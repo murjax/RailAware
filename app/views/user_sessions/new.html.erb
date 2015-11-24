@@ -1,0 +1,61 @@
+<div class="wrapper">
+	<div class="header">
+		<div class="top">
+			<nav>
+				<header>
+					<%= link_to("Railaware", {:controller => 'main', :action => 'index'}, :class => 'logo') %>
+				</header>
+				
+				<ul>
+					<%= link_to("Home", {:controller => 'main', :action => 'index'}) %>
+					<%= link_to("View Reports", {:controller => 'main', :action => 'show'}) %>
+					<%= link_to "Login", :login %>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	
+	<div class="content">
+		<% if !flash[:alert].blank? %>
+			<div class="notice">
+				<p><%= flash[:alert] %></p>
+			</div>
+		<% end %>
+		<%= stylesheet_link_tag("http://yui.yahooapis.com/pure/0.6.0/pure-min.css") %>
+		<%= form_tag user_sessions_path, :method => :post do %>
+		<div id="register" class='pure-form pure-form-aligned'>
+			<fieldset>
+				<div class="pure-control-group">
+					<%= label_tag :email %>
+					<%= text_field_tag :email %>
+				</div>
+				
+				<div class="pure-control-group">
+					<%= label_tag :password %>
+					<%= password_field_tag :password %>
+				</div>
+				
+				<div class="pure-controls">
+					<%= submit_tag("Submit", :class => "pure-button pure-button-primary") %>
+				</div>
+			</fieldset>
+		</div>
+		
+		<% end %>
+		
+		<div id="loginregisterlink">
+			<%= link_to("Register Now", {:controller => 'main', :action => 'register'}) %>
+		</div>
+		
+		<div id="forgetpassword">
+			<!--Create password reset function here-->
+			<p>Forget Password?</p>
+		</div>
+	</div>
+	
+	<div class="footer">
+		<footer>
+			<p>&copy; RailAware 2015</p>
+		</footer>
+	</div>
+</div>

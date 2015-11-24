@@ -1,0 +1,171 @@
+<div class="wrapper">
+	<div class="header">
+		<div class="top">
+			<nav>
+				<header>
+					<%= link_to("Railaware", {:action => 'index'}, :class => 'logo') %>
+				</header>
+				<ul>
+					<%= link_to("Home", {:action => 'index'}) %>
+					<%= link_to("Report A Train", {:action => 'report'}) %>
+					<%= link_to("View Reports", {:action => 'show'}) %>	
+					<%= link_to "Logout", :logout, method: :post %>					
+				</ul>
+			</nav>
+		</div>
+	</div>
+	
+	<div class="content" id="reportformcontainer">
+	<% if !flash[:notice].blank? %>
+		<div class="notice">
+			<% flash[:notice].each_with_index do |message, index| %>
+				<% if index != 0 %>
+				<p><%= message %></p>
+				<% end %>
+			<% end %>
+		</div>
+	<% end %>
+		<%= stylesheet_link_tag("http://yui.yahooapis.com/pure/0.6.0/pure-min.css") %>
+		<%= form_for(:report, :url => {:action => "create_report"}, :html => {:multipart => true}) do |f| %>
+			<div id="report" class='pure-form pure-form-aligned'>
+				<fieldset>
+					<div class="pure-control-group">
+						<label><%= f.label(:trainnumber, "Train #") %></label>
+						<%= f.text_field(:trainnumber) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:loconumber, "Locomotive #") %></label>
+						<%= f.text_field(:loconumber) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:locotype, "Locomotive Type") %></label>
+						<%= f.text_field(:locotype) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:railroad, "Locomotive Railroad") %></label>
+						<%= select_tag :railroad, options_for_select(Report::RAILROAD_LIST) %>
+					</div>
+					
+					<div class="pure-control-group" onclick="addLoco2()">
+						<label>
+							<input id="2check" type="checkbox">Add another locomotive
+						</label>
+					</div>
+					
+					<div id="loco2num" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:loconumber2, "Locomotive # 2") %></label>
+						<%= f.text_field(:loconumber2) %>
+					</div>
+					
+					<div id="loco2type" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:locotype2, "Locomotive Type 2") %></label>
+						<%= f.text_field(:locotype2) %>
+					</div>
+					
+					<div id="loco3check" class="pure-control-group" style="display:none;" onclick="addLoco3()">
+						<label>
+							<input id="3check" type="checkbox">Add another locomotive
+						</label>
+					</div>
+					
+					<div id="loco3num" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:loconumber3, "Locomotive # 3") %></label>
+						<%= f.text_field(:loconumber3) %>
+					</div>
+					
+					<div id="loco3type" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:locotype3, "Locomotive Type 3") %></label>
+						<%= f.text_field(:locotype3) %>
+					</div>
+					
+					<div id="loco4check" class="pure-control-group" style="display:none;" onclick="addLoco4()">
+						<label>
+							<input id="4check" type="checkbox">Add another locomotive
+						</label>
+					</div>
+					
+					<div id="loco4num" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:loconumber4, "Locomotive # 4") %></label>
+						<%= f.text_field(:loconumber4) %>
+					</div>
+					
+					<div id="loco4type" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:locotype4, "Locomotive Type 4") %></label>
+						<%= f.text_field(:locotype4) %>
+					</div>
+					
+					<div id="loco5check" class="pure-control-group" style="display:none;" onclick="addLoco5()">
+						<label>
+							<input id="5check" type="checkbox">Add another locomotive
+						</label>
+					</div>
+					
+					<div id="loco5num" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:loconumber5, "Locomotive # 5") %></label>
+						<%= f.text_field(:loconumber5) %>
+					</div>
+					
+					<div id="loco5type" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:locotype5, "Locomotive Type 5") %></label>
+						<%= f.text_field(:locotype5) %>
+					</div>
+					
+					<div id="loco6check" class="pure-control-group" style="display:none;" onclick="addLoco6()">
+						<label>
+							<input id="6check" type="checkbox">Add another locomotive
+						</label>
+					</div>
+					
+					<div id="loco6num" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:loconumber6, "Locomotive # 6") %></label>
+						<%= f.text_field(:loconumber6) %>
+					</div>
+					
+					<div id="loco6type" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:locotype6, "Locomotive Type 6") %></label>
+						<%= f.text_field(:locotype6) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:city, "City") %></label>
+						<%= f.text_field(:city) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:state, "State") %></label>
+						<%= select_tag :state, options_for_select(Report::STATE_LIST) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:direction, "Direction") %></label>
+						<%= select_tag :direction, options_for_select(Report::DIRECTIONS) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:time, "Time Seen") %></label>
+						<%= f.datetime_select(:time) %>
+						
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:info, "Extra Info") %></label>
+						<%= f.text_field(:info) %>
+					</div>
+					
+					<div class="pure-controls">
+						<%= submit_tag("Submit", :class => "pure-button pure-button-primary") %>
+					</div>
+				</fieldset>
+			</div>
+		<% end %>
+	</div>
+	
+	<div class="footer">
+		<footer>
+			<p>&copy; RailAware 2015</p>
+		</footer>
+	</div>
+</div>

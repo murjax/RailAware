@@ -1,0 +1,72 @@
+<div class="wrapper">	
+	<div class="header">
+		<div class="top">
+			<nav>
+				<header>
+					<%= link_to("Railaware", {:action => 'index'}, :class => 'logo') %>
+				</header>
+				<ul>
+					<%= link_to("Home", {:action => 'index'}) %>
+					<%= link_to("View Reports", {:action => 'show'}) %>
+					<% if current_user %>
+						<%= link_to("Report A Train", {:action => 'report'}) %>
+						<%= link_to "Logout", :logout, method: :post %>
+					<% else %>
+						<%= link_to "Login", :login %>
+					<% end %>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	
+	<div class="content" id="reportscontainer">
+		<%= stylesheet_link_tag("http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css") %>
+		<%= javascript_include_tag("https://cdn.datatables.net/1.10.7/js/jquery.dataTables.js") %>
+		<div id="reportlist">
+			<table id="table_id" class="display">
+				<thead>
+					<tr>
+						<th>Posted By</th>
+						<th>Train Number</th>
+						<th>Locomotive Number</th>
+						<th>Locomotive Type</th>
+						<th>Locomotive Railroad</th>
+						<th>Additional</th>
+						<th>Location</th>
+						<th>Direction</th>
+						<th>Date/Time</th>
+						<th>Other Info</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @reports.each do |report| %>
+					<tr>
+						<td><%= report.username %> </td>
+						<td><%= report.trainnumber %> </td>
+						<td><%= report.loconumber %> </td>
+						<td><%= report.locotype %> </td>
+						<td><%= report.railroad %> </td>
+						<td><%= report.additional %> </td>
+						<td><%= report.location %> </td>
+						<td><%= report.direction %> </td>
+						<td><%= report.time %> </td>
+						<td><%= report.info %> </td>
+					</tr>
+					
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div class="footer">
+		<footer>
+			<p>&copy; RailAware 2015</p>
+		</footer>
+	</div>
+	
+	
+	
+	
+	
+</div>

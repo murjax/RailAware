@@ -1,0 +1,65 @@
+<div class="wrapper">
+	<div class="header">
+		<div class="top">
+			<nav>
+				<header>
+					<%= link_to("Railaware", {:action => 'index'}, :class => 'logo') %>
+				</header>
+				<ul>
+					<%= link_to("Home", {:action => 'index'}) %>
+					<%= link_to("View Reports", {:action => 'show'}) %>	
+					<%= link_to "Login", :login %>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	
+	<div class="content">
+		<% if !flash[:notice].blank? %>
+			<div class="notice">
+				<% flash[:notice].each_with_index do |message, index| %>
+					<% if index != 0 %>
+					<p><%= message %></p>
+					<% end %>
+				<% end %>
+			</div>
+		<% end %>
+		<%= stylesheet_link_tag("http://yui.yahooapis.com/pure/0.6.0/pure-min.css") %>
+		<%=form_for(:user, :url => {:action => "create_user"}, :html => {:multipart => true}) do |f| %>
+		<div id="register" class='pure-form pure-form-aligned'>
+			<fieldset>
+				<div class="pure-control-group">
+					<label><%= f.label(:username, "Username") %></label>
+					<%= f.text_field(:username) %>
+				</div>
+				
+				<div class="pure-control-group">
+					<label><%= f.label(:password, "Password") %></label>
+					<%= f.password_field(:password) %>
+				</div>
+				
+				<div class="pure-control-group">
+					<label><%= f.label(:password_confirmation, "Password Confirmation") %></label>
+					<%= f.password_field(:password_confirmation) %>
+				</div>
+				
+				<div class="pure-control-group">
+					<label><%= f.label(:email, "Email") %></label>
+					<%= f.text_field(:email) %>
+				</div>
+				
+				<div class="pure-controls">
+					<%= submit_tag("Submit", :class => "pure-button pure-button-primary") %>
+				</div>
+			</fieldset>
+		</div>
+		
+		<% end %>
+	</div>
+	
+	<div class="footer">
+		<footer>
+			<p>&copy; RailAware 2015</p>
+		</footer>
+	</div>
+</div>

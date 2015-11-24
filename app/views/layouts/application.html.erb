@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+	<% if !@overflow %>
+	<head class="overflow">
+	<% else %>
+	<head>
+	
+	<% end %>
+		<meta charset="utf-8">
+		
+		<title>RailAware Beta 1.0</title>
+		<meta name="description" content="Share your favorite sightings">
+		<meta name="Ryan Murphy, Michael Kurras, James Terrebonne" content="SitePoint">
+		<%= stylesheet_link_tag('application') %>
+		<%= javascript_include_tag('application') %>
+		
+		<%= csrf_meta_tags %>
+		<!--[if lt IE 9]>
+			<%= javascript_include_tag('http://html5shiv.googlecode.com/svn/trunk/html5.js') %>
+		<![endif]-->
+	</head>
+	
+	<% if !@overflow %>
+	<body class="overflow">
+	<% else %>
+	<body>
+	<% end %>
+		<%= yield %>
+	</body>
+</html>
