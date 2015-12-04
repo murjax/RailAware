@@ -20,6 +20,13 @@
 	</div>
 	
 	<div class="content" id="reportscontainer">
+	<% if !flash[:notice].blank? %>
+		<div class="notice">
+			<% flash[:notice].each_with_index do |message, index| %>
+				<p><%= message %></p>
+			<% end %>
+		</div>
+	<% end %>
 		<%= stylesheet_link_tag("http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css") %>
 		<%= javascript_include_tag("https://cdn.datatables.net/1.10.7/js/jquery.dataTables.js") %>
 		<div id="reportlist">
@@ -41,7 +48,18 @@
 				<tbody>
 					<% @reports.each do |report| %>
 					<tr>
-						<td><%= report.username %> </td>
+						<td class="reportlistusercolumn">
+							<div class="hidden"><%= report.id %></div>
+							<div><%= report.username %></div>
+							<% if current_user %>
+								<% @v = Vote.where(username: current_user.username, report_id: report.id) %>
+								<% if @v.blank? %>
+									<div class="vbutton" id="up"><%= image_tag('up.png', :size => '20x20', :alt => 'Up') %></div>
+									<div class="vbutton" id="down"><%= image_tag('down.png', :size => '20x20', :alt => 'Down') %></div>
+								<% end %>
+							
+							<% end %>
+						</td>
 						<td><%= report.trainnumber %> </td>
 						<td><%= report.loconumber %> </td>
 						<td><%= report.locotype %> </td>

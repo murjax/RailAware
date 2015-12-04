@@ -8,6 +8,7 @@ RailAware::Application.routes.draw do
   get 'register' => 'main#register', :as => :register
   get 'report' => 'main#report', :as => :report
   get 'viewreports' => 'main#show', :as => :viewreports
+  post 'main/vote/:data' => 'main#vote'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

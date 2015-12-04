@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151105054947) do
+ActiveRecord::Schema.define(version: 20151201014911) do
 
   create_table "reports", force: true do |t|
     t.string   "username",    limit: 50
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20151105054947) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "user_id"
+    t.string   "rating"
   end
 
   create_table "users", force: true do |t|
@@ -38,8 +39,17 @@ ActiveRecord::Schema.define(version: 20151105054947) do
     t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "rating"
+    t.string   "votecount"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+
+  create_table "votes", force: true do |t|
+    t.string   "username",   limit: 50
+    t.string   "report_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

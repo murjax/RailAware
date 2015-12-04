@@ -67,6 +67,7 @@ class MainController < ApplicationController
 		@report.info = params[:report][:info]
 		@report.time = DateTime.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i,0)
 		@report.user_id = current_user.id
+		@report.rating = "0"
 		
 		if !@report.valid?
 			flash[:notice] = ["You must fix the following errors to continue."]
@@ -88,6 +89,7 @@ class MainController < ApplicationController
 	def show
 		@overflow = true
 		@reports = Report.all
+		@vote = Vote.all
 	end
 	
 	
@@ -124,6 +126,45 @@ class MainController < ApplicationController
 		else
 		render('register')
 		end
+	end
+	
+	def vote
+		logger.debug("Vote Received")
+		flash[:notice] = ["Vote Received!"]
+		
+		@report = Report.find(params[:data][0])
+		@rating = @report.rating.to_i
+		logger.debug(@rating)
+		@newrating = @rating + (params[:data][1]).to_i
+		logger.debug(@newrating)
+		@report.rating = @newrating
+		@report.save
+		
+		@vote = Vote.new()
+		@vote.username = current_user.username
+		@vote.report_id = params[:data][0]
+		@vote.save
+		
+		@user = User.find_by_username(current_user.username)
+		@user.votecount = @user.votecount.to_i + 1
+		
+		if @user.votecount.to_i.between?(0, 6)
+			@user.rating = (@user.rating.to_i * 0.1) + @user.rating.to_i
+		elsif @user.votecount.to_i.between?(5, 11)
+			@user.rating = (@user.rating.to_i * 0.08) + @user.rating.to_i
+		elsif @user.votecount.to_i.between?(9, 21)
+			@user.rating = (@user.rating.to_i * 0.05) + @user.rating.to_i
+		elsif @user.votecount.to_i.between?(19, 41)
+			@user.rating = (@user.rating.to_i * 0.03) + @user.rating.to_i
+		elsif @user.votecount.to_i.between?(39, 81)
+			@user.rating = (@user.rating.to_i * 0.02) + @user.rating.to_i
+		else
+			@user.rating = (@user.rating.to_i * 0.01) + @user.rating.to_i
+		end
+		
+		@user.save
+		
+		redirect_to(:action => 'show')
 	end
 	
 	private
