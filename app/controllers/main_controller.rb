@@ -106,7 +106,6 @@ class MainController < ApplicationController
 	
 	def create_user
 		@user = User.new(user_params)
-		
 		if !@user.valid?
 			flash[:notice] = ["Please fix the following errors to continue."]
 			@user.errors.each do |attribute, message|
@@ -115,9 +114,6 @@ class MainController < ApplicationController
 			redirect_to(:action => 'register')
 			return
 		end
-		
-		@report.username = current_user.username
-		@report.user_id = current_user.id
 		
 		
 		
