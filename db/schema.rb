@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20151201014911) do
 
-  create_table "reports", force: true do |t|
+  create_table "reports", force: :cascade do |t|
     t.string   "username",    limit: 50
     t.string   "trainnumber", limit: 10
     t.string   "loconumber",  limit: 10
@@ -21,33 +21,33 @@ ActiveRecord::Schema.define(version: 20151201014911) do
     t.string   "railroad",    limit: 50
     t.string   "location",    limit: 30
     t.string   "direction",   limit: 10
-    t.string   "additional"
-    t.string   "info"
-    t.float    "latitude"
-    t.float    "longitude"
+    t.string   "additional",  limit: 255
+    t.string   "info",        limit: 255
+    t.float    "latitude",    limit: 24
+    t.float    "longitude",   limit: 24
     t.datetime "time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "user_id"
-    t.string   "rating"
+    t.string   "user_id",     limit: 255
+    t.string   "rating",      limit: 255
   end
 
-  create_table "users", force: true do |t|
-    t.string   "username"
-    t.string   "email",            null: false
-    t.string   "crypted_password"
-    t.string   "salt"
+  create_table "users", force: :cascade do |t|
+    t.string   "username",         limit: 255
+    t.string   "email",            limit: 255, null: false
+    t.string   "crypted_password", limit: 255
+    t.string   "salt",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "rating"
-    t.string   "votecount"
+    t.string   "rating",           limit: 255
+    t.string   "votecount",        limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
-  create_table "votes", force: true do |t|
+  create_table "votes", force: :cascade do |t|
     t.string   "username",   limit: 50
-    t.string   "report_id"
+    t.string   "report_id",  limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
