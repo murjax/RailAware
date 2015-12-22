@@ -49,6 +49,11 @@
 						<%= select_tag :railroad, options_for_select(Report::RAILROAD_LIST) %>
 					</div>
 					
+					<div class="pure-control-group otherrailroad" style="display:none;">
+						<label><%= f.label(:railroad, "Please enter a railroad") %></label>
+						<%= f.text_field(:railroad) %>
+					</div>
+					
 					<div class="pure-control-group" onclick="addLoco2()">
 						<label>
 							<input id="2check" type="checkbox">Add another locomotive

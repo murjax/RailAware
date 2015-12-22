@@ -1,5 +1,14 @@
 $(document).ready( function () {
 	console.log('hello');
+	$('#railroad').change(function(){
+		if(this.options[this.selectedIndex].value == "Other"){
+			$('.otherrailroad').show();
+		}
+		else{
+			$('.otherrailroad').hide();
+		}
+	});
+	
 	$(document).on('click', '.vbutton', function(evt){
 		console.log($(evt.target).parent());
 		var vote;

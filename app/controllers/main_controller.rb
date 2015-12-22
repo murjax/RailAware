@@ -34,6 +34,7 @@ class MainController < ApplicationController
 	end
 	
 	def create_report
+		logger.debug(params[:report][:railroad])
 		@report = Report.new()
 		@report.username = current_user.username
 		@report.trainnumber = params[:report][:trainnumber]
@@ -62,7 +63,13 @@ class MainController < ApplicationController
 			@report.additional = " "
 		end
 		@report.location = params[:report][:city] + ", " + params[:state]
-		@report.railroad = params[:railroad]
+		
+		if params[:railroad] == "Other"
+			@report.railroad = params[:report][:railroad]
+		else
+			@report.railroad = params[:railroad]
+		end
+		
 		@report.direction = params[:direction]
 		@report.info = params[:report][:info]
 		@report.time = DateTime.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i,0)

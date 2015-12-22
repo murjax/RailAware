@@ -6,15 +6,15 @@ class Report < ActiveRecord::Base
 		'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR',
 		'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
 		
-	RAILROAD_LIST = ['Amtrak', 'BNSF', 'Caltrain', 
-		'Canadian National', 'Canadian Pacific', 'CSX', 'Coaster', 
-		'Conrail Shared Assets', 'Florida East Coast', 'Kansas City Southern',
-		'Long Island Rail Road', 'MARC', 'MBTA', 'Metra', 
-		'Metro-North Commuter Railroad', 'Metrolink',
-		'New England Central Railroad', 'NJ Transit', 'Norfolk Southern',
-		'Northstar', 'Pan Am Railways', 'Providence & Worcester', 
-		'SEPTA', 'SunRail', 'Trinity Railway Express', 'Tri-Rail',
-		'Union Pacific', 'Virginia Railway Express', 'Other']
+	RAILROAD_LIST = ['Amtrak (AMTK)', 'Burlington Northern Santa Fe (BNSF)', 'Caltrain (JPBX)', 
+		'Canadian National (CN)', 'Canadian Pacific (CP)', 'CSX (CSXT)', 'Coaster (SDNX)', 
+		'Conrail Shared Assets (CRCX)', 'Florida East Coast (FEC)', 'Kansas City Southern (KCS)',
+		'Long Island Rail Road (LIRR)', 'MARC', 'MBTA (MBTX)', 'Metra (METX)', 
+		'Metro-North Commuter Railroad (MNCW)', 'Metrolink (SCAX)',
+		'New England Central Railroad (NECR)', 'NJ Transit (NJTR)', 'Norfolk Southern (NS)',
+		'Northstar (MNRX)', 'Pan Am Railways (BM, MEC, PTM, ST)', 'Providence & Worcester (PW)', 
+		'SEPTA (SEPA)', 'SunRail', 'Trinity Railway Express (TRE)', 'Tri-Rail (TRCX)',
+		'Union Pacific (UP)', 'Virginia Railway Express (VREX)', 'Other']
 		
 	DIRECTIONS = ['North', 'South', 'East', 'West']
 	
