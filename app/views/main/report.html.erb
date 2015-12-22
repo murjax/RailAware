@@ -49,7 +49,7 @@
 						<%= select_tag :railroad, options_for_select(Report::RAILROAD_LIST) %>
 					</div>
 					
-					<div class="pure-control-group otherrailroad" style="display:none;">
+					<div id="loco1otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
 						<label><%= f.label(:railroad, "Please enter a railroad") %></label>
 						<%= f.text_field(:railroad) %>
 					</div>
@@ -70,6 +70,16 @@
 						<%= f.text_field(:locotype2) %>
 					</div>
 					
+					<div id="loco2railroad" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:railroad2, "Locomotive Railroad 2") %></label>
+						<%= select_tag :railroad2, options_for_select(Report::RAILROAD_LIST) %>
+					</div>
+					
+					<div id="loco2otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
+						<label><%= f.label(:railroad2, "Please enter a railroad") %></label>
+						<%= f.text_field(:railroad2) %>
+					</div>
+					
 					<div id="loco3check" class="pure-control-group" style="display:none;" onclick="addLoco3()">
 						<label>
 							<input id="3check" type="checkbox">Add another locomotive
@@ -84,6 +94,16 @@
 					<div id="loco3type" class="pure-control-group" style="display:none;">
 						<label><%= f.label(:locotype3, "Locomotive Type 3") %></label>
 						<%= f.text_field(:locotype3) %>
+					</div>
+					
+					<div id="loco3railroad" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:railroad3, "Locomotive Railroad 3") %></label>
+						<%= select_tag :railroad3, options_for_select(Report::RAILROAD_LIST) %>
+					</div>
+					
+					<div id="loco3otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
+						<label><%= f.label(:railroad3, "Please enter a railroad") %></label>
+						<%= f.text_field(:railroad3) %>
 					</div>
 					
 					<div id="loco4check" class="pure-control-group" style="display:none;" onclick="addLoco4()">
@@ -102,6 +122,16 @@
 						<%= f.text_field(:locotype4) %>
 					</div>
 					
+					<div id="loco4railroad" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:railroad4, "Locomotive Railroad 4") %></label>
+						<%= select_tag :railroad4, options_for_select(Report::RAILROAD_LIST) %>
+					</div>
+					
+					<div id="loco4otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
+						<label><%= f.label(:railroad4, "Please enter a railroad") %></label>
+						<%= f.text_field(:railroad4) %>
+					</div>
+					
 					<div id="loco5check" class="pure-control-group" style="display:none;" onclick="addLoco5()">
 						<label>
 							<input id="5check" type="checkbox">Add another locomotive
@@ -118,6 +148,16 @@
 						<%= f.text_field(:locotype5) %>
 					</div>
 					
+					<div id="loco5railroad" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:railroad5, "Locomotive Railroad 5") %></label>
+						<%= select_tag :railroad5, options_for_select(Report::RAILROAD_LIST) %>
+					</div>
+					
+					<div id="loco5otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
+						<label><%= f.label(:railroad5, "Please enter a railroad") %></label>
+						<%= f.text_field(:railroad5) %>
+					</div>
+					
 					<div id="loco6check" class="pure-control-group" style="display:none;" onclick="addLoco6()">
 						<label>
 							<input id="6check" type="checkbox">Add another locomotive
@@ -132,6 +172,16 @@
 					<div id="loco6type" class="pure-control-group" style="display:none;">
 						<label><%= f.label(:locotype6, "Locomotive Type 6") %></label>
 						<%= f.text_field(:locotype6) %>
+					</div>
+					
+					<div id="loco6railroad" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:railroad6, "Locomotive Railroad 6") %></label>
+						<%= select_tag :railroad6, options_for_select(Report::RAILROAD_LIST) %>
+					</div>
+					
+					<div id="loco6otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
+						<label><%= f.label(:railroad6, "Please enter a railroad") %></label>
+						<%= f.text_field(:railroad6) %>
 					</div>
 					
 					<div class="pure-control-group">

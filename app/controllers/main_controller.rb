@@ -46,18 +46,18 @@ class MainController < ApplicationController
 				if !params[:report][:loconumber4].nil? and !params[:report][:locotype4].nil?
 					if !params[:report][:loconumber5].nil? and !params[:report][:locotype5].nil?
 						if !params[:report][:loconumber6].nil? and !params[:report][:locotype6].nil?
-							@report.additional = params[:report][:loconumber2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber6] + " " + params[:report][:locotype6]
+							@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
 						else
-							@report.additional = params[:report][:loconumber2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber5] + " " + params[:report][:locotype5]
+							@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
 						end
 					else
-						@report.additional = params[:report][:loconumber2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber4] + " " + params[:report][:locotype4]
+						@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " +  params[:report][:loconumber2] + ", " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4]
 					end
 				else
-					@report.additional = params[:report][:loconumber2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber3] + " " + params[:report][:locotype3]
+					@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3]
 				end
 			else
-				@report.additional = params[:report][:loconumber2] + " " + params[:report][:locotype2]
+				@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2]
 			end
 		else
 			@report.additional = " "
