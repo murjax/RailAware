@@ -30,7 +30,7 @@
 			<div id="report" class='pure-form pure-form-aligned'>
 				<fieldset>
 					<div class="pure-control-group">
-						<label><%= f.label(:trainnumber, "Train #") %></label>
+						<label><%= f.label(:trainnumber, "Train Symbol/#") %></label>
 						<% if session[:report] %>
 						<%= f.text_field(:trainnumber, :value => session[:report][:trainnumber]) %>
 						<% else %>
