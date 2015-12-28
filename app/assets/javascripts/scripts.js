@@ -1,5 +1,14 @@
+var a = 0;
+var b = 0;
+var c = 0;
+var d = 0;
+var e = 0;
+
 $(document).ready( function () {
-	console.log('hello');
+	console.log($('#railroad').val());
+	if($('#railroad').val() == "Other"){
+		$('#loco1otherrailroad').show();
+	}
 	$('#railroad').change(function(){
 		if(this.options[this.selectedIndex].value == "Other"){
 			$('#loco1otherrailroad').show();
@@ -9,6 +18,9 @@ $(document).ready( function () {
 		}
 	});
 	
+	if($('#railroad2').val() == "Other"){
+		$('#loco2otherrailroad').show();
+	}
 	$('#railroad2').change(function(){
 		if(this.options[this.selectedIndex].value == "Other"){
 			$('#loco2otherrailroad').show();
@@ -18,6 +30,9 @@ $(document).ready( function () {
 		}
 	});
 	
+	if($('#railroad3').val() == "Other"){
+		$('#loco3otherrailroad').show();
+	}
 	$('#railroad3').change(function(){
 		if(this.options[this.selectedIndex].value == "Other"){
 			$('#loco3otherrailroad').show();
@@ -27,6 +42,9 @@ $(document).ready( function () {
 		}
 	});
 	
+	if($('#railroad4').val() == "Other"){
+		$('#loco4otherrailroad').show();
+	}
 	$('#railroad4').change(function(){
 		if(this.options[this.selectedIndex].value == "Other"){
 			$('#loco4otherrailroad').show();
@@ -36,6 +54,9 @@ $(document).ready( function () {
 		}
 	});
 	
+	if($('#railroad5').val() == "Other"){
+		$('#loco5otherrailroad').show();
+	}
 	$('#railroad5').change(function(){
 		if(this.options[this.selectedIndex].value == "Other"){
 			$('#loco5otherrailroad').show();
@@ -45,6 +66,9 @@ $(document).ready( function () {
 		}
 	});
 	
+	if($('#railroad6').val() == "Other"){
+		$('#loco6otherrailroad').show();
+	}
 	$('#railroad6').change(function(){
 		if(this.options[this.selectedIndex].value == "Other"){
 			$('#loco6otherrailroad').show();
@@ -53,6 +77,26 @@ $(document).ready( function () {
 			$('#loco6otherrailroad').hide();
 		}
 	});
+	
+	if($('#twocheck').is(':checked')){
+		addLoco2()
+	}
+	
+	if($('#threecheck').is(':checked')){
+		addLoco3()
+	}
+	
+	if($('#fourcheck').is(':checked')){
+		addLoco4()
+	}
+	
+	if($('#fivecheck').is(':checked')){
+		addLoco5()
+	}
+	
+	if($('#sixcheck').is(':checked')){
+		addLoco6()
+	}
 	
 	$(document).on('click', '.vbutton', function(evt){
 		console.log($(evt.target).parent());
@@ -83,11 +127,7 @@ $(document).ready( function () {
 	$('#table_id').DataTable();
 });
 
-var a = 0;
-var b = 0;
-var c = 0;
-var d = 0;
-var e = 0;
+
 function addLoco2(){
 	if (a == 0){
 		document.getElementById('loco2num').style.display = "block";

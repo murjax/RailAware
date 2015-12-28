@@ -15,8 +15,9 @@ class UserSessionsController < ApplicationController
 		# redirect_back_or_to(:main, notice: 'Login successful')
 		redirect_to(:controller => 'main')
 	else
-		flash.now[:alert] = 'Login failed. Please ensure your email and password are correct.'
-		render('new')
+		flash[:alert] = ['Login failed. Please ensure your email and password are correct.']
+		session[:email] = params[:email]
+		redirect_to(:action => 'new')
 	end
   end
 

@@ -28,13 +28,16 @@ class MainController < ApplicationController
 	
 	def report
 		@overflow = true
+		
+		if session[:report]
+			
+		end
 		if !current_user
 			redirect_to(:login)
 		end
 	end
 	
 	def create_report
-		logger.debug(params[:report][:railroad])
 		@report = Report.new()
 		@report.username = current_user.username
 		@report.trainnumber = params[:report][:trainnumber]
@@ -81,6 +84,51 @@ class MainController < ApplicationController
 			@report.errors.each do |attribute, message|
 				flash[:notice] << message
 			end
+			session[:report] = params[:report]
+			session[:direction] = params[:direction]
+			session[:state] = params[:state]
+			if params[:railroad] == "Other"
+				session[:railroad] = params[:report][:railroad]
+			else
+				session[:railroad] = params[:railroad]
+			end
+			
+			if params[:railroad2] == "Other"
+				session[:railroad2] = params[:report][:railroad2]
+			else
+				session[:railroad2] = params[:railroad2]
+			end
+			
+			if params[:railroad3] == "Other"
+				session[:railroad3] = params[:report][:railroad3]
+			else
+				session[:railroad3] = params[:railroad3]
+			end
+			
+			if params[:railroad4] == "Other"
+				session[:railroad4] = params[:report][:railroad4]
+			else
+				session[:railroad4] = params[:railroad4]
+			end
+			
+			if params[:railroad5] == "Other"
+				session[:railroad5] = params[:report][:railroad5]
+			else
+				session[:railroad5] = params[:railroad5]
+			end
+			
+			if params[:railroad6] == "Other"
+				session[:railroad6] = params[:report][:railroad6]
+			else
+				session[:railroad6] = params[:railroad6]
+			end
+			
+			session[:twocheck] = params[:twocheck]
+			session[:threecheck] = params[:threecheck]
+			session[:fourcheck] = params[:fourcheck]
+			session[:fivecheck] = params[:fivecheck]
+			session[:sixcheck] = params[:sixcheck]
+			
 			redirect_to(:action => 'report')
 			return
 		end
@@ -89,7 +137,7 @@ class MainController < ApplicationController
 		if @report.save
 			redirect_to(:action => 'index')
 		else
-			render('report')
+			render :action => 'report'
 		end
 	end
 	
@@ -118,10 +166,10 @@ class MainController < ApplicationController
 			@user.errors.each do |attribute, message|
 				flash[:notice] << message
 			end
+			session[:user] = params[:user]
 			redirect_to(:action => 'register')
 			return
 		end
-		
 		
 		
 		if @user.save
