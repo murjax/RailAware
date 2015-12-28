@@ -44,11 +44,37 @@ class MainController < ApplicationController
 		@report.loconumber = params[:report][:loconumber]
 		@report.locotype = params[:report][:locotype]
 		
-		if !params[:report][:loconumber2].nil? and !params[:report][:locotype2].nil?
-			if !params[:report][:loconumber3].nil? and !params[:report][:locotype3].nil?
-				if !params[:report][:loconumber4].nil? and !params[:report][:locotype4].nil?
-					if !params[:report][:loconumber5].nil? and !params[:report][:locotype5].nil?
-						if !params[:report][:loconumber6].nil? and !params[:report][:locotype6].nil?
+		if params[:railroad] == "Other"
+			@report.railroad = params[:report][:railroad]
+		else
+			@report.railroad = params[:railroad]
+		end
+		
+		if params[:railroad2] == "Other"
+			params[:railroad2] = params[:report][:railroad2]
+		end
+		
+		if params[:railroad3] == "Other"
+			params[:railroad3] = params[:report][:railroad3]
+		end
+		
+		if params[:railroad4] == "Other"
+			params[:railroad4] = params[:report][:railroad4]
+		end
+		
+		if params[:railroad5] == "Other"
+			params[:railroad5] = params[:report][:railroad5]
+		end
+		
+		if params[:railroad6] == "Other"
+			params[:railroad6] = params[:report][:railroad6]
+		end
+		
+		if !params[:report][:loconumber2].empty? and !params[:report][:locotype2].empty?
+			if !params[:report][:loconumber3].empty? and !params[:report][:locotype3].empty?
+				if !params[:report][:loconumber4].empty? and !params[:report][:locotype4].empty?
+					if !params[:report][:loconumber5].empty? and !params[:report][:locotype5].empty?
+						if !params[:report][:loconumber6].empty? and !params[:report][:locotype6].empty?
 							@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
 						else
 							@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
@@ -66,12 +92,6 @@ class MainController < ApplicationController
 			@report.additional = " "
 		end
 		@report.location = params[:report][:city] + ", " + params[:state]
-		
-		if params[:railroad] == "Other"
-			@report.railroad = params[:report][:railroad]
-		else
-			@report.railroad = params[:railroad]
-		end
 		
 		@report.direction = params[:direction]
 		@report.info = params[:report][:info]
