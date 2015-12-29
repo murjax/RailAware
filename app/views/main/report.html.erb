@@ -402,9 +402,9 @@
 					<div class="pure-control-group">
 						<label><%= f.label(:info, "Extra Info") %></label>
 						<% if session[:report] %>
-						<%= f.text_field(:info, :value => session[:report][:info]) %>
+						<%= f.text_area(:info, :cols => 40, :rows => 7, :value => session[:report][:info]) %>
 						<% else %>
-						<%= f.text_field(:info) %>
+						<%= f.text_area(:info, :cols => 40, :rows => 7) %>
 						<% end %>
 					</div>
 					
