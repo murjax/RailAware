@@ -75,18 +75,256 @@ class MainController < ApplicationController
 				if !params[:report][:loconumber4].empty? and !params[:report][:locotype4].empty?
 					if !params[:report][:loconumber5].empty? and !params[:report][:locotype5].empty?
 						if !params[:report][:loconumber6].empty? and !params[:report][:locotype6].empty?
-							@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+						
+						
+							if params[:direction2] == "Front"
+								if params[:direction3] == "Front"
+									if params[:direction4] == "Front"
+										if params[:direction5] == "Front"
+											if params[:direction6] == "Front"
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										else
+											if params[:direction6] == "Front"
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										end
+									else
+										if params[:direction5] == "Front"
+											if params[:direction6] == "Front"
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										else
+											if params[:direction6] == "Front"
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										end
+									end
+								else
+									if params[:direction4] == "Front"
+										if params[:direction5] == "Front"
+											if params[:direction6] == "Front"
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else	
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										else
+											if params[:direction6] == "Front"
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										end
+									else
+										if params[:direction5] == "Front"
+											if params[:direction6] == "Front"
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										else
+											if params[:direction6] == "Front"
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										end
+									end
+								end
+							else
+								if params[:direction3] == "Front"
+									if params[:direction4] == "Front"
+										if params[:direction5] == "Front"
+											if params[:direction6] == "Front"
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										else	
+											if params[:direction6] == "Front"
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										end
+									else
+										if params[:direction5] == "Front"
+											if params[:direction6] == "Front"
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										else	
+											if params[:direction6] == "Front"
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										end
+									end
+								else
+									if params[:direction4] == "Front"
+										if params[:direction5] == "Front"
+											if params[:direction6] == "Front"
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										else
+											if params[:direction6] == "Front"
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										end
+									else
+										if params[:direction5] == "Front"
+											if params[:direction6] == "Front"
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										else
+											if params[:direction6] == "Front"
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + "<< " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											else
+												@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5] + ", " + ">> " + params[:railroad6] + " " + params[:report][:locotype6] + " " + params[:report][:loconumber6]
+											end
+										end
+									end
+								end
+							end
+						
+							
+							
+							
+							
+							
+							
 						else
-							@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+							if params[:direction2] == "Front"
+								if params[:direction3] == "Front"
+									if params[:direction4] == "Front"
+										if params[:direction5] == "Front"
+											@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										else
+											@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										end
+									else
+										if params[:direction5] == "Front"
+											@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										else
+											@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										end
+									end
+								else
+									if params[:direction4] == "Front"
+										if params[:direction5] == "Front"
+											@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										else
+											@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										end
+									else
+										if params[:direction5] == "Front"
+											@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										else
+											@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										end
+									end
+								end
+							else
+								if params[:direction3] == "Front"
+									if params[:direction4] == "Front"
+										if params[:direction5] == "Front"
+											@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										else
+											@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										end
+									else
+										if params[:direction5] == "Front"
+											@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										else
+											@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										end
+									end
+								else
+									if params[:direction4] == "Front"
+										if params[:direction5] == "Front"
+											@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										else
+											@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										end
+									else
+										if params[:direction5] == "Front"
+											@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + "<< " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										else
+											@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " +  params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4] + ", " + ">> " + params[:railroad5] + " " + params[:report][:locotype5] + " " + params[:report][:loconumber5]
+										end
+									end
+								end
+							end
 						end
 					else
-						@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " +  params[:report][:loconumber2] + ", " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4]
+						if params[:direction2] == "Front"
+							if params[:direction3] == "Front"
+								if params[:direction4] == "Front"
+									@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " +  params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4]
+								else
+									@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " +  params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4]
+								end
+							else
+								if params[:direction4] == "Front"
+									@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " +  params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4]
+								else
+									@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " +  params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4]
+								end
+							end
+						else
+							if params[:direction3] == "Front"
+								if params[:direction4] == "Front"
+									@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " +  params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4]
+								else
+									@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " +  params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " +params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4]
+								end
+							else
+								if params[:direction4] == "Front"
+									@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " +  params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + "<< " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4]
+								else
+									@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " +  params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3] + ", " + ">> " + params[:railroad4] + " " + params[:report][:locotype4] + " " + params[:report][:loconumber4]
+								end
+							end
+						end
 					end
 				else
-					@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3]
+					if params[:direction2] == "Front"
+						if params[:direction3] == "Front"
+							@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3]
+						else
+							@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">>" + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3]
+						end
+					else
+						if params[:direction3] == "Front"
+							@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + "<< " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3]
+						else
+							@report.additional = ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2] + ", " + ">> " + params[:railroad3] + " " + params[:report][:locotype3] + " " + params[:report][:loconumber3]
+						end
+					end
 				end
 			else
-				@report.additional = params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2]
+				if params[:direction2] == "Front"
+					@report.additional = "<< " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2]
+				else
+					@report.additional =  ">> " + params[:railroad2] + " " + params[:report][:locotype2] + " " + params[:report][:loconumber2]
+				end
+				
 			end
 		else
 			@report.additional = " "
@@ -106,6 +344,11 @@ class MainController < ApplicationController
 			end
 			session[:report] = params[:report]
 			session[:direction] = params[:direction]
+			session[:direction2] = params[:direction2]
+			session[:direction3] = params[:direction3]
+			session[:direction4] = params[:direction4]
+			session[:direction5] = params[:direction5]
+			session[:direction6] = params[:direction6]
 			session[:state] = params[:state]
 			if params[:railroad] == "Other"
 				session[:railroad] = params[:report][:railroad]

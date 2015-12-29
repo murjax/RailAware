@@ -139,6 +139,15 @@
 						<% end %>
 					</div>
 					
+					<div id="loco2direction" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:direction2, "Face Direction") %></label>
+						<% if session[:direction2] %>
+						<%= select_tag :direction2, options_for_select(["Front", "Rear"], session[:direction2]) %>
+						<% else %>
+						<%= select_tag :direction2, options_for_select(["Front", "Rear"]) %>
+						<% end %>
+					</div>
+					
 					<div id="loco3check" class="pure-control-group" style="display:none;">
 						<label>
 							<% if session[:threecheck] %>
@@ -195,6 +204,15 @@
 						<% end %>
 					</div>
 					
+					<div id="loco3direction" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:direction3, "Face Direction") %></label>
+						<% if session[:direction3] %>
+						<%= select_tag :direction3, options_for_select(["Front", "Rear"], session[:direction3]) %>
+						<% else %>
+						<%= select_tag :direction3, options_for_select(["Front", "Rear"]) %>
+						<% end %>
+					</div>
+					
 					<div id="loco4check" class="pure-control-group" style="display:none;">
 						<label>
 							<% if session[:fourcheck] %>
@@ -248,6 +266,15 @@
 						<% else %>
 						<%= f.text_field(:railroad4) %>
 						<label><%= check_box_tag "railroadsuggestion", "railroadsuggestion", false %>Suggest this railroad</label>
+						<% end %>
+					</div>
+					
+					<div id="loco4direction" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:direction4, "Face Direction") %></label>
+						<% if session[:direction4] %>
+						<%= select_tag :direction4, options_for_select(["Front", "Rear"], session[:direction4]) %>
+						<% else %>
+						<%= select_tag :direction4, options_for_select(["Front", "Rear"]) %>
 						<% end %>
 					</div>
 					
@@ -308,6 +335,15 @@
 						<% end %>
 					</div>
 					
+					<div id="loco5direction" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:direction5, "Face Direction") %></label>
+						<% if session[:direction5] %>
+						<%= select_tag :direction5, options_for_select(["Front", "Rear"], session[:direction5]) %>
+						<% else %>
+						<%= select_tag :direction5, options_for_select(["Front", "Rear"]) %>
+						<% end %>
+					</div>
+					
 					<div id="loco6check" class="pure-control-group" style="display:none;">
 						<label>
 							<% if session[:sixcheck] %>
@@ -361,6 +397,15 @@
 						<% else %>
 						<%= f.text_field(:railroad6) %>
 						<label><%= check_box_tag "railroadsuggestion", "railroadsuggestion", false %>Suggest this railroad</label>
+						<% end %>
+					</div>
+					
+					<div id="loco6direction" class="pure-control-group" style="display:none;">
+						<label><%= f.label(:direction6, "Face Direction") %></label>
+						<% if session[:direction6] %>
+						<%= select_tag :direction6, options_for_select(["Front", "Rear"], session[:direction6]) %>
+						<% else %>
+						<%= select_tag :direction6, options_for_select(["Front", "Rear"]) %>
 						<% end %>
 					</div>
 					
@@ -423,6 +468,11 @@
 	<% session[:railroad5] = nil %>
 	<% session[:railroad6] = nil %>
 	<% session[:direction] = nil %>
+	<% session[:direction2] = nil %>
+	<% session[:direction3] = nil %>
+	<% session[:direction4] = nil %>
+	<% session[:direction5] = nil %>
+	<% session[:direction6] = nil %>
 	<% session[:state] = nil %>
 	<% session[:twocheck] = nil %>
 	<% session[:threecheck] = nil %>
