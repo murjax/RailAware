@@ -3,7 +3,7 @@ class MainController < ApplicationController
 	
 	def index
 		@overflow = false
-		@reports = Report.all
+		@reports = Report.where(:created_at => (1.week.ago..Time.zone.now))
 		@hash = Gmaps4rails.build_markers(@reports) do |report, marker|
 		  marker.lat report.latitude
 		  marker.lng report.longitude
