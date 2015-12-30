@@ -56,8 +56,10 @@
 							<% if current_user %>
 								<% @v = Vote.where(username: current_user.username, report_id: report.id) %>
 								<% if @v.blank? %>
-									<div class="vbutton" id="up"><%= image_tag('up.png', :size => '20x20', :alt => 'Up') %></div>
-									<div class="vbutton" id="down"><%= image_tag('down.png', :size => '20x20', :alt => 'Down') %></div>
+									<% if current_user.username != report.username %>
+										<div class="vbutton" id="up"><%= image_tag('up.png', :size => '20x20', :alt => 'Up') %></div>
+										<div class="vbutton" id="down"><%= image_tag('down.png', :size => '20x20', :alt => 'Down') %></div>
+									<% end %>	
 								<% end %>
 							
 							<% end %>

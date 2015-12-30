@@ -424,6 +424,8 @@ class MainController < ApplicationController
 	
 	def create_user
 		@user = User.new(user_params)
+		@user.rating = 50
+		@user.votecount = 0
 		if !@user.valid?
 			flash[:notice] = ["Please fix the following errors to continue."]
 			@user.errors.each do |attribute, message|
@@ -443,14 +445,11 @@ class MainController < ApplicationController
 	end
 	
 	def vote
-		logger.debug("Vote Received")
 		flash[:notice] = ["Vote Received!"]
 		
 		@report = Report.find(params[:data][0])
 		@rating = @report.rating.to_i
-		logger.debug(@rating)
 		@newrating = @rating + (params[:data][1]).to_i
-		logger.debug(@newrating)
 		@report.rating = @newrating
 		@report.save
 		
@@ -459,22 +458,41 @@ class MainController < ApplicationController
 		@vote.report_id = params[:data][0]
 		@vote.save
 		
-		@user = User.find_by_username(current_user.username)
+		@user = User.find_by_username(@report.username)
 		@user.votecount = @user.votecount.to_i + 1
 		
-		if @user.votecount.to_i.between?(0, 6)
-			@user.rating = (@user.rating.to_i * 0.1) + @user.rating.to_i
-		elsif @user.votecount.to_i.between?(5, 11)
-			@user.rating = (@user.rating.to_i * 0.08) + @user.rating.to_i
-		elsif @user.votecount.to_i.between?(9, 21)
-			@user.rating = (@user.rating.to_i * 0.05) + @user.rating.to_i
-		elsif @user.votecount.to_i.between?(19, 41)
-			@user.rating = (@user.rating.to_i * 0.03) + @user.rating.to_i
-		elsif @user.votecount.to_i.between?(39, 81)
-			@user.rating = (@user.rating.to_i * 0.02) + @user.rating.to_i
+		if params[:data[1]].to_i == 0)
+			
+			if @user.votecount.to_i.between?(0, 6)
+				@user.rating = (@user.rating.to_i * 0.1) + @user.rating.to_i
+			elsif @user.votecount.to_i.between?(5, 11)
+				@user.rating = (@user.rating.to_i * 0.08) + @user.rating.to_i
+			elsif @user.votecount.to_i.between?(9, 21)
+				@user.rating = (@user.rating.to_i * 0.05) + @user.rating.to_i
+			elsif @user.votecount.to_i.between?(19, 41)
+				@user.rating = (@user.rating.to_i * 0.03) + @user.rating.to_i
+			elsif @user.votecount.to_i.between?(39, 81)
+				@user.rating = (@user.rating.to_i * 0.02) + @user.rating.to_i
+			else
+				@user.rating = (@user.rating.to_i * 0.01) + @user.rating.to_i
+			end
 		else
-			@user.rating = (@user.rating.to_i * 0.01) + @user.rating.to_i
+			
+			if @user.votecount.to_i.between?(0, 6)
+				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.1)
+			elsif @user.votecount.to_i.between?(5, 11)
+				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.08)
+			elsif @user.votecount.to_i.between?(9, 21)
+				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.05)
+			elsif @user.votecount.to_i.between?(19, 41)
+				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.03)
+			elsif @user.votecount.to_i.between?(39, 81)
+				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.02)
+			else
+				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.01)
+			end
 		end
+		
 		
 		@user.save
 		
