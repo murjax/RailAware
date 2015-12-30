@@ -124,7 +124,9 @@ $(document).ready( function () {
 		$(evt.target).parent().parent().children('.vbutton').hide()
 		evt.preventDefault();
 	});
-	$('#table_id').DataTable();
+	$('#table_id').DataTable({
+		responsive: true
+	});
 });
 
 
