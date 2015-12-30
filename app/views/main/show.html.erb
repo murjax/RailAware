@@ -52,7 +52,14 @@
 					<tr>
 						<td class="reportlistusercolumn">
 							<div class="hidden"><%= report.id %></div>
-							<div><%= report.username %></div>
+							<% @u = User.find_by_username(report.username) %>
+							<% if @u.rating.to_i < 50 %>
+								<div class="pooruser"><%= report.username %></div>
+							<% elsif @u.rating.to_i > 80 %>
+								<div class="gooduser"><%= report.username %></div>
+							<% else %>
+								<div class="averageuser"><%= report.username %></div>
+							<% end %>
 							<% if current_user %>
 								<% @v = Vote.where(username: current_user.username, report_id: report.id) %>
 								<% if @v.blank? %>

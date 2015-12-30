@@ -461,7 +461,7 @@ class MainController < ApplicationController
 		@user = User.find_by_username(@report.username)
 		@user.votecount = @user.votecount.to_i + 1
 		
-		if params[:data[1]].to_i == 0)
+		if params[:data[1]].to_i == 0
 			
 			if @user.votecount.to_i.between?(0, 6)
 				@user.rating = (@user.rating.to_i * 0.1) + @user.rating.to_i

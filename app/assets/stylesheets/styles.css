@@ -146,6 +146,18 @@ footer{
 	cursor: pointer;
 }
 
+.gooduser{
+	color: green;
+}
+
+.averageuser{
+	color: #e6b800;
+}
+
+.pooruser{
+	color: #e60000;
+}
+
 #map{
 	width: 100%;
 	top: 0;
