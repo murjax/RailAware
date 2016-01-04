@@ -1,0 +1,5 @@
+Welcome <%= @user.username %>,
+
+Thank you for joining Railaware. Please confirm your registration by clicking the link below.
+
+<%= confirm_email_main_url(@user.confirm_token) %>

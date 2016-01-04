@@ -5,6 +5,7 @@
 				<header>
 					<%= link_to("Railaware", {:action => 'index'}, :class => 'logo') %>
 				</header>
+
 				<ul>
 					<%= link_to("Home", {:action => 'index'}) %>
 					<%= link_to("View Reports", {:action => 'show'}) %>
@@ -23,6 +24,7 @@
 		<%= javascript_include_tag('//maps.google.com/maps/api/js?v=3.18&sensor=false&client=&key=&libraries=geometry&language=&hl=&region=') %>
 		<%= javascript_include_tag('markerclusterer_packed.js') %>
 		<%= javascript_include_tag('infobox_packed.js') %>
+		
 		<div>
 		  <div id="map"></div>
 		</div>

@@ -11,14 +11,18 @@ class UserSessionsController < ApplicationController
   end
 
   def create
-	if @user = login(params[:email], params[:password])
-		# redirect_back_or_to(:main, notice: 'Login successful')
-		redirect_to(:controller => 'main')
-	else
-		flash[:alert] = ['Login failed. Please ensure your email and password are correct.']
-		session[:email] = params[:email]
-		redirect_to(:action => 'new')
+  
+	if @user.email_confirmed
+		if @user = login(params[:email], params[:password])
+			# redirect_back_or_to(:main, notice: 'Login successful')
+			redirect_to(:controller => 'main')
+		else
+			flash[:alert] = ['Login failed. Please ensure your email and password are correct.']
+			session[:email] = params[:email]
+			redirect_to(:action => 'new')
+		end
 	end
+	
   end
 
   def destroy

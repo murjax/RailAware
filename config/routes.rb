@@ -2,6 +2,12 @@ RailAware::Application.routes.draw do
   root 'main#index'
   resources :user_sessions
   
+  resources :main do
+	member do
+		get :confirm_email
+	end
+  end
+  
   match ':controller(/:action(/:id))', :via => [:get, :post]
   get 'login' => 'user_sessions#new', :as => :login
   post 'logout' => 'user_sessions#destroy', :as => :logout

@@ -16,13 +16,22 @@
 	
 	<div class="content">
 		<% if !flash[:notice].blank? %>
-			<div class="notice">
-				<% flash[:notice].each_with_index do |message, index| %>
-					<% if index != 0 %>
-					<p><%= message %></p>
+			<% if flash[:notice][0] == "Please check your email to confirm your registration." %>
+				<div class="goodnotice">
+					<% flash[:notice].each_with_index do |message, index| %>
+						<p><%= message %></p>
 					<% end %>
-				<% end %>
-			</div>
+				</div>
+			<% else %>
+				<div class="notice">
+					<% flash[:notice].each_with_index do |message, index| %>
+						<% if index != 0 %>
+						<p><%= message %></p>
+						<% end %>
+					<% end %>
+				</div>
+			<% end %>
+			
 		<% end %>
 		<%= stylesheet_link_tag("http://yui.yahooapis.com/pure/0.6.0/pure-min.css") %>
 		<%=form_for(:user, :url => {:action => "create_user"}, :html => {:multipart => true}) do |f| %>

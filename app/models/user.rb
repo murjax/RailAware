@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  before_create :confirmation_token
   has_many :reports
   authenticates_with_sorcery!
   EMAIL_REGEX = /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}\Z/i
@@ -10,4 +11,18 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   # validates :email, :format => EMAIL_REGEX
   validates :email, format: {with: EMAIL_REGEX, message: "Email must be in sample@example.com format."}
+  
+  def email_activate
+	self.email_confirmed = true
+	self.confirm_token = nil
+	save!(:validate => false)
+  end
+  
+  private
+  
+	def confirmation_token
+		if self.confirm_token.blank?
+			self.confirm_token = SecureRandom.urlsafe_base64.to_s
+		end
+	end
 end

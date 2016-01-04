@@ -438,7 +438,9 @@ class MainController < ApplicationController
 		
 		
 		if @user.save
-			redirect_to(:action => 'index')
+			UserMailer.registration_confirmation(@user).deliver
+			flash[:notice] = ["Please check your email to confirm your registration."]
+			redirect_to(:action => 'register')
 		else
 		render('register')
 		end
@@ -499,6 +501,15 @@ class MainController < ApplicationController
 		redirect_to(:action => 'show')
 	end
 	
+	def confirm_email
+		user = User.find_by_confirm_token(params[:id])
+		
+		if user
+			user.email_activate
+			redirect_to url_for(:login)
+		end
+	end
+	
 	private
 
 		def user_params
@@ -510,6 +521,5 @@ class MainController < ApplicationController
 			params.require(:report).permit(:username, :trainnumber, :loconumber, :locotype, :railroad, :location, :direction, :additional, :info, :lat, :lon, :time, :user_id)
 			
 		end
-		
 		
 end
