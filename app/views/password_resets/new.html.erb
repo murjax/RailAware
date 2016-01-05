@@ -26,22 +26,15 @@
 			
 		<% end %>
 		<%= stylesheet_link_tag("http://yui.yahooapis.com/pure/0.6.0/pure-min.css") %>
-		<%= form_tag user_sessions_path, :method => :post do %>
+		<%= form_tag password_resets_path, :method => :post do %>
 		<div id="register" class='pure-form pure-form-aligned'>
 			<fieldset>
+
 				<div class="pure-control-group">
-					<%= label_tag :email %>
-					<% if session[:email] %>
-					<%= text_field_tag :email, session[:email] %>
-					<% else %>
-					<%= text_field_tag :email %>
-					<% end %>
+					<label><%= label_tag(:email, "Email") %></label>
+					<%= text_field_tag(:email) %>
 				</div>
 				
-				<div class="pure-control-group">
-					<%= label_tag :password %>
-					<%= password_field_tag :password %>
-				</div>
 				
 				<div class="pure-controls">
 					<%= submit_tag("Submit", :class => "pure-button pure-button-primary") %>
@@ -50,16 +43,7 @@
 		</div>
 		
 		<% end %>
-		
-		<div id="loginregisterlink">
-			<%= link_to("Register Now", {:controller => 'main', :action => 'register'}) %>
-		</div>
-		
-		<div id="forgetpassword">
-			<%= link_to 'Forgot password?', :passwordreset %>
-		</div>
 	</div>
-	<% session[:email] = nil %>
 	<div class="footer">
 		<footer>
 			<p>&copy; RailAware 2015</p>

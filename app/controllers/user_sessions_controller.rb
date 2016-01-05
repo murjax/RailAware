@@ -11,8 +11,8 @@ class UserSessionsController < ApplicationController
   end
 
   def create
-  
-	if @user.email_confirmed
+	
+	if User.find_by_email(params[:email].downcase).email_confirmed
 		if @user = login(params[:email], params[:password])
 			# redirect_back_or_to(:main, notice: 'Login successful')
 			redirect_to(:controller => 'main')

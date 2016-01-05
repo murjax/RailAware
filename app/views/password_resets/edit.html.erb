@@ -26,21 +26,23 @@
 			
 		<% end %>
 		<%= stylesheet_link_tag("http://yui.yahooapis.com/pure/0.6.0/pure-min.css") %>
-		<%= form_tag user_sessions_path, :method => :post do %>
+		<%= form_for @user, :url => password_reset_path(@token), :html => {:method => :put} do |f| %>
 		<div id="register" class='pure-form pure-form-aligned'>
 			<fieldset>
+
 				<div class="pure-control-group">
-					<%= label_tag :email %>
-					<% if session[:email] %>
-					<%= text_field_tag :email, session[:email] %>
-					<% else %>
-					<%= text_field_tag :email %>
-					<% end %>
+					<label><%= f.label(:email, "Email") %></label>
+					<%= f.text_field(:email) %>
 				</div>
 				
 				<div class="pure-control-group">
-					<%= label_tag :password %>
-					<%= password_field_tag :password %>
+					<label><%= f.label(:password, "Password") %></label>
+					<%= f.password_field(:password) %>
+				</div>
+				
+				<div class="pure-control-group">
+					<label><%= f.label(:password_confirmation, "Password Confirmation") %></label>
+					<%= f.password_field(:password_confirmation) %>
 				</div>
 				
 				<div class="pure-controls">
@@ -50,16 +52,7 @@
 		</div>
 		
 		<% end %>
-		
-		<div id="loginregisterlink">
-			<%= link_to("Register Now", {:controller => 'main', :action => 'register'}) %>
-		</div>
-		
-		<div id="forgetpassword">
-			<%= link_to 'Forgot password?', :passwordreset %>
-		</div>
 	</div>
-	<% session[:email] = nil %>
 	<div class="footer">
 		<footer>
 			<p>&copy; RailAware 2015</p>
