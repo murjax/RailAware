@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   before_create :confirmation_token
   has_many :reports
   authenticates_with_sorcery!
-  EMAIL_REGEX = /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}\Z/i
+  EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   
   validates :username, length: {in: 4..46, message: "Username must be between 5 and 45 characters in length."}
   validates :password, length: { minimum: 3, message: "Password must be greater than 3 characters" }, if: -> { new_record? || changes["password"] }
