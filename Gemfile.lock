@@ -160,6 +160,7 @@ DEPENDENCIES
   jquery-ui-rails
   mysql2 (~> 0.3.18)
   rails (= 4.2.0)
+  rails-html-sanitizer
   sdoc
   sorcery
   tzinfo-data

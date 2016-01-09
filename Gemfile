@@ -64,3 +64,6 @@ gem 'tzinfo-data'
 
 #ExecJS
 gem 'execjs'
+
+#HTML sanitizer
+gem 'rails-html-sanitizer'
