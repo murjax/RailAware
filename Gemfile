@@ -67,3 +67,6 @@ gem 'execjs'
 
 #HTML sanitizer
 gem 'rails-html-sanitizer'
+
+#Timezone
+gem 'timezone'

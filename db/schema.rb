@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104222300) do
+ActiveRecord::Schema.define(version: 20160110043937) do
 
   create_table "reports", force: :cascade do |t|
     t.string   "username",    limit: 50
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20160104222300) do
     t.datetime "updated_at"
     t.string   "user_id",     limit: 255
     t.string   "rating",      limit: 255
+    t.string   "timezone",    limit: 255
   end
 
   create_table "users", force: :cascade do |t|

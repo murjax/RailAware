@@ -15,7 +15,7 @@ class MainController < ApplicationController
 			"<br>" + "Addtional Locomotives: " + report.additional + 
 			"<br>" + "Location: " + report.location + 
 			"<br>" + "Direction: " + report.direction +
-			"<br>" + "Date/Time Seen: " + report.time.to_s +
+			"<br>" + "Date/Time Seen: " + report.time.to_s + " " + report.timezone
 			"<br>" + "Additional Info: " + report.info
 			
 			marker.picture({
@@ -405,6 +405,26 @@ class MainController < ApplicationController
 		
 		
 		if @report.save
+			timezone = Timezone::Zone.new :latlon => [@report.latitude.to_s, @report.longitude.to_s]
+			if timezone.zone == "America/St_Johns"
+				@report.timezone = "NT"
+			elsif timezone.zone == "America/Moncton"
+				@report.timezone = "AT"
+			elsif timezone.zone == "America/New_York"
+				@report.timezone = "ET"
+			elsif timezone.zone == "America/Chicago"
+				@report.timezone = "CT"
+			elsif timezone.zone == "America/Denver" || timezone.zone == "America/Phoenix"
+				@report.timezone = "MT"
+			elsif timezone.zone == "America/Los_Angeles"
+				@report.timezone = "PT"
+			elsif timezone.zone == "America/Anchorage"
+				@report.timezone = "AKT"
+			elsif timezone.zone == "Pacific/Honolulu"
+				@report.timezone = "HT"
+			end
+			
+			@report.save
 			redirect_to(:action => 'index')
 		else
 			render :action => 'report'

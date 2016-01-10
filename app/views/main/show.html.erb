@@ -78,7 +78,7 @@
 						<td><%= report.additional %> </td>
 						<td><%= report.location %> </td>
 						<td><%= report.direction %> </td>
-						<td><%= report.time %> </td>
+						<td><%= report.time.strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %> </td>
 						<td><%= report.info %> </td>
 					</tr>
 					

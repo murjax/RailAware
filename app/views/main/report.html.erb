@@ -440,7 +440,7 @@
 					
 					<div class="pure-control-group">
 						<label><%= f.label(:time, "Time Seen") %></label>
-						<%= f.datetime_select(:time) %>
+						<%= f.datetime_select(:time, :order => [:month, :day, :year]) %>
 						
 					</div>
 					
