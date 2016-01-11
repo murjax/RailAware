@@ -344,6 +344,10 @@ class MainController < ApplicationController
 		@report.railroad = full_sanitizer.sanitize(@report.railroad)
 		@report.location = full_sanitizer.sanitize(@report.location)
 		@report.info = full_sanitizer.sanitize(@report.info)
+		
+		if params[:railroadsuggestion]
+			File.open("railroadsuggestions.txt", "a") { |file| file.write params[:report][:railroad] + " " + params[:report][:railroad2] + " " + params[:report][:railroad3] + " " + params[:report][:railroad4] + " " + params[:report][:railroad5] + " " + params[:report][:railroad6]}
+		end
 		if !@report.valid?
 			flash[:notice] = ["You must fix the following errors to continue."]
 			@report.errors.each do |attribute, message|
