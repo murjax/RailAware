@@ -5,6 +5,17 @@ var d = 0;
 var e = 0;
 
 $(document).ready( function () {
+	$('#country').change(function(){
+		
+		if(this.options[this.selectedIndex].value == "Canada"){
+			$('.provinces').show();
+			$('.states').hide();
+		}else{
+			$('.provinces').hide();
+			$('.states').show();
+		}
+		
+	});
 	console.log($('#railroad').val());
 	if($('#railroad').val() == "Other"){
 		$('#loco1otherrailroad').show();

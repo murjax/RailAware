@@ -420,11 +420,25 @@
 					</div>
 					
 					<div class="pure-control-group">
-						<label><%= f.label(:state, "State/Province") %></label>
+						<label><%= f.label(:country, "Country")%></label>
+						<%= select_tag :country, options_for_select(["United States", "Canada"]) %>
+					</div>
+					
+					<div class="pure-control-group states">
+						<label><%= f.label(:state, "State") %></label>
 						<% if session[:state] %>
 						<%= select_tag :state, options_for_select(Report::STATE_LIST, session[:state]) %>
 						<% else %>
 						<%= select_tag :state, options_for_select(Report::STATE_LIST) %>
+						<% end %>
+					</div>
+					
+					<div class="pure-control-group provinces" style="display: none;">
+						<label><%= f.label(:state, "Province") %></label>
+						<% if session[:state] %>
+						<%= select_tag :state, options_for_select(Report::PROVINCE_LIST, session[:state]) %>
+						<% else %>
+						<%= select_tag :state, options_for_select(Report::PROVINCE_LIST) %>
 						<% end %>
 					</div>
 					

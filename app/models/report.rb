@@ -1,10 +1,12 @@
 class Report < ActiveRecord::Base
 	belongs_to :user
 	
-	STATE_LIST = ['AL', 'AB', 'AK', 'AZ', 'AR', 'BC', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI',
-		'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MB', 'MD', 'MA', 'MI', 'MN', 'MS',
-		'MO', 'MT', 'NE', 'NV', 'NB', 'NH', 'NJ', 'NM', 'NY', 'NL', 'NC', 'ND', 'NT', 'NS', 'NU', 'OH', 'OK', 'ON', 'OR',
-		'PA', 'PE', 'QC', 'RI', 'SK', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'YT']
+	STATE_LIST = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI',
+		'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS',
+		'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR',
+		'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
+		
+	PROVINCE_LIST = ['AB', 'BC', 'MB', 'NB', 'NL', 'NT', 'NS', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT']
 		
 	RAILROAD_LIST = ['Amtrak (AMTK)', 'Burlington Northern Santa Fe (BNSF)', 'Caltrain (JPBX)', 
 		'Canadian National (CN)', 'Canadian Pacific (CP)', 'CSX (CSXT)', 'Coaster (SDNX)', 
