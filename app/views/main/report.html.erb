@@ -421,7 +421,12 @@
 					
 					<div class="pure-control-group">
 						<label><%= f.label(:country, "Country")%></label>
+						<% if session[:country] %>
+						<%= select_tag :country, options_for_select(["United States", "Canada"], session[:country]) %>
+						<% else %>
 						<%= select_tag :country, options_for_select(["United States", "Canada"]) %>
+						<% end %>
+						
 					</div>
 					
 					<div class="pure-control-group states">
@@ -434,11 +439,11 @@
 					</div>
 					
 					<div class="pure-control-group provinces" style="display: none;">
-						<label><%= f.label(:state, "Province") %></label>
-						<% if session[:state] %>
-						<%= select_tag :state, options_for_select(Report::PROVINCE_LIST, session[:state]) %>
+						<label><%= f.label(:province, "Province") %></label>
+						<% if session[:province] %>
+						<%= select_tag :province, options_for_select(Report::PROVINCE_LIST, session[:province]) %>
 						<% else %>
-						<%= select_tag :state, options_for_select(Report::PROVINCE_LIST) %>
+						<%= select_tag :province, options_for_select(Report::PROVINCE_LIST) %>
 						<% end %>
 					</div>
 					
@@ -488,6 +493,7 @@
 	<% session[:direction5] = nil %>
 	<% session[:direction6] = nil %>
 	<% session[:state] = nil %>
+	<% session[:province] = nil %>
 	<% session[:twocheck] = nil %>
 	<% session[:threecheck] = nil %>
 	<% session[:fourcheck] = nil %>

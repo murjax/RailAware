@@ -330,7 +330,12 @@ class MainController < ApplicationController
 		else
 			@report.additional = " "
 		end
-		@report.location = params[:report][:city] + ", " + params[:state]
+		if params[:country] == "Canada"
+			@report.location = params[:report][:city] + ", " + params[:province]
+		else
+			@report.location = params[:report][:city] + ", " + params[:state]
+		end
+		
 		
 		@report.direction = params[:direction]
 		@report.info = params[:report][:info]
@@ -361,6 +366,7 @@ class MainController < ApplicationController
 			session[:direction5] = params[:direction5]
 			session[:direction6] = params[:direction6]
 			session[:state] = params[:state]
+			session[:province] = params[:province]
 			if params[:railroad] == "Other"
 				session[:railroad] = params[:report][:railroad]
 			else
@@ -414,21 +420,23 @@ class MainController < ApplicationController
 				@report.timezone = "NT"
 			elsif timezone.zone == "America/Moncton"
 				@report.timezone = "AT"
-			elsif timezone.zone == "America/New_York"
+			elsif timezone.zone == "America/New_York" || timezone.zone == "America/Toronto" || timezone.zone == "America/Detroit" || timezone.zone == "America/Fort_Wayne" || timezone.zone == "America/Indiana/Indianapolis" || timezone.zone == "America/Indiana/Marengo" || timezone.zone == "America/Indiana/Petersburg" || timezone.zone == "America/Indiana/Vevay" || timezone.zone == "America/Indiana/Winamac" || timezone.zone == "America/Indianapolis" || timezone.zone == "America/Kentucky/Louisville" || timezone.zone == "America/Kentucky/Monticello" || timezone.zone == "America/Louisville"
 				@report.timezone = "ET"
-			elsif timezone.zone == "America/Chicago"
+			elsif timezone.zone == "America/Chicago" || timezone.zone == "America/Winnipeg" || timezone.zone == "America/Regina" || timezone.zone == "America/Indiana/Knox" || timezone.zone == "America/Indiana/Tell_City" || timezone.zone == "America/Indiana/Vincennes" || timezone.zone == "America/Knox_IN" || timezone.zone == "America/North_Dakota/Beulah" || timezone.zone == "America/North_Dakota/New_Salem" || timezone.zone == "America/North_Dakota/Center"
 				@report.timezone = "CT"
-			elsif timezone.zone == "America/Denver" || timezone.zone == "America/Phoenix"
+			elsif timezone.zone == "America/Denver" || timezone.zone == "America/Phoenix" || timezone.zone == "America/Edmonton" || timezone
+			.zone == "America/Boise"
 				@report.timezone = "MT"
-			elsif timezone.zone == "America/Los_Angeles"
+			elsif timezone.zone == "America/Los_Angeles" || timezone.zone == "America/Vancouver" || timezone.zone == "America/Creston" || timezone.zone == "America/Dawson" || timezone.zone == "America/Dawson_Creek" || timezone.zone == "America/Fort_Nelson"
 				@report.timezone = "PT"
-			elsif timezone.zone == "America/Anchorage"
+			elsif timezone.zone == "America/Anchorage" || timezone.zone == "America/Juneau" || timezone.zone == "America/Nome"
 				@report.timezone = "AKT"
 			elsif timezone.zone == "Pacific/Honolulu"
 				@report.timezone = "HT"
 			end
 			
 			@report.save
+			logger.debug(timezone.zone)
 			redirect_to(:action => 'index')
 		else
 			render :action => 'report'
