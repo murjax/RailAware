@@ -26,6 +26,7 @@
 		</div>
 	<% end %>
 		<%= stylesheet_link_tag("http://yui.yahooapis.com/pure/0.6.0/pure-min.css") %>
+		<%= javascript_include_tag('scripts') %>
 		<%= form_for(:report, :url => {:action => "create_report"}, :html => {:multipart => true}) do |f| %>
 			<div id="report" class='pure-form pure-form-aligned'>
 				<fieldset>

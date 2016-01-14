@@ -4,7 +4,11 @@ var c = 0;
 var d = 0;
 var e = 0;
 
+
+	
+
 $(document).ready( function () {
+	
 	$('#country').change(function(){
 		
 		if(this.options[this.selectedIndex].value == "Canada"){
@@ -16,7 +20,6 @@ $(document).ready( function () {
 		}
 		
 	});
-	console.log($('#railroad').val());
 	if($('#railroad').val() == "Other"){
 		$('#loco1otherrailroad').show();
 	}
@@ -109,36 +112,8 @@ $(document).ready( function () {
 		addLoco6()
 	}
 	
-	$(document).on('click', '.vbutton', function(evt){
-		console.log($(evt.target).parent());
-		var vote;
-		if($(evt.target).parent().is('div#up')){
-			vote = 1;
-			console.log("true");
-		}else{
-			vote = -1;
-			console.log("false");
-		}
-		
-		var id = $(evt.target).parent().parent().children(":first").html();
-		var data = [id, vote];
-		console.log(id);
-		console.log(data[0])
-		$.ajax({
-			data: JSON.stringify({'data' : data}),
-			dataType: 'json',
-			type: 'post',
-			url: "/main/vote",
-			contentType: 'application/json',
-			cache: false
-		});
-		$(evt.target).parent().parent().children('.vbutton').hide()
-		evt.preventDefault();
-	});
 	
-	$('#table_id').DataTable({
-		responsive: true
-	});
+
 });
 
 

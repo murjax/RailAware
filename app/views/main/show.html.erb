@@ -27,11 +27,24 @@
 			<% end %>
 		</div>
 	<% end %>
-		<%= stylesheet_link_tag("http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css") %>
-		<%= stylesheet_link_tag("https://cdn.datatables.net/responsive/2.0.0/css/responsive.dataTables.min.css") %>
+		<%= javascript_include_tag("https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js") %>	
 		<%= javascript_include_tag("https://cdn.datatables.net/1.10.7/js/jquery.dataTables.js") %>
 		<%= javascript_include_tag("https://cdn.datatables.net/responsive/2.0.0/js/dataTables.responsive.min.js") %>
+		<%= javascript_include_tag('viewscripts') %>
+		
+		
 		<div id="reportlist">
+			<div id="datecontrol">
+				<div id="begincontainer">
+					<label>From:</label>
+					<input type="text" name="beginDate" id="beginDate" value="01/01/2016" class="datepicker" />
+				</div>
+				
+				<div id="endcontainer">
+					<label>To:</label>
+					<input type="text" name="endDate" id="endDate" class="datepicker" />
+				</div>
+			</div>
 			<table id="table_id" class="display">
 				<thead>
 					<tr>

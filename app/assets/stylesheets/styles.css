@@ -217,6 +217,16 @@ footer{
 	font-size: 75%;
 }
 
+#datecontrol label{
+	display: inline-block;
+	width: 30px;
+	text-align: right;
+}
+
+#datecontrol div{
+	padding-bottom: 5px;
+}
+
 .logo{
 	font-size: 200%;
 	font-weight: bold;

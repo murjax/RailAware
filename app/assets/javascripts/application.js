@@ -13,4 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require gmaps/google
-//= require_tree .
+//= require markerclusterer_packed
+//= require underscore-min
