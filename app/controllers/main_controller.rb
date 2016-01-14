@@ -15,7 +15,7 @@ class MainController < ApplicationController
 			"<br>" + "Addtional Locomotives: " + report.additional + 
 			"<br>" + "Location: " + report.location + 
 			"<br>" + "Direction: " + report.direction +
-			"<br>" + "Date/Time Seen: " + report.time.strftime("%m/%d/%Y - %H:%M") + " " + report.timezone
+			"<br>" + "Date/Time Seen: " + report.time.strftime("%m/%d/%Y - %H:%M") + " " + report.timezone +
 			"<br>" + "Additional Info: " + report.info
 			
 			marker.picture({
