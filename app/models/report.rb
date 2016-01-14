@@ -8,14 +8,14 @@ class Report < ActiveRecord::Base
 		
 	PROVINCE_LIST = ['AB', 'BC', 'MB', 'NB', 'NL', 'NT', 'NS', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT']
 		
-	RAILROAD_LIST = ['Amtrak (AMTK)', 'BNSF)', 'Caltrain (JPBX)', 
+	RAILROAD_LIST = ['Amtrak (AMTK)', 'BNSF', 'Caltrain (JPBX)', 
 		'Canadian National (CN)', 'Canadian Pacific (CP)', 'CSX (CSXT)', 'Coaster (SDNX)', 
 		'Conrail Shared Assets (CRCX)', 'Florida East Coast (FEC)', 'Kansas City Southern (KCS)',
 		'Long Island Rail Road (LIRR)', 'MARC', 'MBTA (MBTX)', 'Metra (METX)', 
 		'Metro-North Commuter Railroad (MNCW)', 'Metrolink (SCAX)',
 		'New England Central Railroad (NECR)', 'NJ Transit (NJTR)', 'Norfolk Southern (NS)',
 		'Northstar (MNRX)', 'Pan Am Railways (BM, MEC, ST)', 'Providence & Worcester (PW)', 
-		'SEPTA (SPAX)', 'SunRail', 'Trinity Railway Express (TRE)', 'Tri-Rail (TRCX)',
+		'SEPTA (SPAX)', 'SunRail (CFR)', 'Trinity Railway Express (TRE)', 'Tri-Rail (TRCX)',
 		'Union Pacific (UP)', 'Virginia Railway Express (VREX)', 'Other']
 		
 	DIRECTIONS = ['North', 'South', 'East', 'West']
