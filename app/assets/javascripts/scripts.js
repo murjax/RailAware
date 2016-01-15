@@ -3,6 +3,7 @@ var b = 0;
 var c = 0;
 var d = 0;
 var e = 0;
+var f = 0;
 
 
 	
@@ -203,5 +204,21 @@ function addLoco6(){
 		document.getElementById('loco6railroad').style.display = "none";
 		document.getElementById('loco6direction').style.display = "none";
 		e = 0;
+	}
+}
+
+function displayLocationFields(){
+	if (f == 0){
+		document.getElementById('citybox').style.display = "block";
+		document.getElementById('statebox').style.display = "block";
+		document.getElementById('countrybox').style.display = "block";
+		document.getElementById('locationpicker').style.display = "none";
+		f = 1;
+	}else {
+		document.getElementById('citybox').style.display = "none";
+		document.getElementById('statebox').style.display = "none";
+		document.getElementById('countrybox').style.display = "none";
+		document.getElementById('locationpicker').style.display = "block";
+		f = 0;
 	}
 }

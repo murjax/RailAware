@@ -26,6 +26,8 @@
 		</div>
 	<% end %>
 		<%= stylesheet_link_tag("http://yui.yahooapis.com/pure/0.6.0/pure-min.css") %>
+		<%= javascript_include_tag('//maps.google.com/maps/api/js?v=3.18&sensor=false&client=&key=&libraries=geometry&language=&hl=&region=') %>
+		<%= javascript_include_tag('markerclusterer_packed') %>
 		<%= javascript_include_tag('scripts') %>
 		<%= form_for(:report, :url => {:action => "create_report"}, :html => {:multipart => true}) do |f| %>
 			<div id="report" class='pure-form pure-form-aligned'>
@@ -410,7 +412,55 @@
 						<% end %>
 					</div>
 					
-					<div class="pure-control-group">
+					<div id="manuallocationcheck" class="pure-control-group">
+						<label>
+							<%= check_box_tag "manuallocation", "manuallocation", false, :onclick => 'displayLocationFields()' %>
+							Enter location manually
+						</label>
+					</div>
+					
+					<div id="locationpicker" class="pure-control-group">
+						
+					</div>
+					<script type="text/javascript">
+						handler = Gmaps.build('Google', { markers: { clusterer: null }});
+						handler.buildMap({provider: {}, internal: {id: 'locationpicker'}}, function(){
+						  handler.fitMapToBounds();
+						  handler.getMap().setZoom(3);
+						  var mapcenter = new google.maps.LatLng(39.828215,-98.5817593);
+						  handler.getMap().setCenter(mapcenter);
+						  
+						  var marker;
+						  google.maps.event.addListener(handler.getMap(), 'click', function(event){
+							
+							if(!marker){
+									marker = new google.maps.Marker({
+									position: event.latLng,
+									map: handler.getMap()
+								});
+
+								$('#report_latitude').val(marker.getPosition().lat());
+								$('#report_longitude').val(marker.getPosition().lng());
+							}else{
+								marker.setPosition(event.latLng);
+								$('#report_latitude').val(marker.getPosition().lat());
+								$('#report_longitude').val(marker.getPosition().lng());
+							}
+							
+						  });
+						});
+						
+					</script>
+					
+					<div class="pure-control-group" id="latbox" style="display: none;">
+						<%= f.text_field(:latitude) %>
+					</div>
+					
+					<div class="pure-control-group" id="lonbox" style="display: none;">
+						<%= f.text_field(:longitude) %>
+					</div>
+					
+					<div class="pure-control-group" id="citybox" style="display: none;">
 						<label><%= f.label(:city, "City") %></label>
 						<% if session[:report] %>
 						<%= f.text_field(:city, :value => session[:report][:city]) %>
@@ -420,7 +470,7 @@
 						
 					</div>
 					
-					<div class="pure-control-group">
+					<div class="pure-control-group" id="countrybox" style="display: none;">
 						<label><%= f.label(:country, "Country")%></label>
 						<% if session[:country] %>
 						<%= select_tag :country, options_for_select(["United States", "Canada"], session[:country]) %>
@@ -430,7 +480,7 @@
 						
 					</div>
 					
-					<div class="pure-control-group states">
+					<div class="pure-control-group states" id="statebox" style="display: none;">
 						<label><%= f.label(:state, "State") %></label>
 						<% if session[:state] %>
 						<%= select_tag :state, options_for_select(Report::STATE_LIST, session[:state]) %>

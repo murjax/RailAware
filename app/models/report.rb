@@ -21,7 +21,12 @@ class Report < ActiveRecord::Base
 	DIRECTIONS = ['North', 'South', 'East', 'West']
 	
 	geocoded_by :location
-	after_validation :geocode
+	reverse_geocoded_by :latitude, :longitude do |obj, results|
+		if geo = results.first
+			obj.location = geo.city + ", " + geo.state_code
+		end
+	end
+	after_validation :geocode, :reverse_geocode
 	
 	validates :trainnumber, presence: {in: [true], message: "You must enter a train number."}, length: {maximum: 8, message: "The train number cannot be more than 8 characters."}
 	validates :loconumber, presence: {in: [true], message: "You must enter a locomotive number."}, numericality: {in: [true], message: "The locomotive number field must be a numerical value."}, length: {maximum: 5, message: "The locomotive number cannot be more than 5 digits."}

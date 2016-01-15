@@ -23,6 +23,12 @@
 	#register{
 		padding-left:10px;
 	}
+	
+	#locationpicker{
+		width: 250px;
+		height: 250px;
+		margin-left: 2%;
+	}
 }
 
 @media (min-width: 701px){
@@ -44,6 +50,12 @@
 	
 	#reportformcontainer{
 		overflow: scroll;
+	}
+	
+	#locationpicker{
+		width: 500px;
+		height: 250px;
+		margin-left: 2%;
 	}
 }
 
@@ -225,6 +237,10 @@ footer{
 
 #datecontrol div{
 	padding-bottom: 5px;
+}
+
+#locationpicker{
+	border-radius: 5px;
 }
 
 .logo{

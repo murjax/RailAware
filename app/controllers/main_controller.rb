@@ -330,11 +330,24 @@ class MainController < ApplicationController
 		else
 			@report.additional = " "
 		end
-		if params[:country] == "Canada"
-			@report.location = params[:report][:city] + ", " + params[:province]
+		logger.debug(params[:manuallocation]);
+		if params[:report][:latitude].empty?
+			
+			
 		else
-			@report.location = params[:report][:city] + ", " + params[:state]
+			if params[:manuallocation]
+				if params[:country] == "Canada"
+					@report.location = params[:report][:city] + ", " + params[:province]
+				else
+					@report.location = params[:report][:city] + ", " + params[:state]
+				end
+			else
+				@report.latitude = params[:report][:latitude]
+				@report.longitude = params[:report][:longitude]
+			end
+			
 		end
+		
 		
 		
 		@report.direction = params[:direction]
@@ -432,6 +445,12 @@ class MainController < ApplicationController
 				@report.timezone = "AKT"
 			elsif timezone.zone == "Pacific/Honolulu"
 				@report.timezone = "HT"
+			else
+				flash[:notice] = ["You must fix the following errors to continue."]
+				flash[:notice] << "Location invalid. We only support reporting within the United States and Canada at this time."
+				@report.destroy
+				redirect_to(:action => 'report')
+				return
 			end
 			
 			@report.save
