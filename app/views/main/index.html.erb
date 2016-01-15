@@ -1,5 +1,6 @@
 <div class="wrapper">
 	<div class="header">
+	
 		<div class="top">
 			<nav>
 				<header>
@@ -16,17 +17,27 @@
 						<%= link_to "Login", :login %>
 					<% end %>
 				</ul>
+				
 			</nav>
 		</div>
 	</div>
 	
 	<div class="content">
 		
-		
+		<div id="welcome">
+			<p>Welcome to Railaware. We are currently in testing mode.
+			If you have found your way here, you are welcome to help us test and improve the app.
+			Please be aware though that any reports and accounts you create will likely
+			be deleted in the near future. Please send any questions or comments
+			to railaware@outlook.com. Thank you.</p>
+		</div>
+		<script>
+			$(function(){
+				$('#welcome').dialog();
+			});
+		</script>
 		<div>
-		  <div id="map">
-			
-		  </div>
+		  <div id="map"></div>
 		</div>
 		<script type="text/javascript">
 			handler = Gmaps.build('Google', { markers: { clusterer: null }});
