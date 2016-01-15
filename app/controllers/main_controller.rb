@@ -20,8 +20,8 @@ class MainController < ApplicationController
 			
 			marker.picture({
 				:url => ActionController::Base.helpers.image_path('marker.png', type: :image),
-				:width => 38,
-				:height => 52
+				:width => 15,
+				:height => 20
 			})
 		end
 	end
