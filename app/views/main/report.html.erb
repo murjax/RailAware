@@ -25,10 +25,6 @@
 			<% end %>
 		</div>
 	<% end %>
-		<%= stylesheet_link_tag("http://yui.yahooapis.com/pure/0.6.0/pure-min.css") %>
-		<%= javascript_include_tag('//maps.google.com/maps/api/js?v=3.18&sensor=false&client=&key=&libraries=geometry&language=&hl=&region=') %>
-		<%= javascript_include_tag('markerclusterer_packed') %>
-		<%= javascript_include_tag('scripts') %>
 		<%= form_for(:report, :url => {:action => "create_report"}, :html => {:multipart => true}) do |f| %>
 			<div id="report" class='pure-form pure-form-aligned'>
 				<fieldset>
@@ -425,10 +421,18 @@
 					<script type="text/javascript">
 						handler = Gmaps.build('Google', { markers: { clusterer: null }});
 						handler.buildMap({provider: {}, internal: {id: 'locationpicker'}}, function(){
+						  if(navigator.geolocation){
+							navigator.geolocation.getCurrentPosition( function(position){
+								var mapcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+								handler.getMap().setCenter(mapcenter);
+							});
+						  }else{
+							var mapcenter = new google.maps.LatLng(39.828215,-98.5817593);
+							handler.getMap().setCenter(mapcenter);
+						  }
 						  handler.fitMapToBounds();
-						  handler.getMap().setZoom(3);
-						  var mapcenter = new google.maps.LatLng(39.828215,-98.5817593);
-						  handler.getMap().setCenter(mapcenter);
+						  handler.getMap().setZoom(8);
+						  
 						  
 						  var marker;
 						  google.maps.event.addListener(handler.getMap(), 'click', function(event){
@@ -449,6 +453,10 @@
 							
 						  });
 						});
+						
+						function displayOnMap(position){
+							handler.getMap().setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+						}
 						
 					</script>
 					
