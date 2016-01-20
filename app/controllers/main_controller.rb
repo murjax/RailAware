@@ -330,9 +330,13 @@ class MainController < ApplicationController
 		else
 			@report.additional = " "
 		end
-		logger.debug(params[:manuallocation]);
+		logger.debug(params[:manuallocation])
 		if params[:report][:latitude].empty?
-			
+			if params[:country] == "Canada"
+				@report.location = params[:report][:city] + ", " + params[:province]
+			else
+				@report.location = params[:report][:city] + ", " + params[:state]
+			end
 			
 		else
 			if params[:manuallocation]
