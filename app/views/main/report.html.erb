@@ -28,6 +28,7 @@
 		<%= form_for(:report, :url => {:action => "create_report"}, :html => {:multipart => true}) do |f| %>
 			<div id="report" class='pure-form pure-form-aligned'>
 				<fieldset>
+					<% railroads_array = Railroad.all.map { |rr| [rr.railroad] } %>
 					<div class="pure-control-group">
 						<label><%= f.label(:trainnumber, "Train Symbol/#") %></label>
 						<% if session[:report] %>
@@ -58,20 +59,20 @@
 					<div class="pure-control-group">
 						<label><%= f.label(:railroad, "Locomotive Railroad") %></label>
 						<% if session[:railroad] %>
-							<% if Report::RAILROAD_LIST.include?(session[:railroad]) %>
-							<%= select_tag :railroad, options_for_select(Report::RAILROAD_LIST, session[:railroad]) %>
+							<% if railroads_array.include?([session[:railroad]]) %>
+							<%= select_tag :railroad, options_for_select(railroads_array, session[:railroad]) %>
 							<% else %>
-							<%= select_tag :railroad, options_for_select(Report::RAILROAD_LIST, "Other") %>
+							<%= select_tag :railroad, options_for_select(railroads_array, "Other") %>
 							<% end %>
 						<% else %>
-						<%= select_tag :railroad, options_for_select(Report::RAILROAD_LIST) %>
+						<%= select_tag :railroad, options_for_select(railroads_array) %>
 						<% end %>
 					</div>
 					
 					<div id="loco1otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
 						<label><%= f.label(:railroad, "Please enter a railroad") %></label>
 						<% if session[:railroad] %>
-							<% if Report::RAILROAD_LIST.exclude?(session[:railroad]) %>
+							<% if railroads_array.exclude?([session[:railroad]]) %>
 							<%= f.text_field(:railroad, :value => session[:railroad]) %>
 							<% else %>
 							<%= f.text_field(:railroad) %>
@@ -114,20 +115,20 @@
 					<div id="loco2railroad" class="pure-control-group" style="display:none;">
 						<label><%= f.label(:railroad2, "Locomotive Railroad 2") %></label>
 						<% if session[:railroad2] %>
-							<% if Report::RAILROAD_LIST.include?(session[:railroad2]) %>
-							<%= select_tag :railroad2, options_for_select(Report::RAILROAD_LIST, session[:railroad2]) %>
+							<% if railroads_array.include?([session[:railroad2]]) %>
+							<%= select_tag :railroad2, options_for_select(railroads_array, session[:railroad2]) %>
 							<% else %>
-							<%= select_tag :railroad2, options_for_select(Report::RAILROAD_LIST, "Other") %>
+							<%= select_tag :railroad2, options_for_select(railroads_array, "Other") %>
 							<% end %>
 						<% else %>
-						<%= select_tag :railroad2, options_for_select(Report::RAILROAD_LIST) %>
+						<%= select_tag :railroad2, options_for_select(railroads_array) %>
 						<% end %>
 					</div>
 					
 					<div id="loco2otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
 						<label><%= f.label(:railroad2, "Please enter a railroad") %></label>
 						<% if session[:railroad2] %>
-							<% if Report::RAILROAD_LIST.exclude?(session[:railroad2]) %>
+							<% if railroads_array.exclude?([session[:railroad2]]) %>
 							<%= f.text_field(:railroad2, :value => session[:railroad2]) %>
 							<% else %>
 							<%= f.text_field(:railroad2) %>
@@ -179,20 +180,20 @@
 					<div id="loco3railroad" class="pure-control-group" style="display:none;">
 						<label><%= f.label(:railroad3, "Locomotive Railroad 3") %></label>
 						<% if session[:railroad3] %>
-							<% if Report::RAILROAD_LIST.include?(session[:railroad3]) %>
-							<%= select_tag :railroad3, options_for_select(Report::RAILROAD_LIST, session[:railroad3]) %>
+							<% if railroads_array.include?([session[:railroad3]]) %>
+							<%= select_tag :railroad3, options_for_select(railroads_array, session[:railroad3]) %>
 							<% else %>
-							<%= select_tag :railroad3, options_for_select(Report::RAILROAD_LIST, "Other") %>
+							<%= select_tag :railroad3, options_for_select(railroads_array, "Other") %>
 							<% end %>
 						<% else %>
-						<%= select_tag :railroad3, options_for_select(Report::RAILROAD_LIST) %>
+						<%= select_tag :railroad3, options_for_select(railroads_array) %>
 						<% end %>
 					</div>
 					
 					<div id="loco3otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
 						<label><%= f.label(:railroad3, "Please enter a railroad") %></label>
 						<% if session[:railroad3] %>
-							<% if Report::RAILROAD_LIST.exclude?(session[:railroad3]) %>
+							<% if railroads_array.exclude?([session[:railroad3]]) %>
 							<%= f.text_field(:railroad3, :value => session[:railroad3]) %>
 							<% else %>
 							<%= f.text_field(:railroad3) %>
@@ -244,20 +245,20 @@
 					<div id="loco4railroad" class="pure-control-group" style="display:none;">
 						<label><%= f.label(:railroad4, "Locomotive Railroad 4") %></label>
 						<% if session[:railroad4] %>
-							<% if Report::RAILROAD_LIST.include?(session[:railroad4]) %>
-							<%= select_tag :railroad4, options_for_select(Report::RAILROAD_LIST, session[:railroad4]) %>
+							<% if railroads_array.include?([session[:railroad4]]) %>
+							<%= select_tag :railroad4, options_for_select(railroads_array, session[:railroad4]) %>
 							<% else %>
-							<%= select_tag :railroad4, options_for_select(Report::RAILROAD_LIST, "Other") %>
+							<%= select_tag :railroad4, options_for_select(railroads_array, "Other") %>
 							<% end %>
 						<% else %>
-						<%= select_tag :railroad4, options_for_select(Report::RAILROAD_LIST) %>
+						<%= select_tag :railroad4, options_for_select(railroads_array) %>
 						<% end %>
 					</div>
 					
 					<div id="loco4otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
 						<label><%= f.label(:railroad4, "Please enter a railroad") %></label>
 						<% if session[:railroad4] %>
-							<% if Report::RAILROAD_LIST.exclude?(session[:railroad4]) %>
+							<% if railroads_array.exclude?([session[:railroad4]]) %>
 							<%= f.text_field(:railroad4, :value => session[:railroad4]) %>
 							<% else %>
 							<%= f.text_field(:railroad4) %>
@@ -310,20 +311,20 @@
 					<div id="loco5railroad" class="pure-control-group" style="display:none;">
 						<label><%= f.label(:railroad5, "Locomotive Railroad 5") %></label>
 						<% if session[:railroad5] %>
-							<% if Report::RAILROAD_LIST.include?(session[:railroad5]) %>
-							<%= select_tag :railroad5, options_for_select(Report::RAILROAD_LIST, session[:railroad5]) %>
+							<% if railroads_array.include?([session[:railroad5]]) %>
+							<%= select_tag :railroad5, options_for_select(railroads_array, session[:railroad5]) %>
 							<% else %>
-							<%= select_tag :railroad5, options_for_select(Report::RAILROAD_LIST, "Other") %>
+							<%= select_tag :railroad5, options_for_select(railroads_array, "Other") %>
 							<% end %>
 						<% else %>
-						<%= select_tag :railroad5, options_for_select(Report::RAILROAD_LIST) %>
+						<%= select_tag :railroad5, options_for_select(railroads_array) %>
 						<% end %>
 					</div>
 					
 					<div id="loco5otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
 						<label><%= f.label(:railroad5, "Please enter a railroad") %></label>
 						<% if session[:railroad5] %>
-							<% if Report::RAILROAD_LIST.exclude?(session[:railroad5]) %>
+							<% if railroads_array.exclude?([session[:railroad5]]) %>
 							<%= f.text_field(:railroad5, :value => session[:railroad5]) %>
 							<% else %>
 							<%= f.text_field(:railroad5) %>
@@ -375,20 +376,20 @@
 					<div id="loco6railroad" class="pure-control-group" style="display:none;">
 						<label><%= f.label(:railroad6, "Locomotive Railroad 6") %></label>
 						<% if session[:railroad6] %>
-							<% if Report::RAILROAD_LIST.include?(session[:railroad6]) %>
-							<%= select_tag :railroad6, options_for_select(Report::RAILROAD_LIST, session[:railroad6]) %>
+							<% if railroads_array.include?([session[:railroad6]]) %>
+							<%= select_tag :railroad6, options_for_select(railroads_array, session[:railroad6]) %>
 							<% else %>
-							<%= select_tag :railroad6, options_for_select(Report::RAILROAD_LIST, "Other") %>
+							<%= select_tag :railroad6, options_for_select(railroads_array, "Other") %>
 							<% end %>
 						<% else %>
-						<%= select_tag :railroad6, options_for_select(Report::RAILROAD_LIST) %>
+						<%= select_tag :railroad6, options_for_select(railroads_array) %>
 						<% end %>
 					</div>
 					
 					<div id="loco6otherrailroad" class="pure-control-group otherrailroad" style="display:none;">
 						<label><%= f.label(:railroad6, "Please enter a railroad") %></label>
 						<% if session[:railroad6] %>
-							<% if Report::RAILROAD_LIST.exclude?(session[:railroad6]) %>
+							<% if railroads_array.exclude?([session[:railroad6]]) %>
 							<%= f.text_field(:railroad6, :value => session[:railroad6]) %>
 							<% else %>
 							<%= f.text_field(:railroad6) %>
