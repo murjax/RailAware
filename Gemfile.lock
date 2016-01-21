@@ -39,6 +39,9 @@ GEM
     arel (6.0.3)
     bcrypt (3.1.10-x64-mingw32)
     bcrypt (3.1.10-x86-mingw32)
+    browser-timezone-rails (0.0.8)
+      jquery-rails
+      rails (>= 3.1)
     builder (3.2.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -151,6 +154,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  browser-timezone-rails
   coffee-rails (= 4.0.1)
   coffee-script-source (= 1.8.0)
   execjs

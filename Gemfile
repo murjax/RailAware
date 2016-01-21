@@ -70,3 +70,6 @@ gem 'rails-html-sanitizer'
 
 #Timezone
 gem 'timezone'
+
+#Browser Timezone
+gem 'browser-timezone-rails'

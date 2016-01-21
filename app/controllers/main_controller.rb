@@ -356,7 +356,7 @@ class MainController < ApplicationController
 		
 		@report.direction = params[:direction]
 		@report.info = params[:report][:info]
-		@report.time = DateTime.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i,0)
+		@report.time = Time.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i,0)
 		@report.user_id = current_user.id
 		@report.rating = "0"
 		
@@ -457,6 +457,21 @@ class MainController < ApplicationController
 				return
 			end
 			
+			@absoluteoffset = timezone.utc_offset.to_i.abs
+			@offset = Time.at(@absoluteoffset).utc.strftime("-%H:%M")
+			@offset = @offset.to_s
+			@checktime = Time.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i, 0, @offset)
+			
+			logger.debug(@checktime)
+			logger.debug(Time.now.in_time_zone(timezone.active_support_time_zone))
+			
+			if @checktime > Time.now.in_time_zone(timezone.active_support_time_zone)
+				flash[:notice] = ["You must fix the following errors to continue."]
+				flash[:notice] << "Invalid time. Time cannot be in the future."
+				@report.destroy
+				redirect_to(:action => 'report')
+				return
+			end
 			@report.save
 			logger.debug(timezone.zone)
 			redirect_to(:action => 'index')
