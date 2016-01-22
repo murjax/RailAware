@@ -143,7 +143,7 @@ $(document).ready( function () {
 		var additional = tr.find('#additional').html();
 		var direction = tr.find('#direction').html();
 		var time = tr.find('#time').html();
-		var info = tr.find('#info').html();
+		var info = tr.find('#info').text()
 		if (row.child.isShown()){
 			row.child.hide();
 			tr.removeClass('shown');
