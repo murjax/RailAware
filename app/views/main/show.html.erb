@@ -45,22 +45,29 @@
 			<table id="table_id" class="display">
 				<thead>
 					<tr>
+						<th></th>
 						<th>Posted By</th>
 						<th>Train Number</th>
-						<th>Locomotive Number</th>
-						<th>Locomotive Type</th>
-						<th>Locomotive Railroad</th>
-						<th>Additional*</th>
 						<th>Location</th>
-						<th>Direction</th>
-						<th>Date/Time</th>
-						<th>Other Info</th>
+						<th class="mobilehide">Direction</th>
+						<th class="mobilehide">Date/Time</th>
 					</tr>
 				</thead>
 				<tbody>
 					<% @reports.each do |report| %>
 					<tr>
+						
+						<td class="details-control"></td>
 						<td class="reportlistusercolumn">
+							<div id="expandableresults">
+								<p class="hidden" id="loconumber"><%= report.loconumber %> </p>
+								<p class="hidden" id="locotype"><%= report.locotype %> </p>
+								<p class="hidden" id="railroad"><%= report.railroad %> </p>
+								<p class="hidden" id="additional"><%= report.additional %> </p>
+								<p class="hidden" id="info"><%= simple_format(report.info) %> </p>
+								<p class="hidden" id="direction"><%= report.direction %></p>
+								<p class="hidden" id="time"><%= report.time.strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %></p>
+							</div>
 							<div class="hidden"><%= report.id %></div>
 							<% @u = User.find_by_username(report.username) %>
 							<% if @u.rating.to_i < 50 %>
@@ -82,15 +89,10 @@
 							
 							<% end %>
 						</td>
-						<td><%= report.trainnumber %> </td>
-						<td><%= report.loconumber %> </td>
-						<td><%= report.locotype %> </td>
-						<td><%= report.railroad %> </td>
-						<td><%= report.additional %> </td>
-						<td><%= report.location %> </td>
-						<td><%= report.direction %> </td>
-						<td><%= report.time.strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %> </td>
-						<td><%= simple_format(report.info) %> </td>
+						<td class="tablecenter"><%= report.trainnumber %> </td>
+						<td class="tablecenter"><%= report.location %> </td>
+						<td class="mobilehide tablecenter"><%= report.direction %> </td>
+						<td class="mobilehide tablecenter"><%= report.time.strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %> </td>
 					</tr>
 					
 					<% end %>

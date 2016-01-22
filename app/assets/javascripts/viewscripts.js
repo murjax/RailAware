@@ -3,7 +3,7 @@ $.fn.dataTableExt.afnFiltering.push(
 		
 		var dateStart = parseDateValue($("#beginDate").val());
 		var dateEnd = parseDateValue($("#endDate").val());
-		var evalDate = parseDateValue(cutTimeFromDate(aData[8]));
+		var evalDate = parseDateValue(cutTimeFromDate(aData[5]));
 		
 		if (evalDate >= dateStart && evalDate <= dateEnd){
 			return true;
@@ -25,7 +25,86 @@ function parseDateValue(rawDate){
 	return parsedDate;
 }
 
+function format(l, t, r, a, i){
+	/*return '<div>Locomotive Number: ' + l + '</div>' + 
+		'<div>Locomotive Type: ' + t + '</div>' + 
+		'<div>Locomotive Railroad: ' + r + '</div>' + 
+		'<div>Additional: ' + a + '</div>' + 
+		'<div>Extra Info: ' + i + '</div>';*/
+		
+	return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Number:</td>' +
+			'<td>' + l + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Type:</td>' +
+			'<td>' + t + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Railroad:</td>' +
+			'<td>' + r + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Additional:</td>' +
+			'<td>' + a + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Extra Info:</td>' +
+			'<td>' + i + '</td>' +
+		'</tr>' +
+		'</table>';
+}
+
+function mobileFormat(l, t, r, d, dt, a, i){
+	return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Number:</td>' +
+			'<td>' + l + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Type:</td>' +
+			'<td>' + t + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Railroad:</td>' +
+			'<td>' + r + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Direction:</td>' +
+			'<td>' + d + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Date/Time:</td>' +
+			'<td>' + dt + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Additional:</td>' +
+			'<td>' + a + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Extra Info:</td>' +
+			'<td>' + i + '</td>' +
+		'</tr>' +
+		'</table>';
+}
+
 $(document).ready( function () {
+	var mobile = false;
+	if($(document).width() <  700){
+		$('.mobilehide').hide();
+		var mobile = true;
+	}
 	$(document).on('click', '.vbutton', function(evt){
 		var vote;
 		if($(evt.target).parent().is('div#up')){
@@ -51,7 +130,32 @@ $(document).ready( function () {
 	$('.datepicker').datepicker();
 	$('#endDate').datepicker('setDate', new Date());
 	var $table = $('#table_id').DataTable({
-		responsive: true
+		//responsive: true
+	});
+	
+	$('#table_id').on('click', 'td.details-control', function(){
+		
+		var tr = $(this).closest('tr');
+		var row = $table.row(tr);
+		var loconumber = tr.find('#loconumber').html();
+		var locotype = tr.find('#locotype').html();
+		var railroad = tr.find('#railroad').html();
+		var additional = tr.find('#additional').html();
+		var direction = tr.find('#direction').html();
+		var time = tr.find('#time').html();
+		var info = tr.find('#info').html();
+		if (row.child.isShown()){
+			row.child.hide();
+			tr.removeClass('shown');
+		}else{
+			if (mobile){
+				row.child(mobileFormat(loconumber, locotype, railroad, direction, time, additional, info)).show();
+			}else{
+				row.child(format(loconumber, locotype, railroad, additional, info)).show();
+			}
+			
+			tr.addClass('shown');
+		}
 	});
 	
 	$('#beginDate').keyup( function() {$table.draw();} );
