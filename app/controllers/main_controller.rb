@@ -482,7 +482,7 @@ class MainController < ApplicationController
 	
 	def show
 		@overflow = true
-		@reports = Report.all
+		@reports = Report.order('time DESC').all
 		@vote = Vote.all
 	end
 	
