@@ -493,6 +493,26 @@ class MainController < ApplicationController
 				redirect_to(:action => 'report')
 				return
 			end
+			
+			@duplicatetimecheck = Report.where(created_at: 1.hours.ago..Time.now)
+			if @duplicatetimecheck.length > 1
+				@duplicatelocationcheck = @duplicatetimecheck.where(location: @report.location)
+				if @duplicatelocationcheck.length > 1
+					@duplicatetraincheck = @duplicatelocationcheck.where(trainnumber: @report.trainnumber)
+					if @duplicatetraincheck.length > 1
+						flash[:notice] = ["You must fix the following errors to continue."]
+						flash[:notice] << "This train has already been reported by a user."
+						@report.destroy
+						redirect_to(:action => 'report')
+						return
+					end
+				end
+			end
+			if (Time.now-1.hours..Time.now).cover? @checktime
+				if Report.find_by_location(@report.location)
+					
+				end
+			end
 			@report.save
 			logger.debug(timezone.zone)
 			redirect_to(:action => 'index')
