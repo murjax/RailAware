@@ -8,7 +8,7 @@ class MainController < ApplicationController
 		  marker.lat report.latitude
 		  marker.lng report.longitude
 		  marker.infowindow "Username: " + report.username +
-			"<br>" + "Train Number: " + report.trainnumber +
+			"<br>" + "Train ID: " + report.trainnumber +
 			"<br>" + "Locomotive Number: " + report.loconumber +
 			"<br>" + "Locomotive Type: " + report.locotype +
 			"<br>" + "Locomotive Railroad: " + report.railroad + 
@@ -62,7 +62,17 @@ class MainController < ApplicationController
 		full_sanitizer = Rails::Html::FullSanitizer.new
 		@report = Report.new()
 		@report.username = current_user.username
-		@report.trainnumber = params[:report][:trainnumber]
+		
+		if params[:trainrailroad] == "Other"
+			params[:trainrailroad] = params[:report][:trainrailroad]	
+			@report.trainnumber = params[:trainrailroad] + ' ' + full_sanitizer.sanitize(params[:report][:trainnumber])
+		else
+			@rentry = Railroad.find_by_railroad(params[:trainrailroad])
+			params[:trainrailroad] = @rentry.marks
+			@report.trainnumber = params[:trainrailroad] + ' ' + full_sanitizer.sanitize(params[:report][:trainnumber])
+		end
+		
+		
 		@report.loconumber = params[:report][:loconumber]
 		@report.locotype = params[:report][:locotype]
 		
@@ -381,7 +391,6 @@ class MainController < ApplicationController
 		@report.user_id = current_user.id
 		@report.rating = "0"
 		
-		@report.trainnumber = full_sanitizer.sanitize(@report.trainnumber)
 		@report.loconumber = full_sanitizer.sanitize(@report.loconumber)
 		@report.locotype = full_sanitizer.sanitize(@report.locotype)
 		@report.railroad = full_sanitizer.sanitize(@report.railroad)
@@ -405,6 +414,11 @@ class MainController < ApplicationController
 			session[:direction6] = params[:direction6]
 			session[:state] = params[:state]
 			session[:province] = params[:province]
+			if params[:trainrailroad] == "Other"
+				session[:trainrailroad] = params[:report][:trainrailroad]
+			else
+				session[:trainrailroad] = params[:trainrailroad]
+			end
 			if params[:railroad] == "Other"
 				session[:railroad] = params[:report][:railroad]
 			else

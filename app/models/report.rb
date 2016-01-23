@@ -28,7 +28,7 @@ class Report < ActiveRecord::Base
 	end
 	after_validation :geocode, :reverse_geocode
 	
-	validates :trainnumber, presence: {in: [true], message: "You must enter a train number."}, length: {maximum: 8, message: "The train number cannot be more than 8 characters."}
+	validates :trainnumber, presence: {in: [true], message: "You must enter a train number."}
 	validates :loconumber, presence: {in: [true], message: "You must enter a locomotive number."}, numericality: {in: [true], message: "The locomotive number field must be a numerical value."}, length: {maximum: 5, message: "The locomotive number cannot be more than 5 digits."}
 	validates :locotype, presence: {in: [true], message: "You must enter a locomotive type"}
 	validates :info, length: {maximum: 200, message: "Text must be within 200 characters."}

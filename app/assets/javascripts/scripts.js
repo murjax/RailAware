@@ -21,6 +21,18 @@ $(document).ready( function () {
 		}
 		
 	});
+	
+	if($('#trainrailroad').val() == "Other"){
+		$('#trainotherrailroad').show();
+	}
+	$('#trainrailroad').change(function(){
+		if(this.options[this.selectedIndex].value == "Other"){
+			$('#trainotherrailroad').show();
+		}
+		else{
+			$('#trainotherrailroad').hide();
+		}
+	});
 	if($('#railroad').val() == "Other"){
 		$('#loco1otherrailroad').show();
 	}

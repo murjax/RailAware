@@ -29,6 +29,33 @@
 			<div id="report" class='pure-form pure-form-aligned'>
 				<fieldset>
 					<% railroads_array = Railroad.all.map { |rr| [rr.railroad] } %>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:trainrailroad, "Railroad") %></label>
+						<% if session[:trainrailroad] %>
+							<% if railroads_array.include?([session[:trainrailroad]]) %>
+							<%= select_tag :trainrailroad, options_for_select(railroads_array, session[:trainrailroad]) %>
+							<% else %>
+							<%= select_tag :trainrailroad, options_for_select(railroads_array, "Other") %>
+							<% end %>
+						<% else %>
+						<%= select_tag :trainrailroad, options_for_select(railroads_array) %>
+						<% end %>
+					</div>
+					
+					<div id="trainotherrailroad" class="pure-control-group otherrailroad" style="display:none;">
+						<label><%= f.label(:trainrailroad, "Please enter a railroad") %></label>
+						<% if session[:trainrailroad] %>
+							<% if railroads_array.exclude?([session[:trainrailroad]]) %>
+							<%= f.text_field(:trainrailroad, :value => session[:trainrailroad]) %>
+							<% else %>
+							<%= f.text_field(:trainrailroad) %>
+							<% end %>
+						<% else %>
+						<%= f.text_field(:trainrailroad) %>
+						<label><%= check_box_tag "railroadsuggestion", "railroadsuggestion", false %>Suggest this railroad</label>
+						<% end %>
+					</div>
 					<div class="pure-control-group">
 						<label><%= f.label(:trainnumber, "Train Symbol/#") %></label>
 						<% if session[:report] %>

@@ -11,17 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121213307) do
+ActiveRecord::Schema.define(version: 20160123040824) do
 
   create_table "railroads", force: :cascade do |t|
     t.string   "railroad",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "marks",      limit: 255
   end
 
   create_table "reports", force: :cascade do |t|
     t.string   "username",    limit: 50
-    t.string   "trainnumber", limit: 10
+    t.string   "trainnumber", limit: 255
     t.string   "loconumber",  limit: 10
     t.string   "locotype",    limit: 20
     t.string   "railroad",    limit: 50
