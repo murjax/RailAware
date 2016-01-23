@@ -1,0 +1,162 @@
+<div class="wrapper">
+	<div class="header">
+		<div class="top">
+			<nav>
+				<header>
+					<%= link_to("Railaware", {:action => 'index'}, :class => 'logo') %>
+				</header>
+				<ul>
+					<%= link_to("Home", {:action => 'index'}) %>
+					<%= link_to("View Reports", {:action => 'show'}) %>	
+					<%= link_to("Report A Train", {:action => 'report'}) %>
+					<%= link_to "Logout", :logout, method: :post %>					
+				</ul>
+			</nav>
+		</div>
+	</div>
+	
+	<div class="content" id="reportformcontainer">
+	<% if !flash[:notice].blank? %>
+		<div class="notice">
+			<% flash[:notice].each_with_index do |message, index| %>
+				<% if index != 0 %>
+				<p><%= message %></p>
+				<% end %>
+			<% end %>
+		</div>
+	<% end %>
+		<%= form_for(:report, :url => {:action => "update_report"}, :html => {:multipart => true}) do |f| %>
+			<div id="report" class='pure-form pure-form-aligned'>
+				<fieldset>
+					<% railroads_array = Railroad.all.map { |rr| [rr.railroad] } %>
+					<div class="pure-control-group" style="display:none;">
+						<label><%=f.label(:id, "Report ID") %></label>
+						<%= f.text_field(:id, :value => @oldreport.id) %>
+					</div>
+					<div class="pure-control-group">
+						<label><%= f.label(:trainnumber, "Train Symbol/#") %></label>
+						<%= f.text_field(:trainnumber, :value => @oldreport.trainnumber, :disabled => true) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:loconumber, "Locomotive #") %></label>
+						<%= f.text_field(:loconumber, :value => @oldreport.loconumber, :disabled => true) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:locotype, "Locomotive Type") %></label>
+						<%= f.text_field(:locotype, :value => @oldreport.locotype, :disabled => true) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:railroad, "Locomotive Railroad") %></label>
+						<%= f.text_field(:railroad, :value => @oldreport.railroad, :disabled => true) %>
+					</div>
+					
+					<div id="manuallocationcheck" class="pure-control-group">
+						<label>
+							<%= check_box_tag "manuallocation", "manuallocation", false, :onclick => 'displayLocationFields()' %>
+							Enter location manually
+						</label>
+					</div>
+					
+					<div id="locationpicker" class="pure-control-group">
+						
+					</div>
+					<script type="text/javascript">
+						handler = Gmaps.build('Google', { markers: { clusterer: null }});
+						handler.buildMap({provider: {}, internal: {id: 'locationpicker'}}, function(){
+						  if(navigator.geolocation){
+							navigator.geolocation.getCurrentPosition( function(position){
+								var mapcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+								handler.getMap().setCenter(mapcenter);
+							});
+						  }else{
+							var mapcenter = new google.maps.LatLng(39.828215,-98.5817593);
+							handler.getMap().setCenter(mapcenter);
+						  }
+						  handler.fitMapToBounds();
+						  handler.getMap().setZoom(8);
+						  
+						  
+						  var marker;
+						  google.maps.event.addListener(handler.getMap(), 'click', function(event){
+							
+							if(!marker){
+									marker = new google.maps.Marker({
+									position: event.latLng,
+									map: handler.getMap()
+								});
+
+								$('#report_latitude').val(marker.getPosition().lat());
+								$('#report_longitude').val(marker.getPosition().lng());
+							}else{
+								marker.setPosition(event.latLng);
+								$('#report_latitude').val(marker.getPosition().lat());
+								$('#report_longitude').val(marker.getPosition().lng());
+							}
+							
+						  });
+						});
+						
+						function displayOnMap(position){
+							handler.getMap().setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+						}
+						
+					</script>
+					
+					<div class="pure-control-group" id="latbox" style="display: none;">
+						<%= f.text_field(:latitude) %>
+					</div>
+					
+					<div class="pure-control-group" id="lonbox" style="display: none;">
+						<%= f.text_field(:longitude) %>
+					</div>
+					
+					<div class="pure-control-group" id="citybox" style="display: none;">
+						<label><%= f.label(:city, "City") %></label>
+						<%= f.text_field(:city) %>
+						
+					</div>
+					
+					<div class="pure-control-group" id="countrybox" style="display: none;">
+						<label><%= f.label(:country, "Country")%></label>
+						<%= select_tag :country, options_for_select(["United States", "Canada"]) %>
+						
+					</div>
+					
+					<div class="pure-control-group states" id="statebox" style="display: none;">
+						<label><%= f.label(:state, "State") %></label>
+						<%= select_tag :state, options_for_select(Report::STATE_LIST) %>
+					</div>
+					
+					<div class="pure-control-group provinces" style="display: none;">
+						<label><%= f.label(:province, "Province") %></label>
+						<%= select_tag :province, options_for_select(Report::PROVINCE_LIST) %>
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:direction, "Direction") %></label>
+						<%= select_tag :direction, options_for_select(Report::DIRECTIONS, @oldreport.direction) %>
+						
+					</div>
+					
+					<div class="pure-control-group">
+						<label><%= f.label(:time, "Time Seen") %></label>
+						<%= f.datetime_select(:time, :order => [:month, :day, :year]) %>						
+					</div>
+					
+					<div class="pure-controls">
+						<%= submit_tag("Submit", :class => "pure-button pure-button-primary") %>
+					</div>
+				</fieldset>
+			</div>
+		<% end %>
+	</div>
+
+	<div class="footer">
+		<footer>
+			<p>&copy; RailAware 2016</p>
+		</footer>
+	</div>
+</div>

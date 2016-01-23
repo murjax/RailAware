@@ -37,6 +37,27 @@ class MainController < ApplicationController
 		end
 	end
 	
+	def edit
+		@oldreport = Report.find(params[:id])
+		@overflow = true
+		
+		if !session[:report]
+			
+		end
+		
+		if !current_user
+			redirect_to(:login)
+		end
+		
+		if @oldreport.username != current_user.username
+			redirect_to(:viewreports)
+		end
+		
+		if !(DateTime.now.beginning_of_day..DateTime.now.end_of_day).cover? @oldreport.time
+			redirect_to(:viewreports)
+		end
+	end
+	
 	def create_report
 		full_sanitizer = Rails::Html::FullSanitizer.new
 		@report = Report.new()
@@ -473,6 +494,93 @@ class MainController < ApplicationController
 				return
 			end
 			@report.save
+			logger.debug(timezone.zone)
+			redirect_to(:action => 'index')
+		else
+			render :action => 'report'
+		end
+	end
+	
+	def update_report
+		@report = Report.find(params[:report][:id])
+		@newreport = Report.new()
+		
+		@newreport.username = @report.username
+		@newreport.trainnumber = @report.trainnumber
+		@newreport.loconumber = @report.loconumber
+		@newreport.locotype = @report.locotype
+		@newreport.railroad = @report.railroad
+		@newreport.direction = params[:direction]
+		@newreport.additional = @report.additional
+		@newreport.info = @report.info
+		@newreport.time = Time.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i,0)
+		@newreport.user_id = current_user.id
+		@report.rating = @report.rating
+		
+		if params[:report][:latitude].empty?
+			if params[:country] == "Canada"
+				@newreport.location = params[:report][:city] + ", " + params[:province]
+			else
+				@newreport.location = params[:report][:city] + ", " + params[:state]
+			end
+			
+		else
+			if params[:manuallocation]
+				if params[:country] == "Canada"
+					@newreport.location = params[:report][:city] + ", " + params[:province]
+				else
+					@newreport.location = params[:report][:city] + ", " + params[:state]
+				end
+			else
+				@newreport.latitude = params[:report][:latitude]
+				@newreport.longitude = params[:report][:longitude]
+			end
+			
+		end
+		
+		if @newreport.save
+			@report.destroy
+			timezone = Timezone::Zone.new :latlon => [@newreport.latitude.to_s, @newreport.longitude.to_s]
+			if timezone.zone == "America/St_Johns"
+				@newreport.timezone = "NT"
+			elsif timezone.zone == "America/Moncton" || timezone.zone == "America/Blanc-Sablon" || timezone.zone == "America/Glace_Bay"
+				@newreport.timezone = "AT"
+			elsif timezone.zone == "America/New_York" || timezone.zone == "America/Toronto" || timezone.zone == "America/Detroit" || timezone.zone == "America/Fort_Wayne" || timezone.zone == "America/Indiana/Indianapolis" || timezone.zone == "America/Indiana/Marengo" || timezone.zone == "America/Indiana/Petersburg" || timezone.zone == "America/Indiana/Vevay" || timezone.zone == "America/Indiana/Winamac" || timezone.zone == "America/Indianapolis" || timezone.zone == "America/Kentucky/Louisville" || timezone.zone == "America/Kentucky/Monticello" || timezone.zone == "America/Louisville" || timezone.zone == "America/Atikokan" || timezone.zone == "America/Iqaluit" || timezone.zone == "America/Nipigon" || timezone.zone == "America/Thunder_Bay"
+				@newreport.timezone = "ET"
+			elsif timezone.zone == "America/Chicago" || timezone.zone == "America/Winnipeg" || timezone.zone == "America/Regina" || timezone.zone == "America/Indiana/Knox" || timezone.zone == "America/Indiana/Tell_City" || timezone.zone == "America/Indiana/Vincennes" || timezone.zone == "America/Knox_IN" || timezone.zone == "America/North_Dakota/Beulah" || timezone.zone == "America/North_Dakota/New_Salem" || timezone.zone == "America/North_Dakota/Center" || timezone.zone == "America/Inuvik" || timezone.zone == "America/Rainy_River" || timezone.zone == "America/Rankin_Inlet" || timezone.zone == "America/Resolute" || timezone.zone == "America/Swift_Current"
+				@newreport.timezone = "CT"
+			elsif timezone.zone == "America/Denver" || timezone.zone == "America/Phoenix" || timezone.zone == "America/Edmonton" || timezone.zone == "America/Shiprock" || timezone.zone == "America/Boise"
+				@newreport.timezone = "MT"
+			elsif timezone.zone == "America/Los_Angeles" || timezone.zone == "America/Vancouver" || timezone.zone == "America/Creston" || timezone.zone == "America/Dawson" || timezone.zone == "America/Dawson_Creek" || timezone.zone == "America/Fort_Nelson" || timezone.zone == "America/Cambridge_Bay" || timezone.zone == "America/Whitehorse"
+				@newreport.timezone = "PT"
+			elsif timezone.zone == "America/Anchorage" || timezone.zone == "America/Juneau" || timezone.zone == "America/Nome" || timezone.zone == "America/Adak" || timezone.zone == "America/Atka" || timezone.zone == "America/Sitka"
+				@newreport.timezone = "AKT"
+			elsif timezone.zone == "Pacific/Honolulu"
+				@newreport.timezone = "HT"
+			else
+				flash[:notice] = ["You must fix the following errors to continue."]
+				flash[:notice] << "Location invalid. We only support reporting within the United States and Canada at this time. Please recreate your report."
+				@newreport.destroy
+				redirect_to(:action => 'report')
+				return
+			end
+			
+			@absoluteoffset = timezone.utc_offset.to_i.abs
+			@offset = Time.at(@absoluteoffset).utc.strftime("-%H:%M")
+			@offset = @offset.to_s
+			@checktime = Time.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i, 0, @offset)
+			
+			logger.debug(@checktime)
+			logger.debug(Time.now.in_time_zone(timezone.active_support_time_zone))
+			
+			if @checktime > Time.now.in_time_zone(timezone.active_support_time_zone)
+				flash[:notice] = ["You must fix the following errors to continue."]
+				flash[:notice] << "Invalid time. Time cannot be in the future. Please recreate your report."
+				@newreport.destroy
+				redirect_to(:action => 'report')
+				return
+			end
+			@newreport.save
 			logger.debug(timezone.zone)
 			redirect_to(:action => 'index')
 		else

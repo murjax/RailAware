@@ -60,6 +60,16 @@
 						<td class="details-control"></td>
 						<td class="reportlistusercolumn">
 							<div id="expandableresults">
+								<% if current_user %>
+									<% if current_user.username == report.username %>
+										<% if (DateTime.now.beginning_of_day..DateTime.now.end_of_day).cover? report.time %>
+											<% logger.debug("true") %>
+											<% logger.debug(report.time) %>
+											<p class="hidden" id="sameuser"></p>
+										<% end %>
+									<% end %>
+								<% end %>
+								<p class="hidden" id="reportid"><%= report.id %></p>
 								<p class="hidden" id="loconumber"><%= report.loconumber %> </p>
 								<p class="hidden" id="locotype"><%= report.locotype %> </p>
 								<p class="hidden" id="railroad"><%= report.railroad %> </p>

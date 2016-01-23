@@ -12,9 +12,10 @@ RailAware::Application.routes.draw do
   
   match ':controller(/:action(/:id))', :via => [:get, :post]
   get 'login' => 'user_sessions#new', :as => :login
-  post 'logout' => 'user_sessions#destroy', :as => :logout
+  get 'logout' => 'user_sessions#destroy', :as => :logout
   get 'register' => 'main#register', :as => :register
   get 'report' => 'main#report', :as => :report
+  get 'editreport' => 'main#edit', :as => :editreport
   get 'viewreports' => 'main#show', :as => :viewreports
   get 'passwordreset' => 'password_resets#new', :as => :passwordreset
   post 'main/vote/:data' => 'main#vote'

@@ -25,14 +25,45 @@ function parseDateValue(rawDate){
 	return parsedDate;
 }
 
-function format(l, t, r, a, i){
+function format(id, l, t, r, a, i, u){
 	/*return '<div>Locomotive Number: ' + l + '</div>' + 
 		'<div>Locomotive Type: ' + t + '</div>' + 
 		'<div>Locomotive Railroad: ' + r + '</div>' + 
 		'<div>Additional: ' + a + '</div>' + 
 		'<div>Extra Info: ' + i + '</div>';*/
+	if(u){
+		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Number:</td>' +
+			'<td>' + l + '</td>' +
+		'</tr>' +
 		
-	return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Type:</td>' +
+			'<td>' + t + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Railroad:</td>' +
+			'<td>' + r + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Additional:</td>' +
+			'<td>' + a + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Extra Info:</td>' +
+			'<td>' + i + '</td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td class="lightweighttext">Update Location</td>' +
+			'<td><a class="updateicon" href="http://www.railaware.com/editreport?id=' + id + '"></a></td>' +
+		'</tr>' +
+		'</table>';
+	}else{
+		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
 		'<tr>' +
 			'<td class="lightweighttext">Locomotive Number:</td>' +
 			'<td>' + l + '</td>' +
@@ -58,10 +89,55 @@ function format(l, t, r, a, i){
 			'<td>' + i + '</td>' +
 		'</tr>' +
 		'</table>';
+	}
+	
 }
 
-function mobileFormat(l, t, r, d, dt, a, i){
-	return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+function mobileFormat(id, l, t, r, d, dt, a, i, u){
+	
+	if(u){
+		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Number:</td>' +
+			'<td>' + l + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Type:</td>' +
+			'<td>' + t + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Locomotive Railroad:</td>' +
+			'<td>' + r + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Direction:</td>' +
+			'<td>' + d + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Date/Time:</td>' +
+			'<td>' + dt + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Additional:</td>' +
+			'<td>' + a + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Extra Info:</td>' +
+			'<td>' + i + '</td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td class="lightweighttext">Update Location</td>' +
+			'<td><a class="updateicon" href="http://www.railaware.com/editreport?id=' + id + '"></a></td>' +
+		'</tr>' +
+		'</table>';
+	}else{
+		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
 		'<tr>' +
 			'<td class="lightweighttext">Locomotive Number:</td>' +
 			'<td>' + l + '</td>' +
@@ -97,6 +173,8 @@ function mobileFormat(l, t, r, d, dt, a, i){
 			'<td>' + i + '</td>' +
 		'</tr>' +
 		'</table>';
+	}
+	
 }
 
 $(document).ready( function () {
@@ -137,6 +215,7 @@ $(document).ready( function () {
 		
 		var tr = $(this).closest('tr');
 		var row = $table.row(tr);
+		var id = tr.find("#reportid").html();
 		var loconumber = tr.find('#loconumber').html();
 		var locotype = tr.find('#locotype').html();
 		var railroad = tr.find('#railroad').html();
@@ -148,12 +227,21 @@ $(document).ready( function () {
 			row.child.hide();
 			tr.removeClass('shown');
 		}else{
-			if (mobile){
-				row.child(mobileFormat(loconumber, locotype, railroad, direction, time, additional, info)).show();
+			var reportOfLoggedInUser;
+			if(tr.find('#sameuser').length > 0){
+				reportOfLoggedInUser = true;
 			}else{
-				row.child(format(loconumber, locotype, railroad, additional, info)).show();
+				reportOfLoggedInUser = false;
+			}
+			if (mobile){
+				row.child(mobileFormat(id, loconumber, locotype, railroad, direction, time, additional, info, reportOfLoggedInUser)).show();
+			}else{
+				row.child(format(id, loconumber, locotype, railroad, additional, info, reportOfLoggedInUser)).show();
 			}
 			
+			tr.find('.updateicon').on('click', tr.find('.updateicon'), function(evt){
+				console.log("link clicked");
+			});
 			tr.addClass('shown');
 		}
 	});

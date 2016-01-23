@@ -251,6 +251,14 @@ footer{
 	border-radius: 5px;
 }
 
+.updateicon{
+	background: url('http://i65.tinypic.com/nwc5eu.png') no-repeat center center;
+	width: 15px;
+	height: 19px;
+	display: block;
+	cursor: pointer;
+}
+
 .logo{
 	font-size: 200%;
 	font-weight: bold;
