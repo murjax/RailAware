@@ -10,6 +10,32 @@ var f = 0;
 
 $(document).ready( function () {
 	
+	// Set default report time to the user's current time.
+	var currenttime = new Date();
+	var monthList = new Array();
+	monthList[0] = "January";
+	monthList[1] = "February";
+	monthList[2] = "March";
+	monthList[3] = "April";
+	monthList[4] = "May";
+	monthList[5] = "June";
+	monthList[6] = "July";
+	monthList[7] = "August";
+	monthList[8] = "September";
+	monthList[9] = "October";
+	monthList[10] = "November";
+	monthList[11] = "December";
+	var month = currenttime.getMonth();
+	var date = currenttime.getDate();
+	var year = currenttime.getFullYear();
+	var hour = currenttime.getHours();
+	var minute = currenttime.getMinutes();
+	$('#report_time_2i').val(month + 1);
+	$('#report_time_3i').val(date);
+	$('#report_time_1i').val(year);
+	$('#report_time_4i').val(hour);
+	$('#report_time_5i').val(minute);
+	
 	$('#country').change(function(){
 		
 		if(this.options[this.selectedIndex].value == "Canada"){
