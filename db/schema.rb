@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160123040824) do
+ActiveRecord::Schema.define(version: 20160124013500) do
 
   create_table "railroads", force: :cascade do |t|
     t.string   "railroad",   limit: 255
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160123040824) do
     t.string   "user_id",     limit: 255
     t.string   "rating",      limit: 255
     t.string   "timezone",    limit: 255
+    t.string   "offset",      limit: 255
   end
 
   create_table "users", force: :cascade do |t|

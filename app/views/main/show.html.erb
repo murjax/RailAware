@@ -76,7 +76,7 @@
 								<p class="hidden" id="additional"><%= report.additional %> </p>
 								<p class="hidden" id="info"><%= report.info %> </p>
 								<p class="hidden" id="direction"><%= report.direction %></p>
-								<p class="hidden" id="time"><%= report.time.strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %></p>
+								<p class="hidden" id="time"><%= report.time.in_time_zone(report.offset.to_i).strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %></p>
 							</div>
 							<div class="hidden"><%= report.id %></div>
 							<% @u = User.find_by_username(report.username) %>
@@ -102,7 +102,7 @@
 						<td class="tablecenter"><%= report.trainnumber %> </td>
 						<td class="tablecenter"><%= report.location %> </td>
 						<td class="mobilehide tablecenter"><%= report.direction %> </td>
-						<td class="mobilehide tablecenter"><%= report.time.strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %> </td>
+						<td class="mobilehide tablecenter"><%= report.time.in_time_zone(report.offset.to_i).strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %> </td>
 					</tr>
 					
 					<% end %>

@@ -5,6 +5,8 @@ class MainController < ApplicationController
 		@overflow = false
 		@reports = Report.where(:created_at => (1.week.ago..Time.zone.now))
 		@hash = Gmaps4rails.build_markers(@reports) do |report, marker|
+		  @offset = report.offset
+		  @reporttime = Time.new(report.time.year, report.time.month, report.time.day, report.time.hour, report.time.min, report.time.sec, @offset)
 		  marker.lat report.latitude
 		  marker.lng report.longitude
 		  marker.infowindow "Username: " + report.username +
@@ -15,7 +17,7 @@ class MainController < ApplicationController
 			"<br>" + "Addtional Locomotives: " + report.additional + 
 			"<br>" + "Location: " + report.location + 
 			"<br>" + "Direction: " + report.direction +
-			"<br>" + "Date/Time Seen: " + report.time.strftime("%m/%d/%Y - %H:%M") + " " + report.timezone +
+			"<br>" + "Date/Time Seen: " + report.time.in_time_zone(@offset.to_i).strftime("%m/%d/%Y - %H:%M") + " " + report.timezone +
 			"<br>" + "Additional Info: " + report.info
 			
 			marker.picture({
@@ -495,11 +497,8 @@ class MainController < ApplicationController
 			@absoluteoffset = timezone.utc_offset.to_i.abs
 			@offset = Time.at(@absoluteoffset).utc.strftime("-%H:%M")
 			@offset = @offset.to_s
+			@report.offset = @offset
 			@checktime = Time.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i, 0, @offset)
-			
-			logger.debug(@checktime)
-			logger.debug(Time.now.in_time_zone(timezone.active_support_time_zone))
-			
 			if @checktime > Time.now.in_time_zone(timezone.active_support_time_zone)
 				flash[:notice] = ["You must fix the following errors to continue."]
 				flash[:notice] << "Invalid time. Time cannot be in the future."
