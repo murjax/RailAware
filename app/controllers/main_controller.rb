@@ -60,7 +60,9 @@ class MainController < ApplicationController
 		end
 		
 		if @oldreport.username != current_user.username
-			redirect_to(:viewreports)
+			if current_user.rating.to_i < 95
+				redirect_to(:viewreports)
+			end
 		end
 		
 		if !(DateTime.now.beginning_of_day..DateTime.now.end_of_day).cover? @oldreport.time
@@ -581,7 +583,12 @@ class MainController < ApplicationController
 		@newreport.trainnumber = @report.trainnumber
 		@newreport.direction = params[:direction]
 		@newreport.locomotives = @report.locomotives
-		@newreport.info = @report.info
+		if @report.username == current_user.username
+			@newreport.info = @report.info
+		else
+			@newreport.info = @report.info + "Location updated by: " + current_user.username
+		end
+		
 		@newreport.time = Time.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i,0)
 		@newreport.user_id = current_user.id
 		@report.rating = @report.rating

@@ -38,21 +38,6 @@
 						<%= f.text_field(:trainnumber, :value => @oldreport.trainnumber, :disabled => true) %>
 					</div>
 					
-					<div class="pure-control-group">
-						<label><%= f.label(:loconumber, "Locomotive #") %></label>
-						<%= f.text_field(:loconumber, :value => @oldreport.loconumber, :disabled => true) %>
-					</div>
-					
-					<div class="pure-control-group">
-						<label><%= f.label(:locotype, "Locomotive Type") %></label>
-						<%= f.text_field(:locotype, :value => @oldreport.locotype, :disabled => true) %>
-					</div>
-					
-					<div class="pure-control-group">
-						<label><%= f.label(:railroad, "Locomotive Railroad") %></label>
-						<%= f.text_field(:railroad, :value => @oldreport.railroad, :disabled => true) %>
-					</div>
-					
 					<div id="manuallocationcheck" class="pure-control-group">
 						<label>
 							<%= check_box_tag "manuallocation", "manuallocation", false, :onclick => 'displayLocationFields()' %>

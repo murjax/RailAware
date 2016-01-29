@@ -25,7 +25,7 @@ function parseDateValue(rawDate){
 	return parsedDate;
 }
 
-function format(id, l, i, u){
+function format(id, l, i, u, tu){
 	var htmlLocos;
 	for(x = 0; x < l.length; x++){
 		if (x == 0){
@@ -51,10 +51,25 @@ function format(id, l, i, u){
 		'</tr>' +
 		'<tr>' +
 			'<td class="lightweighttext">Delete Report</td>' +
-			'<td><a class="deleteicon" href="http://localhost:3000/deletereport?id=' + id + '"></a></td>' +
+			'<td><a class="deleteicon" href="http://www.railaware.com/deletereport?id=' + id + '"></a></td>' +
 		'</tr>' +
 		'</table>';
-	}else{
+	}else if(tu){
+		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+		'<tr>' +
+			'<td class="lightweighttext">Locomotives:</td>' +
+			htmlLocos +		
+		'<tr>' +
+			'<td class="lightweighttext">Extra Info:</td>' +
+			'<td>' + i + '</td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td class="lightweighttext">Update Location</td>' +
+			'<td><a class="updateicon" href="http://www.railaware.com/editreport?id=' + id + '"></a></td>' +
+		'</tr>' +
+		'</table>';
+	}
+	else{
 		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
 		'<tr>' +
 			'<td class="lightweighttext">Locomotives:</td>' +
@@ -69,7 +84,7 @@ function format(id, l, i, u){
 	
 }
 
-function mobileFormat(id, l, d, dt, i, u){
+function mobileFormat(id, l, d, dt, i, u, tu){
 	
 	var htmlLocos;
 	for(x = 0; x < l.length; x++){
@@ -106,10 +121,35 @@ function mobileFormat(id, l, d, dt, i, u){
 		'</tr>' +
 		'<tr>' +
 			'<td class="lightweighttext">Delete Report</td>' +
-			'<td><a class="deleteicon" href="http://localhost:3000/deletereport?id=' + id + '"></a></td>' +
+			'<td><a class="deleteicon" href="http://www.railaware.com/deletereport?id=' + id + '"></a></td>' +
 		'</tr>' +
 		'</table>';
-	}else{
+	}else if(tu){
+		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+		'<tr>' +
+			'<td class="lightweighttext">Locomotives:</td>' +
+			htmlLocos +
+		'</tr>' +
+		'<tr>' +
+			'<td class="lightweighttext">Direction:</td>' +
+			'<td>' + d + '</td>' +
+		'</tr>' +
+		
+		'<tr>' +
+			'<td class="lightweighttext">Date/Time:</td>' +
+			'<td>' + dt + '</td>' +
+		'</tr>' +		
+		'<tr>' +
+			'<td class="lightweighttext">Extra Info:</td>' +
+			'<td>' + i + '</td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td class="lightweighttext">Update Location</td>' +
+			'<td><a class="updateicon" href="http://www.railaware.com/editreport?id=' + id + '"></a></td>' +
+		'</tr>' +
+		'</table>';
+	}
+	else{
 		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
 		'<tr>' +
 			'<td class="lightweighttext">Locomotives:</td>' +
@@ -190,16 +230,25 @@ $(document).ready( function () {
 			row.child.hide();
 			tr.removeClass('shown');
 		}else{
+			
 			var reportOfLoggedInUser;
 			if(tr.find('#sameuser').length > 0){
 				reportOfLoggedInUser = true;
 			}else{
 				reportOfLoggedInUser = false;
 			}
-			if (mobile){
-				row.child(mobileFormat(id, locomotivesList, direction, time, info, reportOfLoggedInUser)).show();
+			
+			var trustUser;
+			if(tr.find('#trustuser').length > 0){
+				trustUser = true;
 			}else{
-				row.child(format(id, locomotivesList, info, reportOfLoggedInUser)).show();
+				trustUser = false;
+			}
+			
+			if (mobile){
+				row.child(mobileFormat(id, locomotivesList, direction, time, info, reportOfLoggedInUser, trustUser)).show();
+			}else{
+				row.child(format(id, locomotivesList, info, reportOfLoggedInUser, trustUser)).show();
 			}
 			
 			tr.find('.updateicon').on('click', tr.find('.updateicon'), function(evt){

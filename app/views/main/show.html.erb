@@ -62,10 +62,20 @@
 							<div id="expandableresults">
 								<% if current_user %>
 									<% if current_user.username == report.username %>
+										
 										<% if (DateTime.now.beginning_of_day..DateTime.now.end_of_day).cover? report.time %>
 											<% logger.debug("true") %>
 											<% logger.debug(report.time) %>
 											<p class="hidden" id="sameuser"></p>
+										<% end %>
+									<% else %>
+									
+										<% if current_user.rating.to_i >= 95 %>
+											<% if (DateTime.now.beginning_of_day..DateTime.now.end_of_day).cover? report.time %>
+												<% logger.debug("true") %>
+												<% logger.debug(report.time) %>
+												<p class="hidden" id="trustuser"></p>
+											<% end %>
 										<% end %>
 									<% end %>
 								<% end %>
