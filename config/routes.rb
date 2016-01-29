@@ -16,6 +16,7 @@ RailAware::Application.routes.draw do
   get 'register' => 'main#register', :as => :register
   get 'report' => 'main#report', :as => :report
   get 'editreport' => 'main#edit', :as => :editreport
+  get 'deletereport' => 'main#delete', :as => :deletereport
   get 'viewreports' => 'main#show', :as => :viewreports
   get 'passwordreset' => 'password_resets#new', :as => :passwordreset
   post 'main/vote/:data' => 'main#vote'

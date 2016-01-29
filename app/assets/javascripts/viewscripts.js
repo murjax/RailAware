@@ -49,6 +49,10 @@ function format(id, l, i, u){
 			'<td class="lightweighttext">Update Location</td>' +
 			'<td><a class="updateicon" href="http://www.railaware.com/editreport?id=' + id + '"></a></td>' +
 		'</tr>' +
+		'<tr>' +
+			'<td class="lightweighttext">Delete Report</td>' +
+			'<td><a class="deleteicon" href="http://localhost:3000/deletereport?id=' + id + '"></a></td>' +
+		'</tr>' +
 		'</table>';
 	}else{
 		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
@@ -99,6 +103,10 @@ function mobileFormat(id, l, d, dt, i, u){
 		'<tr>' +
 			'<td class="lightweighttext">Update Location</td>' +
 			'<td><a class="updateicon" href="http://www.railaware.com/editreport?id=' + id + '"></a></td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td class="lightweighttext">Delete Report</td>' +
+			'<td><a class="deleteicon" href="http://localhost:3000/deletereport?id=' + id + '"></a></td>' +
 		'</tr>' +
 		'</table>';
 	}else{

@@ -259,6 +259,14 @@ footer{
 	cursor: pointer;
 }
 
+.deleteicon{
+	background:url('http://i63.tinypic.com/2j5gmmh.png') no-repeat center center;
+	width: 15px;
+	height: 15px;
+	display: block;
+	cursor: pointer;
+}
+
 .logo{
 	font-size: 200%;
 	font-weight: bold;

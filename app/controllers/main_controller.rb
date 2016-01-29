@@ -663,6 +663,29 @@ class MainController < ApplicationController
 		@vote = Vote.all
 	end
 	
+	def delete
+		@report = Report.find(params[:id])
+		@overflow = true
+		
+		if !current_user
+			redirect_to(:login)
+			return
+		end
+		
+		if @report.username != current_user.username
+			redirect_to(:viewreports)
+			return
+		end
+		
+		if !(DateTime.now.beginning_of_day..DateTime.now.end_of_day).cover? @report.time
+			redirect_to(:viewreports)
+			return
+		end
+		
+		@report.destroy
+		redirect_to(:viewreports)
+	end
+	
 	
 	def register
 		@overflow = false
