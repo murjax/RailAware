@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160124013500) do
+ActiveRecord::Schema.define(version: 20160128162728) do
 
   create_table "railroads", force: :cascade do |t|
     t.string   "railroad",   limit: 255
@@ -23,12 +23,8 @@ ActiveRecord::Schema.define(version: 20160124013500) do
   create_table "reports", force: :cascade do |t|
     t.string   "username",    limit: 50
     t.string   "trainnumber", limit: 255
-    t.string   "loconumber",  limit: 10
-    t.string   "locotype",    limit: 20
-    t.string   "railroad",    limit: 50
     t.string   "location",    limit: 30
     t.string   "direction",   limit: 10
-    t.string   "additional",  limit: 255
     t.string   "info",        limit: 255
     t.float    "latitude",    limit: 24
     t.float    "longitude",   limit: 24
@@ -39,6 +35,7 @@ ActiveRecord::Schema.define(version: 20160124013500) do
     t.string   "rating",      limit: 255
     t.string   "timezone",    limit: 255
     t.string   "offset",      limit: 255
+    t.string   "locomotives", limit: 255
   end
 
   create_table "users", force: :cascade do |t|

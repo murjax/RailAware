@@ -25,34 +25,22 @@ function parseDateValue(rawDate){
 	return parsedDate;
 }
 
-function format(id, l, t, r, a, i, u){
-	/*return '<div>Locomotive Number: ' + l + '</div>' + 
-		'<div>Locomotive Type: ' + t + '</div>' + 
-		'<div>Locomotive Railroad: ' + r + '</div>' + 
-		'<div>Additional: ' + a + '</div>' + 
-		'<div>Extra Info: ' + i + '</div>';*/
+function format(id, l, i, u){
+	var htmlLocos;
+	for(x = 0; x < l.length; x++){
+		if (x == 0){
+			htmlLocos = '<td>' + l[x] + '</td></tr>'
+		}else{
+			htmlLocos += '<tr><td></td><td>' + l[x] + '</td></tr>'
+		}
+		
+	}
+	
 	if(u){
 		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
 		'<tr>' +
-			'<td class="lightweighttext">Locomotive Number:</td>' +
-			'<td>' + l + '</td>' +
-		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Locomotive Type:</td>' +
-			'<td>' + t + '</td>' +
-		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Locomotive Railroad:</td>' +
-			'<td>' + r + '</td>' +
-		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Additional:</td>' +
-			'<td>' + a + '</td>' +
-		'</tr>' +
-		
+			'<td class="lightweighttext">Locomotives:</td>' +
+			htmlLocos +		
 		'<tr>' +
 			'<td class="lightweighttext">Extra Info:</td>' +
 			'<td>' + i + '</td>' +
@@ -65,25 +53,9 @@ function format(id, l, t, r, a, i, u){
 	}else{
 		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
 		'<tr>' +
-			'<td class="lightweighttext">Locomotive Number:</td>' +
-			'<td>' + l + '</td>' +
+			'<td class="lightweighttext">Locomotives:</td>' +
+			htmlLocos +
 		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Locomotive Type:</td>' +
-			'<td>' + t + '</td>' +
-		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Locomotive Railroad:</td>' +
-			'<td>' + r + '</td>' +
-		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Additional:</td>' +
-			'<td>' + a + '</td>' +
-		'</tr>' +
-		
 		'<tr>' +
 			'<td class="lightweighttext">Extra Info:</td>' +
 			'<td>' + i + '</td>' +
@@ -93,25 +65,24 @@ function format(id, l, t, r, a, i, u){
 	
 }
 
-function mobileFormat(id, l, t, r, d, dt, a, i, u){
+function mobileFormat(id, l, d, dt, i, u){
+	
+	var htmlLocos;
+	for(x = 0; x < l.length; x++){
+		if (x == 0){
+			htmlLocos = '<td>' + l[x] + '</td>'
+		}else{
+			htmlLocos += '<td>' + l[x] + '</td>'
+		}
+		
+	}
 	
 	if(u){
 		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
 		'<tr>' +
-			'<td class="lightweighttext">Locomotive Number:</td>' +
-			'<td>' + l + '</td>' +
+			'<td class="lightweighttext">Locomotives:</td>' +
+			htmlLocos +
 		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Locomotive Type:</td>' +
-			'<td>' + t + '</td>' +
-		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Locomotive Railroad:</td>' +
-			'<td>' + r + '</td>' +
-		'</tr>' +
-		
 		'<tr>' +
 			'<td class="lightweighttext">Direction:</td>' +
 			'<td>' + d + '</td>' +
@@ -120,13 +91,7 @@ function mobileFormat(id, l, t, r, d, dt, a, i, u){
 		'<tr>' +
 			'<td class="lightweighttext">Date/Time:</td>' +
 			'<td>' + dt + '</td>' +
-		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Additional:</td>' +
-			'<td>' + a + '</td>' +
-		'</tr>' +
-		
+		'</tr>' +		
 		'<tr>' +
 			'<td class="lightweighttext">Extra Info:</td>' +
 			'<td>' + i + '</td>' +
@@ -139,20 +104,9 @@ function mobileFormat(id, l, t, r, d, dt, a, i, u){
 	}else{
 		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
 		'<tr>' +
-			'<td class="lightweighttext">Locomotive Number:</td>' +
-			'<td>' + l + '</td>' +
+			'<td class="lightweighttext">Locomotives:</td>' +
+			htmlLocos +
 		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Locomotive Type:</td>' +
-			'<td>' + t + '</td>' +
-		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Locomotive Railroad:</td>' +
-			'<td>' + r + '</td>' +
-		'</tr>' +
-		
 		'<tr>' +
 			'<td class="lightweighttext">Direction:</td>' +
 			'<td>' + d + '</td>' +
@@ -162,12 +116,6 @@ function mobileFormat(id, l, t, r, d, dt, a, i, u){
 			'<td class="lightweighttext">Date/Time:</td>' +
 			'<td>' + dt + '</td>' +
 		'</tr>' +
-		
-		'<tr>' +
-			'<td class="lightweighttext">Additional:</td>' +
-			'<td>' + a + '</td>' +
-		'</tr>' +
-		
 		'<tr>' +
 			'<td class="lightweighttext">Extra Info:</td>' +
 			'<td>' + i + '</td>' +
@@ -216,10 +164,17 @@ $(document).ready( function () {
 		var tr = $(this).closest('tr');
 		var row = $table.row(tr);
 		var id = tr.find("#reportid").html();
-		var loconumber = tr.find('#loconumber').html();
-		var locotype = tr.find('#locotype').html();
-		var railroad = tr.find('#railroad').html();
-		var additional = tr.find('#additional').html();
+		var locomotives = tr.find("#locomotives").html();
+		var locomotivesList = [];
+		
+		console.log(locomotives);
+		var regExp = /\[([^[]+)\]/g;
+		var matches = locomotives.match(regExp);
+		console.log(matches);
+		for (var i = 0; i < matches.length; i++){
+			var str = matches[i];
+			locomotivesList.push(str.substring(1, str.length - 1));
+		}
 		var direction = tr.find('#direction').html();
 		var time = tr.find('#time').html();
 		var info = tr.find('#info').text()
@@ -234,9 +189,9 @@ $(document).ready( function () {
 				reportOfLoggedInUser = false;
 			}
 			if (mobile){
-				row.child(mobileFormat(id, loconumber, locotype, railroad, direction, time, additional, info, reportOfLoggedInUser)).show();
+				row.child(mobileFormat(id, locomotivesList, direction, time, info, reportOfLoggedInUser)).show();
 			}else{
-				row.child(format(id, loconumber, locotype, railroad, additional, info, reportOfLoggedInUser)).show();
+				row.child(format(id, locomotivesList, info, reportOfLoggedInUser)).show();
 			}
 			
 			tr.find('.updateicon').on('click', tr.find('.updateicon'), function(evt){

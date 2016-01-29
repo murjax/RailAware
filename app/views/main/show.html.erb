@@ -70,10 +70,7 @@
 									<% end %>
 								<% end %>
 								<p class="hidden" id="reportid"><%= report.id %></p>
-								<p class="hidden" id="loconumber"><%= report.loconumber %> </p>
-								<p class="hidden" id="locotype"><%= report.locotype %> </p>
-								<p class="hidden" id="railroad"><%= report.railroad %> </p>
-								<p class="hidden" id="additional"><%= report.additional %> </p>
+								<p class="hidden" id="locomotives"><%= report.locomotives %></p>
 								<p class="hidden" id="info"><%= report.info %> </p>
 								<p class="hidden" id="direction"><%= report.direction %></p>
 								<p class="hidden" id="time"><%= report.time.in_time_zone(report.offset.to_i).strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %></p>
