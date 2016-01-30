@@ -3,17 +3,17 @@
 		<div class="top">
 			<nav>
 				<header>
-					<%= link_to("Railaware", {:action => 'index'}, :class => 'logo') %>
+					<%= link_to("",{:action => 'index'}, :class => 'logo') %>
 				</header>
 				<ul>
-					<%= link_to("Home", {:action => 'index'}) %>
-					<%= link_to("View Reports", {:action => 'show'}) %>
 					<% if current_user %>
-						<%= link_to("Report A Train", {:action => 'report'}) %>
 						<%= link_to "Logout", :logout, method: :post %>
+						<%= link_to("Report A Train", {:action => 'report'}) %>
 					<% else %>
 						<%= link_to "Login", :login %>
 					<% end %>
+					<%= link_to("View Reports", {:action => 'show'}) %>
+					<%= link_to("Home", {:action => 'index'}) %>
 				</ul>
 			</nav>
 		</div>
@@ -118,7 +118,6 @@
 		</div>
 		<p id="viewreportsfootnotes">* '<<' Indicates locomotive is facing forward, or the direction of travel. '>>' Indicates locomotive is facing backwards, or the opposite direction of travel.</p>
 	</div>
-	
 	<div class="footer">
 		<footer>
 			<p>&copy; RailAware 2016</p>

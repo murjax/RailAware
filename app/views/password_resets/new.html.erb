@@ -3,13 +3,13 @@
 		<div class="top">
 			<nav>
 				<header>
-					<%= link_to("Railaware", {:controller => 'main', :action => 'index'}, :class => 'logo') %>
+					<%= link_to("",{:action => 'index'}, :class => 'logo') %>
 				</header>
 				
 				<ul>
-					<%= link_to("Home", {:controller => 'main', :action => 'index'}) %>
-					<%= link_to("View Reports", {:controller => 'main', :action => 'show'}) %>
 					<%= link_to "Login", :login %>
+					<%= link_to("View Reports", {:controller => 'main', :action => 'show'}) %>
+					<%= link_to("Home", {:controller => 'main', :action => 'index'}) %>
 				</ul>
 			</nav>
 		</div>

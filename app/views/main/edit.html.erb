@@ -3,13 +3,13 @@
 		<div class="top">
 			<nav>
 				<header>
-					<%= link_to("Railaware", {:action => 'index'}, :class => 'logo') %>
+					<%= link_to("",{:action => 'index'}, :class => 'logo') %>
 				</header>
 				<ul>
-					<%= link_to("Home", {:action => 'index'}) %>
-					<%= link_to("View Reports", {:action => 'show'}) %>	
+					<%= link_to "Logout", :logout, method: :post %>	
 					<%= link_to("Report A Train", {:action => 'report'}) %>
-					<%= link_to "Logout", :logout, method: :post %>					
+					<%= link_to("View Reports", {:action => 'show'}) %>	
+					<%= link_to("Home", {:action => 'index'}) %>
 				</ul>
 			</nav>
 		</div>
@@ -138,7 +138,6 @@
 			</div>
 		<% end %>
 	</div>
-
 	<div class="footer">
 		<footer>
 			<p>&copy; RailAware 2016</p>

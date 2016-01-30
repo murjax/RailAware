@@ -7,13 +7,39 @@
 		font-size: 75%;
 	}
 	
+	.header{
+		padding-right: 30px;
+	}
+	.content{
+		padding-right: 30px;
+	}
+	
+	#reportformcontainer{
+		padding-right: 20px;
+	}
+	.footer{
+		padding-right: 30px;
+		padding-bottom: 2px;
+	}
+	.ads{
+		padding-right:30px;
+		padding-bottom: 2px;
+	}
+	
 	nav ul{
 		padding: 0;
 		margin: 0;
-		padding-top: 2%;
-		text-align: center;
+		text-align:center;
 		list-style: none;
 	}
+	
+	nav ul a{
+		display: inline;
+		padding-right: 15px;
+		padding-bottom: 10px;
+		font-size: 80%;
+		
+}
 	
 	#reportformcontainer{
 		overflow: scroll;
@@ -32,6 +58,7 @@
 }
 
 @media (min-width: 701px){
+
 	header{
 		float: left;
 		padding: 0;
@@ -57,6 +84,34 @@
 		height: 250px;
 		margin-left: 2%;
 	}
+	
+	nav ul a{
+		float: right;
+		display: block;
+		padding-top: 4px;
+		padding-left: 15px;
+		padding-right: 15px;
+		font-size: 75%;
+		font-weight: 800;
+		/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#949494+0,828282+23,696969+76,575757+100 */
+		background: rgb(148,148,148); /* Old browsers */
+		background: -moz-linear-gradient(top,  rgba(148,148,148,1) 0%, rgba(130,130,130,1) 23%, rgba(105,105,105,1) 76%, rgba(87,87,87,1) 100%); /* FF3.6-15 */
+		background: -webkit-linear-gradient(top,  rgba(148,148,148,1) 0%,rgba(130,130,130,1) 23%,rgba(105,105,105,1) 76%,rgba(87,87,87,1) 100%); /* Chrome10-25,Safari5.1-6 */
+		background: linear-gradient(to bottom,  rgba(148,148,148,1) 0%,rgba(130,130,130,1) 23%,rgba(105,105,105,1) 76%,rgba(87,87,87,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#949494', endColorstr='#575757',GradientType=0 ); /* IE6-9 */
+		color: #ededed;
+		text-shadow: 1px 1px 3px #000;
+		height: 25px;
+		text-align: center;
+}
+
+nav ul a:last-child{
+	border-top-left-radius: 10px;
+}
+
+nav ul a:first-child{
+	border-top-right-radius: 10px;
+}
 }
 
 
@@ -85,14 +140,6 @@ nav{
 	overflow: hidden;
 }
 
-nav ul a{
-		display: inline;
-		padding-right: 15px;
-		padding-bottom: 10px;
-		font-size: 75%;
-		
-}
-
 a{
 		text-decoration: none;
 		color: #595858;
@@ -113,7 +160,7 @@ footer{
 	width: 100%;
 	overflow: hidden;
 	position: absolute;
-	
+	background-color: #bfbfbf;
 }
 
 .hidden{
@@ -133,6 +180,7 @@ footer{
 	bottom:40px;
 	overflow: auto;
 	position: absolute;
+	background-color: #bfbfbf;
 }
 .footer {
 	background:#ededed;
@@ -142,6 +190,7 @@ footer{
 	left:0;
 	overflow: hidden;
 	position:absolute;
+	background-color: #bfbfbf;
 }
 
 .overflow{
@@ -223,6 +272,7 @@ footer{
 }
 
 #reportlist{
+	padding-top: 5px;
 	padding-left: 1%;
 	padding-right: 1%;
 	font-size: 60%;
@@ -268,8 +318,13 @@ footer{
 }
 
 .logo{
-	font-size: 200%;
-	font-weight: bold;
+	background:url('http://i64.tinypic.com/x1j80z.png');
+	width: 150px;
+	height: 26px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	cursor: pointer;
 }
 
 @import url('//cdn.datatables.net/1.10.2/css/jquery.dataTables.css');
