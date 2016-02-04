@@ -616,20 +616,38 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		if params[:report][:latitude].empty?
 			if params[:country] == "Canada"
 				@newreport.location = params[:report][:city] + ", " + params[:province]
+				@report.latitude = Geocoder.coordinates(@report.location)[0]
+				@report.longitude = Geocoder.coordinates(@report.location)[1]
 			else
 				@newreport.location = params[:report][:city] + ", " + params[:state]
+				@report.latitude = Geocoder.coordinates(@report.location)[0]
+				@report.longitude = Geocoder.coordinates(@report.location)[1]
 			end
 			
 		else
 			if params[:manuallocation]
 				if params[:country] == "Canada"
 					@newreport.location = params[:report][:city] + ", " + params[:province]
+					@newreport.latitude = Geocoder.coordinates(@newreport.location)[0]
+					@newreport.longitude = Geocoder.coordinates(@newreport.location)[1]
 				else
 					@newreport.location = params[:report][:city] + ", " + params[:state]
+					@newreport.latitude = Geocoder.coordinates(@newreport.location)[0]
+					@newreport.longitude = Geocoder.coordinates(@newreport.location)[1]
 				end
 			else
 				@newreport.latitude = params[:report][:latitude]
 				@newreport.longitude = params[:report][:longitude]
+				@address = Geocoder.address(@newreport.latitude.to_s + ", " + @newreport.longitude.to_s)
+				logger.debug(@address)
+				@addresssplit = @address.split(",")
+				if @addresssplit.length == 2
+					@newreport.location = @addresssplit[0] + ", " + @addresssplit[1]
+				else
+					logger.debug(@addresssplit)
+					@newreport.location = @addresssplit[1] + "," + @addresssplit[2][0..2]
+					@newreport.location.slice!(0)
+				end
 			end
 			
 		end
@@ -664,6 +682,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 			@absoluteoffset = timezone.utc_offset.to_i.abs
 			@offset = Time.at(@absoluteoffset).utc.strftime("-%H:%M")
 			@offset = @offset.to_s
+			@newreport.offset = @offset
 			@checktime = Time.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i, 0, @offset)
 			
 			logger.debug(@checktime)
