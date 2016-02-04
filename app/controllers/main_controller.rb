@@ -411,20 +411,41 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		if params[:report][:latitude].empty?
 			if params[:country] == "Canada"
 				@report.location = params[:report][:city] + ", " + params[:province]
+				@report.latitude = Geocoder.coordinates(@report.location)[0]
+				@report.longitude = Geocoder.coordinates(@report.location)[1]
 			else
 				@report.location = params[:report][:city] + ", " + params[:state]
+				@report.latitude = Geocoder.coordinates(@report.location)[0]
+				@report.longitude = Geocoder.coordinates(@report.location)[1]
 			end
 			
 		else
 			if params[:manuallocation]
 				if params[:country] == "Canada"
 					@report.location = params[:report][:city] + ", " + params[:province]
+					@report.latitude = Geocoder.coordinates(@report.location)[0]
+					@report.longitude = Geocoder.coordinates(@report.location)[1]
 				else
 					@report.location = params[:report][:city] + ", " + params[:state]
+					@report.latitude = Geocoder.coordinates(@report.location.to_s)[0]
+					@report.longitude = Geocoder.coordinates(@report.location.to_s)[1]
+					
+					
 				end
 			else
 				@report.latitude = params[:report][:latitude]
 				@report.longitude = params[:report][:longitude]
+				@address = Geocoder.address(@report.latitude.to_s + ", " + @report.longitude.to_s)
+				logger.debug(@address)
+				@addresssplit = @address.split(",")
+				if @addresssplit.length == 2
+					@report.location = @addresssplit[0] + ", " + @addresssplit[1]
+				else
+					logger.debug(@addresssplit)
+					@report.location = @addresssplit[1] + "," + @addresssplit[2][0..2]
+					@report.location.slice!(0)
+				end
+				
 			end
 			
 		end
