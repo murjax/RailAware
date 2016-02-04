@@ -187,8 +187,9 @@ $(document).ready( function () {
 			vote = -1;
 		}
 		
-		var id = $(evt.target).parent().parent().children(":first").html();
-		var data = [id, vote];
+		var id = $(evt.target).parent().parent().children("#expandableresults").children("#reportid").html();
+		var voter = $(evt.target).parent().parent().children("#voterusername").html();
+		var data = [id, vote, voter];
 		$.ajax({
 			data: JSON.stringify({'data' : data}),
 			dataType: 'json',

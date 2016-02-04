@@ -1,6 +1,5 @@
 class MainController < ApplicationController
-	layout "application"
-	
+protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 	def index
 		@overflow = false
 		@reports = Report.where(:created_at => (1.week.ago..Time.zone.now))
@@ -733,7 +732,7 @@ class MainController < ApplicationController
 	
 	def vote
 		flash[:notice] = ["Vote Received!"]
-		
+		logger.debug(current_user)
 		@report = Report.find(params[:data][0])
 		@rating = @report.rating.to_i
 		@newrating = @rating + (params[:data][1]).to_i
@@ -741,7 +740,7 @@ class MainController < ApplicationController
 		@report.save
 		
 		@vote = Vote.new()
-		@vote.username = current_user.username
+		@vote.username = params[:data][2]
 		@vote.report_id = params[:data][0]
 		@vote.save
 		
