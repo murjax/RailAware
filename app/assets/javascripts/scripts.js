@@ -4,11 +4,37 @@ var c = 0;
 var d = 0;
 var e = 0;
 var f = 0;
-
+var menucheck = 0
 
 	
 
 $(document).ready( function () {
+	
+	$('nav ul').addClass('js').before('<div id="menu">&#9776;</div>');
+	$('#menu').click(function(){
+		$('nav ul').toggle();
+		if(menucheck == 0){
+			$('.header').height(300);
+			$('.content').css({top: '300px'});
+			menucheck = 1;
+		}else{
+			$('.header').height(60);
+			$('.content').css({top: '60px'});
+			menucheck = 0;
+		}
+		
+	});
+	if(window.innerWidth > 800) {
+			$("#menu").hide();
+	}
+	$(window).resize(function(){
+		if(window.innerWidth > 800) {
+			$("#menu").hide();
+		}else{
+			$("#menu").show();
+		}
+	});
+	
 	
 	// Set default report time to the user's current time.
 	var currenttime = new Date();
