@@ -191,6 +191,15 @@ footer{
 	text-align: center;
 }
 
+footer p{
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+
+footer a{
+	margin-top: 0;
+}
+
 .wrapper {
 	min-height:100%;
 	position:relative;
@@ -363,6 +372,16 @@ footer{
 	background:url('http://i64.tinypic.com/x1j80z.png');
 	width: 150px;
 	height: 26px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	cursor: pointer;
+}
+
+.fb{
+	background:url('http://i65.tinypic.com/palu0.png');
+	width: 72px;
+	height: 13px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
