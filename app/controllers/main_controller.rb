@@ -452,12 +452,19 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		
 		allreports = Report.where(:created_at => (1.week.ago..Time.zone.now))
 		
-		allreports.each do |xreport|
-			if (@report.latitude.round(4).equal? xreport.latitude) && (@report.longitude.round(4).equal? xreport.longitude)
-				@report.latitude = @report.latitude - 0.0001
-				@report.longitude = @report.longitude - 0.0001
-			end	
+		locmatches = true;
+		while locmatches == true do
+			
+			allreports.each do |xreport|
+				if (@report.latitude.round(4).equal? xreport.latitude) && (@report.longitude.round(4).equal? xreport.longitude)
+					@report.latitude = @report.latitude - 0.0001
+					@report.longitude = @report.longitude - 0.0001
+				else
+					locmatches = false
+				end	
+			end
 		end
+		
 		
 		@report.direction = params[:direction]
 		@report.info = params[:report][:info]
