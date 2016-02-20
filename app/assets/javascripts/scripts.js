@@ -56,11 +56,17 @@ $(document).ready( function () {
 	var year = currenttime.getFullYear();
 	var hour = currenttime.getHours();
 	var minute = currenttime.getMinutes();
+	if(minute < 10){
+		var firstTenString = "0" + minute;
+		$('#report_time_5i').val(firstTenString);
+	}else{
+		$('#report_time_5i').val(minute);
+	}
 	$('#report_time_2i').val(month + 1);
 	$('#report_time_3i').val(date);
 	$('#report_time_1i').val(year);
 	$('#report_time_4i').val(hour);
-	$('#report_time_5i').val(minute);
+	
 	
 	$('#country').change(function(){
 		
