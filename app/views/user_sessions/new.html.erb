@@ -63,7 +63,10 @@
 	<div class="footer">
 		<footer>
 			<p>&copy; RailAware 2016</p>
-			<%= link_to("","https://www.facebook.com/RailAware/", :class => 'fb') %>
+			<div class="contact">
+				<%= link_to("","https://www.facebook.com/RailAware/", :class => 'fb') %>
+				<%= mail_to "railaware@outlook.com", "", :class => 'mail' %>
+			</div>
 		</footer>
 	</div>
 </div>

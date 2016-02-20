@@ -383,9 +383,25 @@ footer a{
 	width: 72px;
 	height: 13px;
 	display: block;
+	float: left;
+	cursor: pointer;
+}
+
+.mail{
+	background:url('http://i67.tinypic.com/34rbqk6.png');
+	width: 13px;
+	height: 13px;
+	display: block;
+	float: right;
+	cursor: pointer;
+}
+
+.contact{
+	width: 100px;
+	height: 15px;
 	margin-left: auto;
 	margin-right: auto;
-	cursor: pointer;
+	
 }
 
 @import url('//cdn.datatables.net/1.10.2/css/jquery.dataTables.css');
