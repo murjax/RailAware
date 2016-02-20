@@ -34,7 +34,12 @@ $(document).ready( function () {
 			$("#menu").show();
 		}
 	});
-	
+	$('#map').click(function(){
+		setTimeout(function(){
+			$('.infobox').parent().parent().parent().css({'background-color': '#4B2EA6', 'padding-right': '5px'});
+		}, 100);
+		
+	});
 	
 	// Set default report time to the user's current time.
 	var currenttime = new Date();

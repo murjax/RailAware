@@ -19,13 +19,37 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		  @reporttime = Time.new(report.time.year, report.time.month, report.time.day, report.time.hour, report.time.min, report.time.sec, @offset)
 		  marker.lat report.latitude
 		  marker.lng report.longitude
-		  marker.infowindow "Username: " + report.username +
-			"<br>" + "Train ID: " + report.trainnumber +
-			"<br>" + "Locomotives: " + @htmlLocos +
-			"<br>" + "Location: " + report.location + 
-			"<br>" + "Direction: " + report.direction +
-			"<br>" + "Date/Time Seen: " + report.time.in_time_zone(@offset.to_i).strftime("%m/%d/%Y - %H:%M") + " " + report.timezone +
-			"<br>" + "Additional Info: " + report.info
+		  marker.infowindow "<ul class='infobox'>" + 
+			"<li>" +
+				"<label>Username:</label>" +
+				"<span>" + report.username + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Train ID:</label>" +
+				"<span>" + report.trainnumber + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Locomotives:</label>" +
+				"<span>" + @htmlLocos + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Location:</label>" +
+				"<span>" + report.location + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Direction:</label>" +
+				"<span>" + report.direction + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Date/Time Seen:</label>" +
+				"<span>" + report.time.in_time_zone(@offset.to_i).strftime("%m/%d/%Y - %H:%M") + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Additional Info:</label>" +
+				"<span>" + report.info + "</span>" +
+			"</li>" + 
+			
+			"</ul>"
 			
 			marker.picture({
 				:url => ActionController::Base.helpers.image_path('marker.png', type: :image),

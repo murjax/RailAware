@@ -368,6 +368,25 @@ footer a{
 	cursor: pointer;
 }
 
+.infobox{
+	display: table;
+	color: #EDEDED;
+}
+
+.infobox li{
+	display: table-row;
+}
+
+.infobox label, span{
+	display: table-cell;
+	border-bottom: thin solid #240D6F;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.infobox label{
+	padding-right: 10px;
+	font-weight: 800;
+}
 .logo{
 	background:url('http://i64.tinypic.com/x1j80z.png');
 	width: 150px;
