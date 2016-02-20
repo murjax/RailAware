@@ -16,10 +16,12 @@ $(document).ready( function () {
 		if(menucheck == 0){
 			$('.header').height(300);
 			$('.content').css({top: '300px'});
+			$('.homecontent').css({top: '300px'});
 			menucheck = 1;
 		}else{
 			$('.header').height(60);
 			$('.content').css({top: '60px'});
+			$('.homecontent').css({top: '60px'});
 			menucheck = 0;
 		}
 		

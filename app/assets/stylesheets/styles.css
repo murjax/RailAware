@@ -10,7 +10,7 @@
 	.header{
 		padding-right: 30px;
 	}
-	.content{
+	.content, .homecontent{
 		padding-right: 30px;
 	}
 	
@@ -176,6 +176,7 @@ body{
 
 footer{
 	font-size: 75%;
+	padding-top: 5px;
 }
 
 nav{
@@ -220,15 +221,23 @@ footer a{
 .content {
 	width: 100%;
 	top: 60px;
-	bottom: 78px;
+	bottom: 38px;
+	overflow: auto;
+	position: absolute;
+}
+
+.homecontent{
+	width: 100%;
+	top: 60px;
+	bottom: 143px;
 	overflow: auto;
 	position: absolute;
 }
 
 .ads{
 	width: 100%;
-	height:40px;
-	bottom:38px;
+	height:100px;
+	bottom:43px;
 	overflow: auto;
 	position: absolute;
 	background-color: #bfbfbf;
@@ -236,7 +245,7 @@ footer a{
 .footer {
 	background:#ededed;
 	width:100%;
-	height:40px;
+	height:45px;
 	bottom:0;
 	left:0;
 	overflow: hidden;
