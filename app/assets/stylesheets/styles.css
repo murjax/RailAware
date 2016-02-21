@@ -188,6 +188,10 @@ a{
 		color: #595858;
 }
 
+nav ul a:hover{
+	color: #8A8888;
+}
+
 footer{
 	text-align: center;
 }
