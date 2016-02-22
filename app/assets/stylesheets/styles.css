@@ -368,7 +368,7 @@ footer a{
 
 .infobox{
 	display: table;
-	color: #EDEDED;
+	color: #6B6A6A;
 }
 
 .infobox li{
@@ -377,13 +377,23 @@ footer a{
 
 .infobox label, span{
 	display: table-cell;
-	border-bottom: thin solid #240D6F;
+	border-bottom: thin solid #333333;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 .infobox label{
 	padding-right: 10px;
 	font-weight: 800;
+}
+
+.infoboxheader{
+	background-color: #333333;
+	color: #9D9C9C;
+	border-radius: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-weight: 800;
+	text-align: center;
 }
 .logo{
 	background:url('http://i64.tinypic.com/x1j80z.png');

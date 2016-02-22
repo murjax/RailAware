@@ -19,14 +19,10 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		  @reporttime = Time.new(report.time.year, report.time.month, report.time.day, report.time.hour, report.time.min, report.time.sec, @offset)
 		  marker.lat report.latitude
 		  marker.lng report.longitude
-		  marker.infowindow "<ul class='infobox'>" + 
+		  marker.infowindow "<div class='infoboxheader'>" + report.trainnumber + "</div>" + "<ul class='infobox'>" + 
 			"<li>" +
-				"<label>Username:</label>" +
+				"<label>Posted By:</label>" +
 				"<span>" + report.username + "</span>" +
-			"</li>" + 
-			"<li>" +
-				"<label>Train ID:</label>" +
-				"<span>" + report.trainnumber + "</span>" +
 			"</li>" + 
 			"<li>" +
 				"<label>Locomotives:</label>" +
