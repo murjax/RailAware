@@ -59,8 +59,8 @@
 		padding-bottom: 10px;
 		font-size: 75%;
 		font-weight: 800;
-		color: #333333;
-		border-bottom: thin solid #bfbfbf;
+		color: #82C1DC;
+		border-bottom: thin solid #82C1DC;
 		text-align: center;
 	}
 	
@@ -91,6 +91,11 @@
 	
 	nav ul.js{
 		display: none;
+	}
+	
+	.content{
+		border-bottom: 14px solid #595858;
+		border-top: 4px solid #595858;
 	}
 }
 
@@ -131,10 +136,15 @@
 		padding-right: 15px;
 		font-size: 75%;
 		font-weight: 800;
-		border-right: thin solid #ededed;
-		color: #ededed;
+		border-right: thin solid #B3DEF1;
+		color: #B3DEF1;
 		height: 30px;
 		text-align: center;
+}
+
+.content{
+	border-bottom: 9px solid #595858;
+	border-top: 2px solid #595858;
 }
 
 nav ul a:first-child{
@@ -174,7 +184,7 @@ a{
 }
 
 nav ul a:hover{
-	color: #8A8888;
+	color: #ededed;
 }
 
 footer{
@@ -183,7 +193,8 @@ footer{
 
 footer p{
 	margin-top: 0;
-	margin-bottom: 5px;
+	margin-bottom: 2px;
+	color: #B3DEF1;
 }
 
 footer a{
@@ -195,13 +206,12 @@ footer a{
 	position:relative;
 }
 .header {
-	background:#ededed;
 	top:0;
 	height:60px;
 	width: 100%;
 	overflow: hidden;
 	position: absolute;
-	background-color: #bfbfbf;
+	background-color: #3187AC;
 }
 
 .hidden{
@@ -232,14 +242,13 @@ footer a{
 	background-color: #bfbfbf;
 }
 .footer {
-	background:#ededed;
 	width:100%;
 	height:45px;
 	bottom:0;
 	left:0;
 	overflow: hidden;
 	position:absolute;
-	background-color: #bfbfbf;
+	background-color: #3187AC;
 }
 
 .overflow{
@@ -396,7 +405,7 @@ footer a{
 	text-align: center;
 }
 .logo{
-	background:url('http://i64.tinypic.com/x1j80z.png');
+	background:url('http://i68.tinypic.com/bhalh0.png');
 	width: 150px;
 	height: 26px;
 	display: block;
@@ -427,6 +436,9 @@ footer a{
 .contact{
 	width: 100px;
 	height: 15px;
+	background-color: #E8F7FD;
+	padding: 3px;
+	border-radius: 3px;
 	margin-left: auto;
 	margin-right: auto;
 	
