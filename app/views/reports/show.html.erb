@@ -17,7 +17,7 @@
 				<ul>
 					<% if current_user %>
 						<%= link_to "Logout", :logout, method: :post %>
-						<%= link_to("Report A Train", {:action => 'report'}) %>
+						<%= link_to("Report A Train", {:action => 'new'}) %>
 					<% else %>
 						<%= link_to "Login", :login %>
 					<% end %>

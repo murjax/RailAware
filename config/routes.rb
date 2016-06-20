@@ -1,8 +1,8 @@
 RailAware::Application.routes.draw do
-  root 'main#index'
+  root 'reports#index'
   resources :user_sessions
   
-  resources :main do
+  resources :user do
 	member do
 		get :confirm_email
 	end
@@ -13,13 +13,13 @@ RailAware::Application.routes.draw do
   match ':controller(/:action(/:id))', :via => [:get, :post]
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
-  get 'register' => 'main#register', :as => :register
-  get 'report' => 'main#report', :as => :report
-  get 'editreport' => 'main#edit', :as => :editreport
-  get 'deletereport' => 'main#delete', :as => :deletereport
-  get 'viewreports' => 'main#show', :as => :viewreports
+  get 'register' => 'users#new', :as => :register
+  get 'report' => 'reports#new', :as => :report
+  get 'editreport' => 'reports#edit', :as => :editreport
+  get 'deletereport' => 'reports#delete', :as => :deletereport
+  get 'viewreports' => 'reports#show', :as => :viewreports
   get 'passwordreset' => 'password_resets#new', :as => :passwordreset
-  post 'main/vote/:data' => 'main#vote'
+  post 'vote/create/:data' => 'vote#create'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

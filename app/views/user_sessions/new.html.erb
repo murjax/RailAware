@@ -12,13 +12,13 @@
 		<div class="top">
 			<nav>
 				<header>
-					<%= link_to("",{:action => 'index'}, :class => 'logo') %>
+					<%= link_to("",{:controller => 'reports', :action => 'index'}, :class => 'logo') %>
 				</header>
 				
 				<ul>
 					<%= link_to "Login", :login %>
-					<%= link_to("View Reports", {:controller => 'main', :action => 'show'}) %>
-					<%= link_to("Home", {:controller => 'main', :action => 'index'}) %>
+					<%= link_to("View Reports", {:controller => 'reports', :action => 'show'}) %>
+					<%= link_to("Home", {:controller => 'reports', :action => 'index'}) %>
 				</ul>
 			</nav>
 		</div>
@@ -61,7 +61,7 @@
 		<% end %>
 		
 		<div id="loginregisterlink">
-			<%= link_to("Register Now", {:controller => 'main', :action => 'register'}) %>
+			<%= link_to("Register Now", {:controller => 'users', :action => 'new'}) %>
 		</div>
 		
 		<div id="forgetpassword">

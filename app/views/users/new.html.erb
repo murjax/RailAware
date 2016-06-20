@@ -12,12 +12,12 @@
 		<div class="top">
 			<nav>
 				<header>
-					<%= link_to("",{:action => 'index'}, :class => 'logo') %>
+					<%= link_to("",{:controller => 'reports', :action => 'index'}, :class => 'logo') %>
 				</header>
 				<ul>
 					<%= link_to "Login", :login %>
-					<%= link_to("View Reports", {:action => 'show'}) %>	
-					<%= link_to("Home", {:action => 'index'}) %>
+					<%= link_to("View Reports", {:controller => 'reports', :action => 'show'}) %>	
+					<%= link_to("Home", {:controller => 'reports', :action => 'index'}) %>
 				</ul>
 			</nav>
 		</div>
@@ -43,7 +43,7 @@
 			
 		<% end %>
 		
-		<%=form_for(:user, :url => {:action => "create_user"}, :html => {:multipart => true}) do |f| %>
+		<%=form_for(:user, :url => {:action => "create"}, :html => {:multipart => true}) do |f| %>
 		<div id="register" class='pure-form pure-form-aligned'>
 			<fieldset>
 				<div class="pure-control-group">

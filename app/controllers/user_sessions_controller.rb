@@ -3,7 +3,7 @@ class UserSessionsController < ApplicationController
   def new
 	@overflow = false
 	if current_user
-		redirect_to(:controller => 'main', :action => 'index')
+		redirect_to(:controller => 'reports', :action => 'index')
 	else
 		@user = User.new
 	end
@@ -15,7 +15,7 @@ class UserSessionsController < ApplicationController
 	if User.find_by_email(params[:email].downcase).email_confirmed
 		if @user = login(params[:email], params[:password])
 			# redirect_back_or_to(:main, notice: 'Login successful')
-			redirect_to(:controller => 'main')
+			redirect_to(:controller => 'reports', :action => 'index')
 		else
 			flash[:alert] = ['Login failed. Please ensure your email and password are correct.']
 			session[:email] = params[:email]
@@ -27,6 +27,6 @@ class UserSessionsController < ApplicationController
 
   def destroy
 	logout
-	redirect_to(:controller => 'main', notice: 'Logged out!')
+	redirect_to(:controller => 'reports', :action => 'index', notice: 'Logged out!')
   end
 end

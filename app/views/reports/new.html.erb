@@ -16,7 +16,7 @@
 				</header>
 				<ul>
 					<%= link_to "Logout", :logout, method: :post %>	
-					<%= link_to("Report A Train", {:action => 'report'}) %>
+					<%= link_to("Report A Train", {:action => 'new'}) %>
 					<%= link_to("View Reports", {:action => 'show'}) %>	
 					<%= link_to("Home", {:action => 'index'}) %>						
 				</ul>
@@ -34,7 +34,7 @@
 			<% end %>
 		</div>
 	<% end %>
-		<%= form_for(:report, :url => {:action => "create_report"}, :html => {:multipart => true}) do |f| %>
+		<%= form_for(:report, :url => {:action => "create"}, :html => {:multipart => true}) do |f| %>
 			<div id="report" class='pure-form pure-form-aligned'>
 				<fieldset>
 					<% railroads_array = Railroad.all.map { |rr| [rr.railroad] } %>

@@ -1,4 +1,4 @@
-class MainController < ApplicationController
+class ReportsController < ApplicationController
 protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 	def index
 		@overflow = false
@@ -55,7 +55,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		end
 	end
 	
-	def report
+	def new
 		@overflow = true
 		
 		if session[:report]
@@ -89,7 +89,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		end
 	end
 	
-	def create_report
+	def create
 		full_sanitizer = Rails::Html::FullSanitizer.new
 		@report = Report.new()
 		@report.username = current_user.username
@@ -633,7 +633,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		end
 	end
 	
-	def update_report
+	def update
 		@report = Report.find(params[:report][:id])
 		@newreport = Report.new()
 		
@@ -770,118 +770,10 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		redirect_to(:viewreports)
 	end
 	
-	
-	def register
-		@overflow = false
-		
-		if current_user
-			redirect_to(:action => 'index')
-		else
-			@user = User.new()
-		end
-		
-	end
-	
-	def create_user
-		user_sanitizer = Rails::Html::FullSanitizer.new
-		@user = User.new(user_params)
-		@user.rating = 50
-		@user.votecount = 0
-		@user.username = user_sanitizer.sanitize(@user.username)
-		if !@user.valid?
-			flash[:notice] = ["Please fix the following errors to continue."]
-			@user.errors.each do |attribute, message|
-				flash[:notice] << message
-			end
-			session[:user] = params[:user]
-			redirect_to(:action => 'register')
-			return
-		end
-		
-		
-		if @user.save
-			UserMailer.registration_confirmation(@user).deliver
-			flash[:notice] = ["Please check your email to confirm your registration."]
-			redirect_to(:action => 'register')
-		else
-		render('register')
-		end
-	end
-	
-	def vote
-		flash[:notice] = ["Vote Received!"]
-		logger.debug(current_user)
-		@report = Report.find(params[:data][0])
-		@rating = @report.rating.to_i
-		@newrating = @rating + (params[:data][1]).to_i
-		@report.rating = @newrating
-		@report.save
-		
-		@vote = Vote.new()
-		@vote.username = params[:data][2]
-		@vote.report_id = params[:data][0]
-		@vote.save
-		
-		@user = User.find_by_username(@report.username)
-		@user.votecount = @user.votecount.to_i + 1
-		
-		if params[:data[1]].to_i == 0
-			
-			if @user.votecount.to_i.between?(0, 6)
-				@user.rating = (@user.rating.to_i * 0.1) + @user.rating.to_i
-			elsif @user.votecount.to_i.between?(5, 11)
-				@user.rating = (@user.rating.to_i * 0.08) + @user.rating.to_i
-			elsif @user.votecount.to_i.between?(9, 21)
-				@user.rating = (@user.rating.to_i * 0.05) + @user.rating.to_i
-			elsif @user.votecount.to_i.between?(19, 41)
-				@user.rating = (@user.rating.to_i * 0.03) + @user.rating.to_i
-			elsif @user.votecount.to_i.between?(39, 81)
-				@user.rating = (@user.rating.to_i * 0.02) + @user.rating.to_i
-			else
-				@user.rating = (@user.rating.to_i * 0.01) + @user.rating.to_i
-			end
-		else
-			
-			if @user.votecount.to_i.between?(0, 6)
-				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.1)
-			elsif @user.votecount.to_i.between?(5, 11)
-				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.08)
-			elsif @user.votecount.to_i.between?(9, 21)
-				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.05)
-			elsif @user.votecount.to_i.between?(19, 41)
-				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.03)
-			elsif @user.votecount.to_i.between?(39, 81)
-				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.02)
-			else
-				@user.rating = @user.rating.to_i - (@user.rating.to_i * 0.01)
-			end
-		end
-		
-		
-		@user.save
-		
-		redirect_to(:action => 'show')
-	end
-	
-	def confirm_email
-		user = User.find_by_confirm_token(params[:id])
-		
-		if user
-			user.email_activate
-			redirect_to url_for(:login)
-		end
-	end
-	
 	private
-
-		def user_params
-			params.require(:user).permit(:username, :password, :password_confirmation, :email)
-		end
 		
 		def report_params
-			
 			params.require(:report).permit(:username, :trainnumber, :loconumber, :locotype, :railroad, :location, :direction, :additional, :info, :lat, :lon, :time, :user_id)
-			
 		end
 		
 end
