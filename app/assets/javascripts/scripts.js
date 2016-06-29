@@ -67,19 +67,6 @@ $(document).ready( function () {
 	$('#report_time_1i').val(year);
 	$('#report_time_4i').val(hour);
 	
-	
-	$('#country').change(function(){
-		
-		if(this.options[this.selectedIndex].value == "Canada"){
-			$('.provinces').show();
-			$('.states').hide();
-		}else{
-			$('.provinces').hide();
-			$('.states').show();
-		}
-		
-	});
-	
 	if($('#trainrailroad').val() == "Other"){
 		$('#trainotherrailroad').show();
 	}
@@ -281,13 +268,11 @@ function displayLocationFields(){
 	if (f == 0){
 		document.getElementById('citybox').style.display = "block";
 		document.getElementById('statebox').style.display = "block";
-		document.getElementById('countrybox').style.display = "block";
 		document.getElementById('locationpicker').style.display = "none";
 		f = 1;
 	}else {
 		document.getElementById('citybox').style.display = "none";
 		document.getElementById('statebox').style.display = "none";
-		document.getElementById('countrybox').style.display = "none";
 		document.getElementById('locationpicker').style.display = "block";
 		f = 0;
 	}

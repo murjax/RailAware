@@ -113,16 +113,14 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 			end
 			session[:direction] = params[:direction]
 			session[:state] = params[:state]
-			session[:province] = params[:province]
-			session[:country] = params[:country]
 			logger.debug(@report.errors.full_messages)
 			redirect_to(:action => 'new')
 			return
 		else
 			if params[:manuallocation]
-				location = @report.location.city + ", " + @report.location.state_prov
-				@report.latitude = Geocoder.coordinates(@report.location)[0]
-				@report.longitude = Geocoder.coordinates(@report.location)[1]
+				city_state_prov = "#{@report.location.city}, #{@report.location.state_prov}"
+				@report.location.latitude = Geocoder.coordinates(city_state_prov)[0]
+				@report.location.longitude = Geocoder.coordinates(city_state_prov)[1]
 			else
 				address = Geocoder.address(@report.location.latitude.to_s + ", " + @report.location.longitude.to_s)
 				address_split = address.split(",")
@@ -196,24 +194,25 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 				return
 			end
 			
-			@duplicatetimecheck = Report.where(created_at: 1.hours.ago..Time.now)
-			if @duplicatetimecheck.length > 1
-				@duplicatetimecheck.each do |r|
-					if r.location.latitude == @report.location.latitude
-						@duplicatelocationcheck.push(r)
-					end
-				end
-				if @duplicatelocationcheck.length > 1
-					@duplicatetraincheck = @duplicatelocationcheck.where(train_number: @report.train_number)
-					if @duplicatetraincheck.length > 1
-						flash[:notice] = ["You must fix the following errors to continue."]
-						flash[:notice] << "This train has already been reported by a user."
-						@report.destroy
-						redirect_to(:action => 'report')
-						return
-					end
-				end
-			end
+			#@duplicatetimecheck = Report.where(created_at: 1.hours.ago..Time.now)
+			#if @duplicatetimecheck.length > 1
+			#	@duplicatetimecheck.each do |r|
+					#if r.location.latitude == @report.location.latitude
+					#	@duplicatelocationcheck.push(r)
+					#end
+			#	end
+			#	if @duplicatelocationcheck.length > 1
+			#		@duplicatetraincheck = @duplicatelocationcheck.where(train_number: @report.train_number)
+			#		if @duplicatetraincheck.length > 1
+			#			flash[:notice] = ["You must fix the following errors to continue."]
+			#			flash[:notice] << "This train has already been reported by a user."
+			#			@report.destroy
+			#			redirect_to(:action => 'report')
+			#			return
+			#		end
+			#	end
+			#end
+
 			@report.save
 			logger.debug(timezone.zone)
 			redirect_to(:action => 'index')

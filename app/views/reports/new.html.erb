@@ -179,33 +179,15 @@
 							
 						</div>
 						
-						<div class="pure-control-group" id="countrybox" style="display: none;">
-							<label><%= f.label(:country, "Country")%></label>
-							<% if session[:country] %>
-							<%= select_tag :country, options_for_select(["United States", "Canada"], session[:country]) %>
-							<% else %>
-							<%= select_tag :country, options_for_select(["United States", "Canada"]) %>
-							<% end %>
-							
-						</div>
-						
 						<div class="pure-control-group states" id="statebox" style="display: none;">
-							<label><%= l.label(:state, "State") %></label>
-							<% if session[:state] %>
-							<%= select_tag :state_prov, options_for_select(Report::STATE_LIST, session[:state]) %>
+							<label><%= l.label(:state_prov, "State/Province") %></label>
+							<% if session[:state_prov] %>
+							<%= l.select :state_prov, options_for_select(Report::STATE_LIST + Report::PROVINCE_LIST, session[:state]) %>
 							<% else %>
-							<%= select_tag :state_prov, options_for_select(Report::STATE_LIST) %>
+							<%= l.select :state_prov, options_for_select(Report::STATE_LIST + Report::PROVINCE_LIST) %>
 							<% end %>
 						</div>
 						
-						<div class="pure-control-group provinces" style="display: none;">
-							<label><%= l.label(:province, "Province") %></label>
-							<% if session[:province] %>
-							<%= select_tag :state_prov, options_for_select(Report::PROVINCE_LIST, session[:province]) %>
-							<% else %>
-							<%= select_tag :state_prov, options_for_select(Report::PROVINCE_LIST) %>
-							<% end %>
-						</div>
 					<% end %>
 					
 					
