@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  railroad: 
+  number: 
+  type: 
+  report_id: 
+
+two:
+  railroad: 
+  number: 
+  type: 
+  report_id: 

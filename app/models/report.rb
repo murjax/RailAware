@@ -1,5 +1,9 @@
 class Report < ActiveRecord::Base
 	belongs_to :user
+	has_many :locomotives
+	has_one :location
+	accepts_nested_attributes_for :locomotives, allow_destroy: true
+	accepts_nested_attributes_for :location, allow_destroy: true
 	
 	STATE_LIST = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI',
 		'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS',
@@ -27,7 +31,7 @@ class Report < ActiveRecord::Base
 	#	end
 	#end
 	#after_validation :reverse_geocode
-	validates :trainnumber, presence: {in: [true], message: "You must enter a train number."}
+	validates :train_number, presence: {in: [true], message: "You must enter a train number."}
 	#validates :loconumber, presence: {in: [true], message: "You must enter a locomotive number."}, numericality: {in: [true], message: "The locomotive number field must be a numerical value."}, length: {maximum: 5, message: "The locomotive number cannot be more than 5 digits."}
 	#validates :locotype, presence: {in: [true], message: "You must enter a locomotive type"}
 	validates :info, length: {maximum: 200, message: "Text must be within 200 characters."}
