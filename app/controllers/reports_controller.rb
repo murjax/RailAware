@@ -176,7 +176,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 				flash[:notice] = ["You must fix the following errors to continue."]
 				flash[:notice] << "Location invalid. We only support reporting within the United States and Canada at this time."
 				@report.destroy
-				redirect_to(:action => 'report')
+				redirect_to(:action => 'new')
 				return
 			end
 			
@@ -190,28 +190,29 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 				flash[:notice] = ["You must fix the following errors to continue."]
 				flash[:notice] << "Invalid time. Time cannot be in the future."
 				@report.destroy
-				redirect_to(:action => 'report')
+				redirect_to(:action => 'new')
 				return
 			end
-			
-			#@duplicatetimecheck = Report.where(created_at: 1.hours.ago..Time.now)
-			#if @duplicatetimecheck.length > 1
-			#	@duplicatetimecheck.each do |r|
-					#if r.location.latitude == @report.location.latitude
-					#	@duplicatelocationcheck.push(r)
-					#end
-			#	end
-			#	if @duplicatelocationcheck.length > 1
-			#		@duplicatetraincheck = @duplicatelocationcheck.where(train_number: @report.train_number)
-			#		if @duplicatetraincheck.length > 1
-			#			flash[:notice] = ["You must fix the following errors to continue."]
-			#			flash[:notice] << "This train has already been reported by a user."
-			#			@report.destroy
-			#			redirect_to(:action => 'report')
-			#			return
-			#		end
-			#	end
-			#end
+
+			duplicate_times = Location.where(created_at: 1.hours.ago..Time.now)
+			if duplicate_times.length > 1
+				duplicate_locations = duplicate_times.where(latitude: @report.location.latitude)
+				if duplicate_locations.length > 1
+					duplicate_report_ids = []
+					duplicate_locations.select("report_id").each {|i| duplicate_report_ids.push(i.report_id)}
+					duplicate_location_reports = Report.where(id: duplicate_report_ids)
+					duplicate_trains = duplicate_location_reports.where(train_number: @report.train_number)
+					if duplicate_trains.length > 1
+						flash[:notice] = ["You must fix the following errors to continue."]
+						flash[:notice] << "This train has already been reported by a user."
+						@report.location.destroy
+						@report.locomotives.destroy_all
+						@report.destroy
+						redirect_to(:action => 'new')
+						return
+					end
+				end
+			end
 
 			@report.save
 			logger.debug(timezone.zone)
