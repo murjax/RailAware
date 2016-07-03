@@ -89,7 +89,10 @@
 									<% end %>
 								<% end %>
 								<p class="hidden" id="reportid"><%= report.id %></p>
-								<p class="hidden" id="locomotives"><%= report.locomotives %></p>
+
+								<% report.locomotives.each do |l| %>
+									<p class="hidden locomotives"><%= "#{l.loco_type}: #{l.number}" %></p>
+								<% end %>
 								<p class="hidden" id="info"><%= report.info %> </p>
 								<p class="hidden" id="direction"><%= report.direction %></p>
 								<p class="hidden" id="time"><%= report.time.in_time_zone(report.offset.to_i).strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %></p>
@@ -117,7 +120,7 @@
 							<% end %>
 						</td>
 						<td class="tablecenter"><%= report.train_number %> </td>
-						<td class="tablecenter"><%= report.location %> </td>
+						<td class="tablecenter"><%= "#{report.location.city}, #{report.location.state_prov}" %> </td>
 						<td class="mobilehide tablecenter"><%= report.direction %> </td>
 						<td class="mobilehide tablecenter"><%= report.time.in_time_zone(report.offset.to_i).strftime("%m/%d/%Y - %H:%M") + " " + report.timezone %> </td>
 					</tr>
