@@ -72,7 +72,6 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		@oldreport = Report.find(params[:id])
 		@overflow = true
 		
-		
 		if !current_user
 			redirect_to(:login)
 		end
@@ -128,7 +127,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 					@report.location.city = address_split[0]
 					@report.location.state_prov = address_split[1]
 				else
-					@report.location.city = address_split[0]
+					@report.location.city = address_split[1]
 					@report.location.state_prov = address_split[2][0..2]
 				end
 			end
@@ -223,7 +222,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 	end
 	
 	def update
-		@report = Report.find(params[:id])
+		@report = Report.find(params[:report][:id])
 
 		if !@report.valid?
 			flash[:notice] = ["You must fix the following errors to continue."]
@@ -244,17 +243,23 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 			redirect_to(:action => 'report')
 		else
 			if params[:manuallocation]
-				location = @report.location.city + ", " + @report.location.state_prov
-				@report.latitude = Geocoder.coordinates(@report.location)[0]
-				@report.longitude = Geocoder.coordinates(@report.location)[1]
+				logger.debug(params[:report][:city])
+				logger.debug(params[:report][:state_prov])
+				location = params[:report][:city] + ", " + params[:state_prov]
+				@report.location.latitude = Geocoder.coordinates(location)[0]
+				@report.location.longitude = Geocoder.coordinates(location)[1]
+				@report.location.city = params[:report][:city]
+				@report.location.state_prov = params[:state_prov]
 			else
+				@report.location.latitude = params[:report][:latitude]
+				@report.location.longitude = params[:report][:longitude]
 				address = Geocoder.address(@report.location.latitude.to_s + ", " + @report.location.longitude.to_s)
 				address_split = address.split(",")
-				if @address_split.length == 2
+				if address_split.length == 2
 					@report.location.city = address_split[0]
 					@report.location.state_prov = address_split[1]
 				else
-					@report.location.city = address_split[0]
+					@report.location.city = address_split[1]
 					@report.location.state_prov = address_split[2][0..2]
 				end
 			end
@@ -264,7 +269,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 				locmatches = true;
 				while locmatches == true do
 					allreports.each do |xreport|
-						if (@report.location.latitude.round(4).equal? xreport.location.latitude) && (@report.location.longitude.round(4).equal? xreport.location.longitude)
+						if (@report.location.latitude.to_f.round(4).equal? xreport.location.latitude) && (@report.location.longitude.to_f.round(4).equal? xreport.location.longitude)
 							@report.location.latitude = @report.location.latitude - 0.0001
 							@report.location.longitude = @report.location.longitude - 0.0001
 						else
@@ -274,7 +279,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 				end
 			end
 		end	
-		if @report.update_attributes(user_params)
+		if @report.save
 			redirect_to(:action => 'index')
 		else
 			render :action => 'report'

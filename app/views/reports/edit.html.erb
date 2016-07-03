@@ -43,8 +43,8 @@
 						<%= f.text_field(:id, :value => @oldreport.id) %>
 					</div>
 					<div class="pure-control-group">
-						<label><%= f.label(:trainnumber, "Train Symbol/#") %></label>
-						<%= f.text_field(:trainnumber, :value => @oldreport.trainnumber, :disabled => true) %>
+						<label><%= f.label(:train_number, "Train Symbol/#") %></label>
+						<%= f.text_field(:train_number, :value => @oldreport.train_number, :disabled => true) %>
 					</div>
 					
 					<div id="manuallocationcheck" class="pure-control-group">
@@ -98,42 +98,32 @@
 						}
 						
 					</script>
-					
-					<div class="pure-control-group" id="latbox" style="display: none;">
-						<%= f.text_field(:latitude) %>
-					</div>
-					
-					<div class="pure-control-group" id="lonbox" style="display: none;">
-						<%= f.text_field(:longitude) %>
-					</div>
-					
-					<div class="pure-control-group" id="citybox" style="display: none;">
-						<label><%= f.label(:city, "City") %></label>
-						<%= f.text_field(:city) %>
+
+					<%= f.fields_for :location do |l| %>
+						<div class="pure-control-group" id="latbox" style="display: none;">
+							<%= f.text_field(:latitude) %>
+						</div>
 						
-					</div>
-					
-					<div class="pure-control-group" id="countrybox" style="display: none;">
-						<label><%= f.label(:country, "Country")%></label>
-						<%= select_tag :country, options_for_select(["United States", "Canada"]) %>
+						<div class="pure-control-group" id="lonbox" style="display: none;">
+							<%= f.text_field(:longitude) %>
+						</div>
 						
-					</div>
-					
-					<div class="pure-control-group states" id="statebox" style="display: none;">
-						<label><%= f.label(:state, "State") %></label>
-						<%= select_tag :state, options_for_select(Report::STATE_LIST) %>
-					</div>
-					
-					<div class="pure-control-group provinces" style="display: none;">
-						<label><%= f.label(:province, "Province") %></label>
-						<%= select_tag :province, options_for_select(Report::PROVINCE_LIST) %>
-					</div>
+						<div class="pure-control-group" id="citybox" style="display: none;">
+							<label><%= f.label(:city, "City") %></label>
+							<%= f.text_field(:city) %>
+						</div>
+						
+						<div class="pure-control-group states" id="statebox" style="display: none;">
+							<label><%= f.label(:state_prov, "State/Province") %></label>
+							<%= select_tag :state_prov, options_for_select(Report::STATE_LIST + Report::PROVINCE_LIST) %>
+						</div>
+					<% end %>
 					
 					<div class="pure-control-group">
 						<label><%= f.label(:direction, "Direction") %></label>
 						<%= select_tag :direction, options_for_select(Report::DIRECTIONS, @oldreport.direction) %>
-						
 					</div>
+					
 					
 					<div class="pure-control-group">
 						<label><%= f.label(:time, "Time Seen") %></label>
