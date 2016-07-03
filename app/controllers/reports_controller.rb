@@ -174,6 +174,8 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 			else
 				flash[:notice] = ["You must fix the following errors to continue."]
 				flash[:notice] << "Location invalid. We only support reporting within the United States and Canada at this time."
+				@report.location.destroy
+				@report.locomotives.destroy_all
 				@report.destroy
 				redirect_to(:action => 'new')
 				return
@@ -188,6 +190,8 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 			if @checktime > Time.now.in_time_zone(timezone.active_support_time_zone)
 				flash[:notice] = ["You must fix the following errors to continue."]
 				flash[:notice] << "Invalid time. Time cannot be in the future."
+				@report.location.destroy
+				@report.locomotives.destroy_all
 				@report.destroy
 				redirect_to(:action => 'new')
 				return
@@ -310,7 +314,8 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 			redirect_to(:viewreports)
 			return
 		end
-		
+		@report.location.destroy
+		@report.locomotives.destroy_all
 		@report.destroy
 		redirect_to(:viewreports)
 	end
