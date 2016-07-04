@@ -38,8 +38,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 	
 	def create
 		full_sanitizer = Rails::Html::FullSanitizer.new
-		parameters = report_params.except!("location")
-		parameters = parameters.except!("locomotives")
+		parameters = report_params.except!("location").except("locomotives")
 		locomotives = []
 		locomotives.push(report_params.delete("locomotives"))
 		location = Location.new(report_params.delete("location"))
@@ -48,81 +47,50 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		@report.locomotives = locomotives.map{ |l| Locomotive.new(l) }
 
 		if !@report.valid?
+			session = set_session_params(params[:report], params[:railroad], params[:direction], params[:state])
 			flash[:notice] = ["You must fix the following errors to continue."]
 			@report.errors.each do |attribute, message|
 				flash[:notice] << message
 			end
-
-			session[:report] = params[:report]
-			if params[:railroad] == "Other"
-				session[:railroad] = params[:report][:railroad]
-			else
-				session[:railroad] = params[:railroad]
-			end
-			session[:direction] = params[:direction]
-			session[:state] = params[:state]
-			logger.debug(@report.errors.full_messages)
 			redirect_to(:action => 'new')
 			return
 		else
 			if params[:manuallocation]
-				city_state_prov = "#{@report.location.city}, #{@report.location.state_prov}"
-				@report.location.latitude = Geocoder.coordinates(city_state_prov)[0]
-				@report.location.longitude = Geocoder.coordinates(city_state_prov)[1]
+				city_to_coordinates
 			else
-				address = Geocoder.address(@report.location.latitude.to_s + ", " + @report.location.longitude.to_s)
-				address_split = address.split(",")
-				if address_split.length == 2
-					@report.location.city = address_split[0]
-					@report.location.state_prov = address_split[1]
-				else
-					@report.location.city = address_split[1]
-					@report.location.state_prov = address_split[2][0..2]
-				end
+				coordinates_to_city
 			end
 
 			if @report.location.has_matches?
 				@report.location.adjust_location
 			end
 
-
 			@report.info = full_sanitizer.sanitize(@report.info)
 
 			if params[:railroadsuggestion]
-			File.open("railroadsuggestions.txt", "a") { |file| file.write params[:report][:railroad] + " " + params[:report][:railroad2] + " " + params[:report][:railroad3] + " " + params[:report][:railroad4] + " " + params[:report][:railroad5] + " " + params[:report][:railroad6]}
+				write_suggestions(params[:report][:railroad])
+			end
 		end
-		end
+
 		if @report.save
 		   @timezone = @report.set_timezone
 		   if @timezone == false
-			   	flash[:notice] = ["You must fix the following errors to continue."]
-				flash[:notice] << "Location invalid. We only support reporting within the United States and Canada at this time."
-				@report.location.destroy
-				@report.locomotives.destroy_all
-				@report.destroy
-				redirect_to(:action => 'new')
-				return
+		   		notice = "Location invalid. We only support reporting within the United States and Canada at this time."
+		   		destroy_and_redirect_to_new(notice)
+		   		return
 		   end
 
 		   @report.set_offset(@timezone)
 
 		   if !@report.valid_time?(Time.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i, 0, @offset), @timezone)
-		   		flash[:notice] = ["You must fix the following errors to continue."]
-				flash[:notice] << "Invalid time. Time cannot be in the future."
-				@report.location.destroy
-				@report.locomotives.destroy_all
-				@report.destroy
-				redirect_to(:action => 'new')
-				return
+		   		notice = "Invalid time. Time cannot be in the future."
+		   		destroy_and_redirect_to_new(notice)
+		   		return
 		   end
 
 		   if @report.is_duplicate?
-		   		flash[:notice] = ["You must fix the following errors to continue."]
-				flash[:notice] << "This train has already been reported by a user."
-				@report.location.destroy
-				@report.locomotives.destroy_all
-				@report.destroy
-				redirect_to(:action => 'new')
+		   		notice = "This train has already been reported by a user."
+		   		destroy_and_redirect_to_new(notice)
 				return
 		   end
 
@@ -294,5 +262,50 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 			
 			"</ul>"
 		end
+
+		def city_to_coordinates
+			city_state_prov = "#{@report.location.city}, #{@report.location.state_prov}"
+			@report.location.latitude = Geocoder.coordinates(city_state_prov)[0]
+			@report.location.longitude = Geocoder.coordinates(city_state_prov)[1]
+		end
+
+		def coordinates_to_city
+			address = Geocoder.address(@report.location.latitude.to_s + ", " + @report.location.longitude.to_s)
+			address_split = address.split(",")
+			if address_split.length == 2
+				@report.location.city = address_split[0]
+				@report.location.state_prov = address_split[1]
+			else
+				@report.location.city = address_split[1]
+				@report.location.state_prov = address_split[2][0..2]
+			end
+		end
+
+		def write_suggestions(railroad)
+			File.open("railroadsuggestions.txt", "a") { |file| file.write railroad}
+		end
+
+		def set_session_params(report, railroad, direction, state)
+			session[:report] = report
+			if params[:railroad] == "Other"
+				session[:railroad] = report[:railroad]
+			else
+				session[:railroad] = railroad
+			end
+			session[:direction] = direction
+			session[:state] = state
+
+			session
+		end
+
+		def destroy_and_redirect_to_new(notice)
+			flash[:notice] = ["You must fix the following errors to continue."]
+			flash[:notice] << notice
+			@report.location.destroy
+			@report.locomotives.destroy_all
+			@report.destroy
+			redirect_to(:action => 'new')
+		end
+
 		
 end
