@@ -132,20 +132,10 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 				end
 			end
 
-			allreports = Report.where(:created_at => (1.week.ago..Time.zone.now))
-			if !allreports.empty?
-				locmatches = true;
-				while locmatches == true do
-					allreports.each do |xreport|
-						if (@report.location.latitude.to_f.round(4).equal? xreport.location.latitude) && (@report.location.longitude.to_f.round(4).equal? xreport.location.longitude)
-							@report.location.latitude = @report.location.latitude - 0.0001
-							@report.location.longitude = @report.location.longitude - 0.0001
-						else
-							locmatches = false
-						end	
-					end
-				end
+			if @report.location.has_matches?
+				@report.location.adjust_location
 			end
+
 
 			@report.info = full_sanitizer.sanitize(@report.info)
 
@@ -154,71 +144,40 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		end
 		end
 		if @report.save
-			timezone = Timezone::Zone.new :latlon => [@report.location.latitude, @report.location.longitude]
-			if timezone.zone == "America/St_Johns"
-				@report.timezone = "NT"
-			elsif timezone.zone == "America/Moncton" || timezone.zone == "America/Blanc-Sablon" || timezone.zone == "America/Glace_Bay"
-				@report.timezone = "AT"
-			elsif timezone.zone == "America/New_York" || timezone.zone == "America/Toronto" || timezone.zone == "America/Detroit" || timezone.zone == "America/Fort_Wayne" || timezone.zone == "America/Indiana/Indianapolis" || timezone.zone == "America/Indiana/Marengo" || timezone.zone == "America/Indiana/Petersburg" || timezone.zone == "America/Indiana/Vevay" || timezone.zone == "America/Indiana/Winamac" || timezone.zone == "America/Indianapolis" || timezone.zone == "America/Kentucky/Louisville" || timezone.zone == "America/Kentucky/Monticello" || timezone.zone == "America/Louisville" || timezone.zone == "America/Atikokan" || timezone.zone == "America/Iqaluit" || timezone.zone == "America/Nipigon" || timezone.zone == "America/Thunder_Bay"
-				@report.timezone = "ET"
-			elsif timezone.zone == "America/Chicago" || timezone.zone == "America/Winnipeg" || timezone.zone == "America/Regina" || timezone.zone == "America/Indiana/Knox" || timezone.zone == "America/Indiana/Tell_City" || timezone.zone == "America/Indiana/Vincennes" || timezone.zone == "America/Knox_IN" || timezone.zone == "America/North_Dakota/Beulah" || timezone.zone == "America/North_Dakota/New_Salem" || timezone.zone == "America/North_Dakota/Center" || timezone.zone == "America/Inuvik" || timezone.zone == "America/Rainy_River" || timezone.zone == "America/Rankin_Inlet" || timezone.zone == "America/Resolute" || timezone.zone == "America/Swift_Current"
-				@report.timezone = "CT"
-			elsif timezone.zone == "America/Denver" || timezone.zone == "America/Phoenix" || timezone.zone == "America/Edmonton" || timezone.zone == "America/Shiprock" || timezone.zone == "America/Boise"
-				@report.timezone = "MT"
-			elsif timezone.zone == "America/Los_Angeles" || timezone.zone == "America/Vancouver" || timezone.zone == "America/Creston" || timezone.zone == "America/Dawson" || timezone.zone == "America/Dawson_Creek" || timezone.zone == "America/Fort_Nelson" || timezone.zone == "America/Cambridge_Bay" || timezone.zone == "America/Whitehorse"
-				@report.timezone = "PT"
-			elsif timezone.zone == "America/Anchorage" || timezone.zone == "America/Juneau" || timezone.zone == "America/Nome" || timezone.zone == "America/Adak" || timezone.zone == "America/Atka" || timezone.zone == "America/Sitka"
-				@report.timezone = "AKT"
-			elsif timezone.zone == "Pacific/Honolulu"
-				@report.timezone = "HT"
-			else
-				flash[:notice] = ["You must fix the following errors to continue."]
+		   @timezone = @report.set_timezone
+		   if @timezone == false
+			   	flash[:notice] = ["You must fix the following errors to continue."]
 				flash[:notice] << "Location invalid. We only support reporting within the United States and Canada at this time."
 				@report.location.destroy
 				@report.locomotives.destroy_all
 				@report.destroy
 				redirect_to(:action => 'new')
 				return
-			end
-			
-			@absoluteoffset = timezone.utc_offset.to_i.abs
-			@offset = Time.at(@absoluteoffset).utc.strftime("-%H:%M")
-			@offset = @offset.to_s
-			@report.offset = @offset
-			logger.debug(params[:report])
-			@checktime = Time.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i, 0, @offset)
-			if @checktime > Time.now.in_time_zone(timezone.active_support_time_zone)
-				flash[:notice] = ["You must fix the following errors to continue."]
+		   end
+
+		   @report.set_offset(@timezone)
+
+		   if !@report.valid_time?(Time.new(params[:report]["time(1i)"].to_i,params[:report]["time(2i)"].to_i,params[:report]["time(3i)"].to_i,params[:report]["time(4i)"].to_i,params[:report]["time(5i)"].to_i, 0, @offset), @timezone)
+		   		flash[:notice] = ["You must fix the following errors to continue."]
 				flash[:notice] << "Invalid time. Time cannot be in the future."
 				@report.location.destroy
 				@report.locomotives.destroy_all
 				@report.destroy
 				redirect_to(:action => 'new')
 				return
-			end
+		   end
 
-			duplicate_times = Location.where(created_at: 1.hours.ago..Time.now)
-			if duplicate_times.length > 1
-				duplicate_locations = duplicate_times.where(latitude: @report.location.latitude)
-				if duplicate_locations.length > 1
-					duplicate_report_ids = []
-					duplicate_locations.select("report_id").each {|i| duplicate_report_ids.push(i.report_id)}
-					duplicate_location_reports = Report.where(id: duplicate_report_ids)
-					duplicate_trains = duplicate_location_reports.where(train_number: @report.train_number)
-					if duplicate_trains.length > 1
-						flash[:notice] = ["You must fix the following errors to continue."]
-						flash[:notice] << "This train has already been reported by a user."
-						@report.location.destroy
-						@report.locomotives.destroy_all
-						@report.destroy
-						redirect_to(:action => 'new')
-						return
-					end
-				end
-			end
+		   if @report.is_duplicate?
+		   		flash[:notice] = ["You must fix the following errors to continue."]
+				flash[:notice] << "This train has already been reported by a user."
+				@report.location.destroy
+				@report.locomotives.destroy_all
+				@report.destroy
+				redirect_to(:action => 'new')
+				return
+		   end
 
 			@report.save
-			logger.debug(timezone.zone)
 			redirect_to(:action => 'index')
 		else
 			redirect_to(:action => 'new')
