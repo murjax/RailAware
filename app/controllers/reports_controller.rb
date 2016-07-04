@@ -3,58 +3,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 	def index
 		@overflow = false
 		@reports = Report.where(:created_at => (1.week.ago..Time.zone.now))
-		
-		@hash = Gmaps4rails.build_markers(@reports) do |report, marker|
-		  @locomotivesList = report.locomotives
-		  @htmlLocos = "";
-		  for x in 0..@locomotivesList.length - 1
-			if x == 0
-				locomotive_attr = "#{@locomotivesList[x].loco_type}: #{@locomotivesList[x].number}"
-				@htmlLocos = locomotive_attr
-			else
-				locomotive_attr = "#{@locomotivesList[x].loco_type}: #{@locomotivesList[x].number}"
-				@htmlLocos = @htmlLocos + ", " + locomotive_attr
-			end
-			
-		  end
-		  @offset = report.offset
-		  @reporttime = Time.new(report.time.year, report.time.month, report.time.day, report.time.hour, report.time.min, report.time.sec, @offset)
-		  marker.lat report.location.latitude
-		  marker.lng report.location.longitude
-		  marker.infowindow "<div class='infoboxheader'>" + report.train_number + "</div>" + "<ul class='infobox'>" + 
-			"<li>" +
-				"<label>Posted By:</label>" +
-				"<span>" + report.username + "</span>" +
-			"</li>" + 
-			"<li>" +
-				"<label>Locomotives:</label>" +
-				"<span>" + @htmlLocos + "</span>" +
-			"</li>" + 
-			"<li>" +
-				"<label>Location:</label>" +
-				"<span>" + "#{report.location.city}, #{report.location.state_prov}" + "</span>" +
-			"</li>" + 
-			"<li>" +
-				"<label>Direction:</label>" +
-				"<span>" + report.direction + "</span>" +
-			"</li>" + 
-			"<li>" +
-				"<label>Date/Time Seen:</label>" +
-				"<span>" + report.time.in_time_zone(@offset.to_i).strftime("%m/%d/%Y - %H:%M") + "</span>" +
-			"</li>" + 
-			"<li>" +
-				"<label>Additional Info:</label>" +
-				"<span>" + report.info + "</span>" +
-			"</li>" + 
-			
-			"</ul>"
-			
-			marker.picture({
-				:url => ActionController::Base.helpers.image_path('marker.png', type: :image),
-				:width => 15,
-				:height => 20
-			})
-		end
+		build_markers
 	end
 	
 	def new
@@ -283,6 +232,67 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		
 		def report_params
 			params.require(:report).permit(:username, :railroad, :train_number, :direction, :info, :time, :user_id, :rating, :timezone, :offset, location: [ :latitude, :longitude, :city, :state_prov, :id ], locomotives: [ :id, :number, :loco_type, :railroad ])
+		end
+
+		def build_markers
+			@hash = Gmaps4rails.build_markers(@reports) do |report, marker|
+			  locomotives = report.locomotives
+			  offset = report.offset
+			  marker.lat report.location.latitude
+			  marker.lng report.location.longitude
+			  marker.infowindow info_window_html(report, locomotives, offset)
+				
+			  marker.picture({
+			  	:url => ActionController::Base.helpers.image_path('marker.png', type: :image),
+			  	:width => 15,
+				:height => 20
+			  })
+			end
+		end
+
+		def locomotives_to_html(locomotives)
+			html_locos = ""
+			  for x in 0..locomotives.length - 1
+				if x == 0
+					locomotive_attr = "#{locomotives[x].loco_type}: #{locomotives[x].number}"
+					html_locos = locomotive_attr
+				else
+					locomotive_attr = "#{locomotives[x].loco_type}: #{locomotives[x].number}"
+					html_locos = html_locos + ", " + locomotive_attr
+				end
+				
+			  end
+			  html_locos
+		end
+
+		def info_window_html(report, locomotives, offset)
+			"<div class='infoboxheader'>" + report.train_number + "</div>" + "<ul class='infobox'>" + 
+			"<li>" +
+				"<label>Posted By:</label>" +
+				"<span>" + report.username + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Locomotives:</label>" +
+				"<span>" + locomotives_to_html(locomotives) + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Location:</label>" +
+				"<span>" + "#{report.location.city}, #{report.location.state_prov}" + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Direction:</label>" +
+				"<span>" + report.direction + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Date/Time Seen:</label>" +
+				"<span>" + report.time.in_time_zone(offset.to_i).strftime("%m/%d/%Y - %H:%M") + "</span>" +
+			"</li>" + 
+			"<li>" +
+				"<label>Additional Info:</label>" +
+				"<span>" + report.info + "</span>" +
+			"</li>" + 
+			
+			"</ul>"
 		end
 		
 end
