@@ -105,58 +105,27 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 		@report = Report.find(params[:report][:id])
 
 		if !@report.valid?
+			session = set_session_params(params[:report], params[:railroad], params[:direction], params[:state])
 			flash[:notice] = ["You must fix the following errors to continue."]
 			@report.errors.each do |attribute, message|
 				flash[:notice] << message
 			end
-
-			session[:report] = params[:report]
-			if params[:railroad] == "Other"
-				session[:railroad] = params[:report][:railroad]
-			else
-				session[:railroad] = params[:railroad]
-			end
-			session[:direction] = params[:direction]
-			session[:state] = params[:state]
-			session[:province] = params[:province]
-			session[:country] = params[:country]
-			redirect_to(:action => 'report')
+			redirect_to(:back)
+			return
 		else
 			if params[:manuallocation]
-				logger.debug(params[:report][:city])
-				logger.debug(params[:report][:state_prov])
 				location = params[:report][:city] + ", " + params[:state_prov]
-				@report.location.latitude = Geocoder.coordinates(location)[0]
-				@report.location.longitude = Geocoder.coordinates(location)[1]
 				@report.location.city = params[:report][:city]
 				@report.location.state_prov = params[:state_prov]
+				city_to_coordinates
 			else
 				@report.location.latitude = params[:report][:latitude]
 				@report.location.longitude = params[:report][:longitude]
-				address = Geocoder.address(@report.location.latitude.to_s + ", " + @report.location.longitude.to_s)
-				address_split = address.split(",")
-				if address_split.length == 2
-					@report.location.city = address_split[0]
-					@report.location.state_prov = address_split[1]
-				else
-					@report.location.city = address_split[1]
-					@report.location.state_prov = address_split[2][0..2]
-				end
+				coordinates_to_city
 			end
 
-			allreports = Report.where(:created_at => (1.week.ago..Time.zone.now))
-			if !allreports.empty?
-				locmatches = true;
-				while locmatches == true do
-					allreports.each do |xreport|
-						if (@report.location.latitude.to_f.round(4).equal? xreport.location.latitude) && (@report.location.longitude.to_f.round(4).equal? xreport.location.longitude)
-							@report.location.latitude = @report.location.latitude - 0.0001
-							@report.location.longitude = @report.location.longitude - 0.0001
-						else
-							locmatches = false
-						end	
-					end
-				end
+			if @report.location.has_matches?
+				@report.location.adjust_location
 			end
 		end	
 		if @report.save
