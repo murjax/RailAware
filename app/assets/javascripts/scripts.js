@@ -1,9 +1,4 @@
-var a = 0;
-var b = 0;
-var c = 0;
-var d = 0;
-var e = 0;
-var f = 0;
+
 var menucheck = 0
 	
 
@@ -67,110 +62,11 @@ $(document).ready( function () {
 	$('#report_time_1i').val(year);
 	$('#report_time_4i').val(hour);
 	
-	if($('#trainrailroad').val() == "Other"){
-		$('#trainotherrailroad').show();
-	}
-	$('#trainrailroad').change(function(){
-		if(this.options[this.selectedIndex].value == "Other"){
-			$('#trainotherrailroad').show();
-		}
-		else{
-			$('#trainotherrailroad').hide();
-		}
-	});
-	if($('#railroad').val() == "Other"){
-		$('#loco1otherrailroad').show();
-	}
-	$('#railroad').change(function(){
-		if(this.options[this.selectedIndex].value == "Other"){
-			$('#loco1otherrailroad').show();
-		}
-		else{
-			$('#loco1otherrailroad').hide();
-		}
-	});
-	
-	if($('#railroad2').val() == "Other"){
-		$('#loco2otherrailroad').show();
-	}
-	$('#railroad2').change(function(){
-		if(this.options[this.selectedIndex].value == "Other"){
-			$('#loco2otherrailroad').show();
-		}
-		else{
-			$('#loco2otherrailroad').hide();
-		}
-	});
-	
-	if($('#railroad3').val() == "Other"){
-		$('#loco3otherrailroad').show();
-	}
-	$('#railroad3').change(function(){
-		if(this.options[this.selectedIndex].value == "Other"){
-			$('#loco3otherrailroad').show();
-		}
-		else{
-			$('#loco3otherrailroad').hide();
-		}
-	});
-	
-	if($('#railroad4').val() == "Other"){
-		$('#loco4otherrailroad').show();
-	}
-	$('#railroad4').change(function(){
-		if(this.options[this.selectedIndex].value == "Other"){
-			$('#loco4otherrailroad').show();
-		}
-		else{
-			$('#loco4otherrailroad').hide();
-		}
-	});
-	
-	if($('#railroad5').val() == "Other"){
-		$('#loco5otherrailroad').show();
-	}
-	$('#railroad5').change(function(){
-		if(this.options[this.selectedIndex].value == "Other"){
-			$('#loco5otherrailroad').show();
-		}
-		else{
-			$('#loco5otherrailroad').hide();
-		}
-	});
-	
-	if($('#railroad6').val() == "Other"){
-		$('#loco6otherrailroad').show();
-	}
-	$('#railroad6').change(function(){
-		if(this.options[this.selectedIndex].value == "Other"){
-			$('#loco6otherrailroad').show();
-		}
-		else{
-			$('#loco6otherrailroad').hide();
-		}
-	});
-	
-	if($('#twocheck').is(':checked')){
-		addLoco2()
-	}
-	
-	if($('#threecheck').is(':checked')){
-		addLoco3()
-	}
-	
-	if($('#fourcheck').is(':checked')){
-		addLoco4()
-	}
-	
-	if($('#fivecheck').is(':checked')){
-		addLoco5()
-	}
-	
-	if($('#sixcheck').is(':checked')){
-		addLoco6()
-	}
-	
-	
+	/*$('#locomotive_remove_link').click(function(){
+		$(this).closest(".pure-control-group").prev().children("input[type=hidden]").value = 1
+		$(this).closest(".locomotive_fields").hide()
+		
+	})*
 
 });
 

@@ -70,3 +70,5 @@ gem 'rails-html-sanitizer'
 
 #Timezone
 gem 'timezone'
+
+gem 'nested_form_fields'

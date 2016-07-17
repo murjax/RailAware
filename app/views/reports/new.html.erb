@@ -34,7 +34,7 @@
 			<% end %>
 		</div>
 	<% end %>
-		<%= form_for(:report, :url => {:action => "create"}, :html => {:multipart => true}) do |f| %>
+		<%= form_for(@report, :url => {:action => "create"}, :html => {:multipart => true}) do |f| %>
 			<div id="report" class='pure-form pure-form-aligned'>
 				<fieldset>
 					<% railroads_array = Railroad.all.map { |rr| [rr.railroad] } %>
@@ -76,39 +76,13 @@
 						<%= f.text_field(:offset, :value => "-05:00") %>
 					</div>
 
-					<%= f.fields_for :locomotives do |l| %>
-						<div class="pure-control-group">
-							<label><%= l.label(:number, "Locomotive #") %></label>
-							<% if session[:report] %>
-							<%= l.text_field(:number, :value => session[:report][:locomotives][:number]) %>
-							<% else %>
-							<%= l.text_field(:number) %>
-							<% end %>
-						</div>
-						
-						<div class="pure-control-group">
-							<label><%= l.label(:loco_type, "Locomotive Type") %></label>
-							<% if session[:report] %>
-							<%= l.text_field(:loco_type, :value => session[:report][:locomotives][:loco_type]) %>
-							<% else %>
-							<%= l.text_field(:loco_type) %>
-							<% end %>
-						</div>
-						
-						<div class="pure-control-group">
-							<label><%= l.label(:railroad, "Locomotive Railroad") %></label>
-							<% if session[:railroad] %>
-								<% if railroads_array.include?([session[:report][:locomotives][:railroad]]) %>
-								<%= l.select :railroad, options_for_select(railroads_array, session[:report][:locomotives][:railroad]) %>
-								<% else %>
-								<%= l.select :railroad, options_for_select(railroads_array, "Other") %>
-								<% end %>
-							<% else %>
-							<%= l.select :railroad, options_for_select(railroads_array) %>
-							<% end %>
-						</div>
-					<% end %>
-					
+					<%= render partial: "locomotives", locals: {f: f, railroads_array: railroads_array} %>
+
+					<div class="pure-control-group">
+						<label><%= f.add_nested_fields_link :locomotives %></label>
+					</div>
+
+										
 					<div id="manuallocationcheck" class="pure-control-group">
 						<label>
 							<%= check_box_tag "manuallocation", "manuallocation", false, :onclick => 'displayLocationFields()' %>
@@ -144,12 +118,12 @@
 									map: handler.getMap()
 								});
 
-								$('#report_location_latitude').val(marker.getPosition().lat());
-								$('#report_location_longitude').val(marker.getPosition().lng());
+								$('#report_location_attributes_latitude').val(marker.getPosition().lat());
+								$('#report_location_attributes_longitude').val(marker.getPosition().lng());
 							}else{
 								marker.setPosition(event.latLng);
-								$('#report_location_latitude').val(marker.getPosition().lat());
-								$('#report_location_longitude').val(marker.getPosition().lng());
+								$('#report_location_attributes_latitude').val(marker.getPosition().lat());
+								$('#report_location_attributes_longitude').val(marker.getPosition().lng());
 							}
 							
 						  });
@@ -160,7 +134,7 @@
 						}
 						
 					</script>
-					<%= f.fields_for :location do |l| %>
+					<%= f.fields_for :location, @report.location do |l| %>
 						<div class="pure-control-group" id="latbox" style="display: none;">
 							<%= l.text_field(:latitude) %>
 						</div>

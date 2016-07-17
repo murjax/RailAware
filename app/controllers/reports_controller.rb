@@ -38,14 +38,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 	
 	def create
 		full_sanitizer = Rails::Html::FullSanitizer.new
-		parameters = report_params.except!("location").except("locomotives")
-		locomotives = []
-		locomotives.push(report_params.delete("locomotives"))
-		location = Location.new(report_params.delete("location"))
-		@report = Report.new(parameters)
-		@report.location = location
-		@report.locomotives = locomotives.map{ |l| Locomotive.new(l) }
-
+		@report = Report.new(report_params)
 		if !@report.valid?
 			session = set_session_params(params[:report], params[:railroad], params[:direction], params[:state])
 			flash[:notice] = ["You must fix the following errors to continue."]
@@ -168,7 +161,7 @@ protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format ==
 	private
 		
 		def report_params
-			params.require(:report).permit(:username, :railroad, :train_number, :direction, :info, :time, :user_id, :rating, :timezone, :offset, location: [ :latitude, :longitude, :city, :state_prov, :id ], locomotives: [ :id, :number, :loco_type, :railroad ])
+			params.require(:report).permit(:username, :railroad, :train_number, :direction, :info, :time, :user_id, :rating, :timezone, :offset, location_attributes: [ :latitude, :longitude, :city, :state_prov, :id ], locomotives_attributes: [ :id, :_destroy, :number, :loco_type, :railroad ])
 		end
 
 		def build_markers

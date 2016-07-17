@@ -1,0 +1,22 @@
+
+<%= f.nested_fields_for :locomotives do |l| %>
+	<div class="pure-control-group">
+		<%= l.label(:number, "Locomotive #") %>
+		<%= l.text_field(:number) %>
+	</div>
+
+	<div class="pure-control-group">
+		<%= l.label(:loco_type, "Locomotive Type") %>
+		<%= l.text_field(:loco_type) %>
+	</div>
+
+	<div class="pure-control-group">
+		<%= l.label(:railroad, "Locomotive Railroad") %>
+		<%= l.select :railroad, options_for_select(railroads_array) %>
+	</div>
+	<div class="pure-control-group">
+		<label><%= l.remove_nested_fields_link "Remove Locomotive" %></label>
+	</div>
+<% end %>
+
+
